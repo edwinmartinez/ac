@@ -1,0 +1,1 @@
+[12-Mar-2007 13:26:03] PHP Fatal error:  Smarty error: the $compile_dir 'templates_c' does not exist, or is not a directory. in /home/clasific/public_html/amigocupido/includes/smarty/libs/Smarty.class.php on line 1095

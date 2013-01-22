@@ -1,0 +1,12 @@
+
+		<div id="logo">
+<a href="http://www.amigocupido.com/"><img src="/images/spacer.gif" alt="AmigoCupido.com" title="myspace en espanol" width="319" height="80" border="0" /></a></div>
+		<div id="topNav">
+		<a href="/">Inicio</a> | 
+		<a href="/gente/">Gente</a> | 
+		<a href="/citas_en_linea_blog/">Articulos</a> | <a href="/citas-en-linea-acerca.php">Acerca de Amigo Cupido</a> | <a href="/citas_en_linea_contacto.php">Contactanos</a>		
+<?php if(isset($HTTP_SESSION_VARS['user_id']))
+		echo '| <a href="/logout/">Salir (Logout)</a>';
+?>
+</div> 
+

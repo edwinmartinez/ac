@@ -1,0 +1,779 @@
+body {
+	color: #333333;
+	background-color:#ccc;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-family: Tahoma;
+	}
+	/*body {
+    background: #fff url(bg.gif) center top repeat-y;
+    body,td,a,p,.h{font-family:arial,sans-serif;font-size:12px;}
+}*/
+html, body {
+	height:100%;
+}
+a:link, a:visited {
+	color:#0033CC;
+}
+h1 { 
+	font: bold 11pt Tahoma;
+	margin-bottom: 0px; 
+	color: #6AA14E;
+	padding-bottom: 0px;
+	}
+h3 { 
+	font: bold 11pt Tahoma;
+	margin-bottom: 0px; 
+	color: #6AA14E;
+	padding-bottom: 0px;
+	}
+
+
+#supportingText h3 span,#preamble h3 span {
+	padding-bottom: 4px;
+	background: url(flower3.gif) no-repeat 0 0;
+	padding-left: 24px;
+	}
+
+.smallTextGray{
+	color:#666666;
+	font-size:12px;
+}
+/* ----- Swapping text with images ----------------------------------------------------------------------------------- */
+#headerWords {
+	position:absolute;
+	left:447px;
+	top:27px;
+	width:368px;
+	height:58px;
+	z-index:1;
+	visibility: hidden;
+}
+	
+/* ----- LAYOUT ------------------------------------------------------------------------------------------------------ */
+#header {
+	background: url("/images/header_bg.jpg") no-repeat scroll center top #990134;
+    height: 76px;
+    margin: 0 auto;
+}
+
+#container { 
+	/*background: url(bg_main.gif) repeat-y;*/
+	background-color:#FFFFFF;
+	width: 728px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 8px;
+	padding-top: 0px;
+	text-align: left;
+	position: relative;
+	border:#CCCCCC 8px solid;
+	}
+		#header { 
+			/*background: url(bg_header.jpg) no-repeat right top; */
+			width: 728px;
+			height: 117px;
+			float: left;
+			}
+		#logo { 
+			background: url(/images/amigo_cupido_header.jpg) no-repeat left top; 
+			width: 728px;
+			height: 80px;
+			border:#FFFFFF 1px solid;
+			border-bottom-width:0px;
+			}
+		#topNav { 
+			/*background: url(images/cita-en-linea.gif) no-repeat right top; */
+			font: bold 9pt Verdana;
+			background-color:#000000;
+			color:#FFFFFF;
+			text-align:center;
+			width: 100%;
+			/*height: 30px;*/
+			margin-bottom:0px;
+			padding-bottom:10px;
+			padding-top:10px;
+			border:#FFFFFF 1px solid;
+			
+			}
+		#topNav a{ 
+			color:#FFFFFF;
+			text-decoration:none;
+			margin-left:8px;
+			margin-right:8px;
+			}
+.centeredWrap {
+	width:100%;
+	text-align:center;
+}	
+
+.centered{
+	margin:auto;
+}	
+
+body,td,a,p,.h{font-family:arial,sans-serif;font-size:12px;}
+
+
+        color:#0000cc;
+        font-weight: normal;
+    }
+    a:visited { color:#551a8b; }
+    a:active { color:#ff0000; }
+    .h{font-size: 20px;}
+    
+    table.userTable {
+        border: 1px solid #ccc;
+        padding:2px;
+        margin-top:10px;
+        margin-bottom: 10px;
+        margin-left:5px;
+        border-collapse: collapse;
+    }
+    td.userCellContent{
+        background-color: #fff;
+        padding:10px 5px 10px 5px;
+    }
+    
+    td.userCellEmail{
+        background-color: #ffffff;
+        padding:2px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    td.userCellTitle {
+    background-color: #E5ECF9;
+    font-weight: bold;
+    color: #3366CC;
+    padding-left: 4px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    }
+    td.userCellEdit {
+        background-color: #E5ECF9;
+        text-align:right;
+        padding-right:8px;
+    }
+
+#contentText {
+	margin-left: 31px;
+	padding: 0px 20px;
+	margin-bottom:20px;
+	width: 600px;
+	border:#FFFFFF 1px solid;
+	margin-top: 25px;
+	}
+#homeContentWide {
+	margin: 0px;
+	padding: 0px;
+/*	margin-bottom:20px;*/
+	width: 728px;
+	/*height:380px;*/
+	border:#FFFFFF 1px solid;
+	background:#FFFFFF;
+	}
+	#homeContentWideTop {
+		background-image:url(images/home_content_bg.png);
+		background-repeat:repeat-x;
+		margin: 0px;
+		padding: 0px;
+		/*margin-bottom:20px;*/
+		width: 728px;
+		height:380px;
+		}	
+	#homeLeftCol {
+	margin: 0px 0px 10px 5px;
+	padding:0 4px;
+	width: 415px;
+	font-size: 11px;
+	color:#000000;
+	float:left;
+	}
+	
+#leftCol {
+	margin: 0px 0px 10px 5px;
+    padding:0 4px;
+    width: 210px;
+    font-size: 11px;
+    color:#000000;
+    float:left;
+}
+#rightCol{
+	
+}
+
+#memberHomeNavLinks > ul{
+  margin-left:0em; 
+  padding-left:0.2em; 
+  margin-bottom:1em; 
+}
+#memberHomeNavLinks > ul > li{
+  padding-left: 0.8em; 
+  list-style: none;
+  margin-bottom:5px;
+}
+
+#accHeadWrap{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	text-align:center;
+	border-bottom:#666666 solid 1px;
+	padding-bottom: 4px;
+	margin-top:30px;
+}
+.accHeadTab{
+	text-decoration:none;
+	color:#666666;
+	padding:4px 6px;
+	margin-left:10px;
+	background-color:#CCCCCC;
+	border:solid #666666 1px;
+}
+.accHeadTab:hover{
+	text-decoration:none;
+	color:#FFFFFF;
+	padding:4px 6px;
+	margin-left:10px;
+	background-color:#0000CC;
+	border:solid #666666 1px;
+}
+.accHeadTabOn{
+	text-decoration:none;
+	color:#000000;
+	padding:4px 6px;
+	margin-left:10px;
+	background-color:#FFFFFF;
+	border:solid #666666 1px;
+}
+
+.editable {
+	background-color:#FFFF99;
+}
+.editableArea {
+	background-color:#FFFFCC;
+	width:400px;
+}
+.simulatedLink {
+	color:#0000FF;
+	text-decoration:underline;
+}
+.fieldname{
+	font-weight:bold;
+}
+
+/*-------------------- mi account ------------------------------------------*/
+.section{
+	font-size:24px;
+	width:100%;
+	display:block;
+	border-bottom-color:#000000;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	margin-bottom:10px;
+}
+.label {
+	font-size:14px;
+	
+	
+}
+.editProfileItem{
+	margin-bottom:10px;
+}
+
+.inplaceeditor-form{
+	margin-bottom:0px;
+}
+.inplaceeditor-form a:link, .inplaceeditor-form a:visited{
+	color:#0000FF;
+}
+
+.kw{
+font-size:2px;
+color:#FFFFFF;
+}
+
+
+/*----------------favorites ----------------------*/
+
+	.favorite {
+	font:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	margin-top: 10px;
+	text-align:left;
+	padding:5px;
+	padding-bottom:10px;
+	border-bottom:#ccc solid 1px;
+	}
+	.favorite a:link, .favorite a:visited{
+	font-size:11px;
+		color:#FF6600;
+	}
+	
+	/*------------------------- boxes --------------------*/
+.leftBox{
+	width:200px; 
+	border:#ccc solid 1px;
+	margin-left:4px;
+	margin-top:10px;
+	padding:0px;
+}
+.leftBox .leftBoxSearchContent{
+	padding:4px;
+}
+.leftBox .searchItem{
+	margin: 12px 0; 
+	/*border:#CCCCCC solid 1px;*/
+}
+.leftBox h2{
+	margin:0;
+	padding:0;
+	display:block;
+	background:#E5ECF9;
+	font-weight: bold;
+	font-size:12px;
+	color: #3366CC;
+	padding-left: 4px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+}
+.homeProfiles{
+	
+}
+.waitingBuddy{
+	border:#999999 solid 1px;
+	padding:4px;
+	width:120px;
+	margin:4px;
+	float:left;
+}
+.waitingBuddyHead {
+	display:block;
+	background:#CC0000;
+	color:#FFFFFF;
+	padding:4px;
+}
+.approveBuddyLink {
+	color:#0099FF;
+	font-weight:bold;
+	font-size:10px;
+}
+/*----------------------------home page ------------------*/
+.loginBox{
+	padding:0;
+	margin:0;
+	width:728px;
+	clear:both;
+	position:relative;
+	bottom: 45px;
+}
+
+#loginForm {
+	margin:0;
+ background-color: #CCCCCC;
+ color: #000000;
+ border: 1px solid #999999;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 10px;
+ text-align: left;
+ padding:4px 10px;
+}
+#loginForm .buttons { 
+ font-family: Verdana, Arial, Helvetica, sans-serif; 
+ font-size: 10px; 
+ background-color: #0063dc; 
+ color: #FFFFFF; 
+ margin-right: 6px; 
+}
+#loginForm .text { 
+ font-family: Verdana, Arial, Helvetica, sans-serif; 
+ font-size: 11px; 
+ width: 90px; 
+ margin-right: 6px; 
+
+}
+
+.buttons { 
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight:bold; 
+	background-color: #0063dc; 
+	color: #FFFFFF; 
+	margin-right: 6px; 
+}
+
+/*--------------------  -------*/
+.content{
+	margin: 0 10px 10px 8px;
+}
+.content h2{
+	margin:0;
+	padding:0;
+}
+.myPicturesFrame{
+	width:710px;
+	min-height:500px;
+	margin-left:0px;
+	margin-top:20px;
+	/*border:#999999 solid 1px;*/	
+}
+
+#myPicturesWideCol{
+	float:left;
+	width:500px;
+}
+#myPicturesNarrowCol{
+	width:200px;
+	float:right;
+}
+
+.noContentText{
+	color:#999999;
+	width:100%;
+	height:100%;
+	text-align:center;
+	vertical-align:middle;
+	padding:50% 0;
+	border:#666666 solid 1px;
+}
+.myPicturesDisplayPic{
+	float:left;
+	width:500px;
+/*	border:#FF0000 solid 1px;*/
+	text-align:center;
+	/*min-height:400px;*/
+}
+.myPicturesDisplayPic h2{
+	font-size:14px;
+}
+.myPicturesThumbs{
+	position:relative;
+	float:right;
+	width:200px;
+	height:300px;
+	min-height:300px;
+	border:#CCCCCC solid 1px;
+	overflow:auto;
+	margin:0;
+	text-align:center;
+
+}
+
+
+.myPicturesDisplayImg{
+	float:left;
+	margin:4px;
+	width:75px;
+	height:75px;
+}
+.myPicturesUploadLink{
+	text-align:center;
+	width:190px;
+	padding:5px;
+	margin:5px 0px;
+	float:right;
+	border:#CCCCCC solid 1px;
+	text-transform:uppercase;
+}
+.myPicturesControls{
+	border:#ccc solid 1px;
+	text-align:left;
+	padding:4px 40px;
+	margin-bottom:5px;
+	font-size:12px;
+	margin:4px 0;
+ }
+.myPicturesControls img{
+	float:left;
+	display:inline;
+	margin-right:4px;
+}
+.picCaption{
+	font-size:12px;
+	margin:auto;
+	min-height:30px;
+	margin-top:5px;
+	text-align:left;
+	width:400px;
+}
+
+.myPicturesTagsHead{
+	padding:4px;
+	font-size: 12px;
+	margin-top:10px;
+/*	border:#00CC33 solid 1px;*/
+}
+
+.myPicturesTags{
+	position:relative;
+	float:right;
+	width:190px;
+	padding:4px;
+	font-size:12px;
+	margin:8px 0;
+}
+
+.myPicturesTags a{
+	color:#999999;
+	text-decoration:none;
+	font-size:12px;
+}
+
+/*----------------------editable -----------------------*/
+.myPicturesCaptionTextarea{
+	width: 400px;
+	font-size: 12px;
+	border:#666666 solid 1px;
+	background-color: #ffffd3;
+	padding:4px;
+	margin:4px;
+}
+#mainPic{
+	text-align:center;
+}
+.editable{
+
+}
+
+
+img.progress{
+	vertical-align: middle;
+	padding: 0 10px;
+}
+
+/*------------------editable end ----------------------------*/
+#photosNarrowCol{
+	width:170px;
+	/*border:#999999 solid 1px;*/
+	float:left;
+	margin-top:20px;
+	padding-left:20px;
+}
+.photosThumb{
+	float:left;
+	margin:15px 10px;
+	width:75px;
+	height:75px;
+	text-align:center;
+}
+.photosThumb a{
+	font-size:12px;
+}
+
+#photosFrame {
+	width:510px;
+	border:#ccc solid 1px;
+	margin-left:194px;
+	margin-top:20px;
+}
+.photosTags{
+	font-size:14px;
+	line-height:24px;
+	margin-top:10px;
+	width:160px;
+}
+
+.myPicturesComments{
+/*	border:#000 solid 1px;*/
+	float:left;
+	padding:4px;
+	width:500px;
+	text-align:center;
+}
+.myPicturesCommentsTitle{
+/*	border:#000 solid 1px;*/
+	text-align:left;
+	padding:4px;
+	width:450px;
+	padding-left:20px;
+	border-bottom: #000 solid 1px;
+	margin-bottom: 10px;
+}
+.myPicturesCommenter{
+	width:120px;
+	float:left;
+	text-align:center;
+	/*border-right:#999999 solid 1px;*/
+	padding: 5px;
+	margin-bottom:20px;
+}
+.myPicturesComment{
+	/* border-top:#FF0000 solid 1px; */
+	margin-left:10px;
+	margin-bottom:20px;
+	text-align:left;
+	width:335px;
+	padding-top:5px;
+}
+#commentForm{
+	border-top:#FF0000 solid 1px;
+	margin-left:150px;
+	text-align:left;
+	width:340px;
+	padding-top:5px;
+	background:#ccc;
+}
+
+/* ----------- mi account ------------*/
+.breadCrumbs{
+	margin:10px;
+	font-weight:bold;
+}
+.breadCrumbs a{
+	
+}
+
+/*---------- profile views --------------*/
+.profileView{
+	float:left;display:inline;
+	margin:20px;
+	height:140px;
+	text-align:center;
+}
+.profileViewImg img{
+	width:80px;
+	height:80px;
+}
+.profileViewTime{
+	font-size:12px;
+}
+/*------------message blocks ------------*/
+.warningBlock{
+	display:block;
+	border:#FF0000 2px solid; 
+	padding: 5px;
+	margin-bottom:20px;
+}
+.notifyBlock{
+	display:block;
+	border:#00CC00 2px solid; 
+	padding: 5px;
+	margin-bottom:20px;
+}
+/*------footer---------*/
+#footer{
+	clear:both;
+	text-align:center;
+	margin-bottom:10px;
+}
+#footer a{
+	font-size:12px;
+}
+
+/************************************************
+ Round Corners Button foto sort menu
+************************************************/
+#psortArea{
+	margin-left: 186px;
+}
+#psortArea ul {
+	margin:0;
+	padding:0;
+	margin-top:5px;
+}
+
+.psort li {
+    display:inline;
+    list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.psort li a {
+    background:transparent url(images/button_psort.gif) no-repeat top left;
+    display:block;
+    float:left;
+    height:25px;
+    margin-right:15px;
+	text-decoration:none;
+	font-weight:bold;
+	font-size:12px;
+}
+
+.psort li a span {
+    background:transparent url(images/button_psort.gif) no-repeat right top;
+    display:inline;
+    float:left;
+    height:21px;
+    padding:4px 10px 0 0;
+    margin-left:10px;
+    cursor:pointer;
+}
+
+.psort li a.active {
+	background-position:0px -25px; color:#fff;
+	color: #000;
+}
+.psort li a.active span{
+    background-position:right -25px;
+}
+
+.psort li a:hover {
+    background-position:0px bottom; color:#fff;
+}
+
+.psort li a:hover span {
+    background-position:right bottom;
+}
+
+/*******************
+**** fbook bar ******
+***********************/
+
+
+#presence_bar {
+    font-size: 11pt;
+    font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+	position:fixed;
+	bottom:0;
+	left: 15px;
+	right: 15px;
+	height: 25px;
+	background-color:#ccc;
+	/*background:url(images/presence/bar_bg_bw.gif) repeat-x top left;*/
+	border-right: solid 1px #b5b5b5;
+	z-index: 3;
+}
+#presence_bar_l{
+    float:left;
+	background-color:#ddd;
+	border: 1px #999 solid;
+}
+#presence_bar_r{
+    height:95%;
+    width:190px;
+	padding-right:10px;
+	text-align:right;
+	float:right;
+	border: 1px #000 solid;
+}
+
+
+
+    .usersMiniProfile {
+    font:Verdana, Arial, Helvetica, sans-serif;
+    font-size:10px;
+    float:left;
+    margin-left: 18px;
+    margin-right: 18px;
+    margin-top: 10px;
+    height:150px;
+    text-align:center;
+    }
+    .usersMiniProfile img{
+        /*width:80px;
+        height:80px;*/
+    }
+    .miniProfilePhoto img{
+        width:80px;
+        height:80px;
+    }
+    .usersMiniProfile a:link, .usersMiniProfile a:visited{
+    font-size:11px;
+        color:#FF6600;
+    }
+    .miniProfileBuddyOptions{
+        width:80px;
+        text-align:left;
+    }
+

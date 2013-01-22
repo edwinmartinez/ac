@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" title="RSS" href="rss.xsl"?>
+<rss version="2.0">
+<channel>
+<title>My blog</title>
+<description>I am using EasyRSS to create this shit</description>
+<link>http://www.sistemos.com</link>
+<language>en-us</language>
+<generator>EasyRSS</generator>
+
+<item>
+<title>My first blog</title>
+
+<description><![CDATA[Hello! This is my first time using EasyRSS]]></description>
+<link>http://localhost/first</link>
+</item>
+
+<item>
+<title>Exceptions of using XSL stylesheet</title>
+<description><![CDATA[When using XSL stylesheet, remember that Mozilla does not parse HTML tags. Though IE6 accepts HTML <b>tags</b> and parses them, Mozilla does not (and will never do). So using disable-output-escaping=&quot;yes&quot; parameter in &lt;xsl:text&gt; and &lt;xsl:value-of&gt; would be effective in MSIE only.]]></description>
+<pubDate>Wed, 25 Aug 2004 01:39:21 +0300</pubDate>
+<link>http://bugzilla.mozilla.org/show_bug.cgi?id=98168</link>
+</item>
+
+</channel>
+</rss>

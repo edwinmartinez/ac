@@ -1,0 +1,36 @@
+body {
+	margin:0;
+	text-align:center;
+	background-color:#CCCCCC;
+	background-image:url(/images/profile/body_bg.jpg);
+	background-position:center top;
+	background-repeat:repeat-y;
+}
+
+
+#wrapper{
+	margin:0;
+	background-image: url(/images/profile/eyebrow_bg.gif);
+	background-repeat:repeat-x;
+}
+#acTopMenu{
+	margin:0 auto;
+	text-align:left;
+	width:770px;
+	height:32px;
+	background-image:url(/images/profile/eyebrow_contents.gif);
+	background-repeat:no-repeat;
+}
+#container{
+	margin:0 auto 0 auto;
+	text-align: left;
+	width:770px;
+	background:#FFFFFF;
+	clear:both;
+}
+h4,h5{
+	font-size:11px;
+	margin:0;
+	padding:0;
+	color:#3366CC;
+}

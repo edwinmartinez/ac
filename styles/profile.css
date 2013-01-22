@@ -1,0 +1,290 @@
+#homeLeftCol{
+    float:left;
+	display:inline;
+	width:244px;
+}
+#homeRightCol{
+    width:450px;
+	float:left;
+	display:inline;
+}
+
+/* ------------------------ new stuff -------------------------  */
+
+
+
+body,td,a,p,.h{font-family:arial,sans-serif;font-size:12px;}
+#userBody {
+margin-top:30px;
+margin-left:4px;
+}
+	a:link {
+	    color:#0000cc;
+	    font-weight: normal;
+    }
+	a:visited { color:#551a8b; }
+	a:active { color:#ff0000; }
+	.h{font-size: 20px;}
+	
+	table.userTable {
+	    border: 1px solid #ccc;
+	    padding:2px;
+		margin-top:10px;
+	    margin-bottom: 10px;
+		margin-left:5px;
+	    border-collapse: collapse;
+	}
+	td.userCellContent{
+		background-color: #fff;
+	    padding:10px 5px 10px 5px;
+	}
+	
+	td.userCellEmail{
+	    background-color: #ffffff;
+	    padding:2px;
+	    padding-top: 10px;
+	    padding-bottom: 10px;
+	}
+	td.userCellTitle {
+	background-color: #E5ECF9;
+	font-weight: bold;
+	color: #3366CC;
+	padding-left: 4px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	}
+	td.userCellEdit {
+	    background-color: #E5ECF9;
+	    text-align:right;
+		padding-right:8px;
+	}
+	
+	#userBasicInfo{
+		margin-top:4px;
+		width:125px;
+	}
+	
+	#aboutMe{
+		margin: 4px 4px 8px 10px;;
+	}
+	
+
+.userCloseLink {
+	text-align: right;
+	text-decoration: underline;
+
+}
+
+.userDetailTable {
+	    border: 1px solid #ccc;
+	    padding:2px;
+	    margin-bottom: 10px;
+	    border-collapse: collapse;
+	}
+.userLeftDetailCell{
+    color:#336699;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+    background-color:#EFEFEF;
+	margin-left:4px;
+	margin-right:3px;
+	margin-bottom:3px;
+	margin-top:3px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top:5px;
+	padding-bottom:5px;
+	text-align:left;
+
+}
+.userRightDetailCell{
+    color:#000000;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	text-align:left;
+    background-color:#D5E8FB;
+    margin-left:4px;
+	margin-right:3px;
+	margin-bottom:3px;
+	margin-top:3px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.userHighlightCell {
+    background-color:#FFDCDC;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:10px;
+	font-weight:bold;
+
+    border-top-color:#FFB2B2;
+    border-top-width:1px;
+    border-top-style:solid;
+    border-right-color:8D0000;
+    border-right-width:1px;
+    border-right-style:solid;
+    border-bottom-color:8D0000;
+    border-bottom-width:1px;
+    border-bottom-style:solid;
+    border-left-color:#FFB2B2;
+    border-left-width:1px;
+    border-left-style:solid;
+
+    margin-left:4px;
+	margin-right:3px;
+	margin-bottom:3px;
+	margin-top:3px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top:5px;
+	padding-bottom:5px;
+
+}
+.userHighlightCell:input { 
+    background-color:#FFFFFF;
+}
+.userWideLeftCell {
+    color:#336699;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+    background-color:#EFEFEF;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top:5px;
+	padding-bottom:5px;
+	text-align:left;
+	width:120px;
+	/*border:#FFFFFF 1px solid;*/
+}
+
+.userWideRightCell {
+    color:#000000;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+    background-color:#FFFFFF;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top:5px;
+	padding-bottom:5px;
+	text-align:left;
+	border-bottom:#CCCCCC 1px dotted;
+	/*border:#FFFFFF 1px solid;*/
+}
+
+
+#userMyOnlinePhoto {
+    margin-left:4px;
+	margin-top:4px;
+	}
+.userProfCommentsLCol {
+	background-color:#EFEFEF;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:10px;
+	padding-right:10px;
+}
+.userProfCommentsRCol {
+	background-color:#FFFFFF;
+	text-align:left;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:10px;
+	padding-right:10px;
+}
+.userAddCommentLink {
+	text-align:right;
+}
+
+
+/*---------------------- divs ------>*/
+
+#friendsBox{
+	width:500px;
+	border:#CCCCCC solid 1px;
+	margin-left:4px;
+}
+#friendsBox h2{
+	background-color: #E5ECF9;
+	font-weight: bold;
+	font-size:12px;
+	color: #3366CC;
+	padding:0;
+	margin:0;
+	padding-left: 4px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+}
+#deleteBuddyDiv{
+    cursor: hand;
+	cursor: pointer;
+	position: relative;
+	background:#ccc;
+	top:12px;
+	width: 11px;
+	left:68px;
+}
+#commentsBox{
+	width:500px;
+	border:#CCCCCC solid 1px;
+	margin-left:4px;
+}
+#commentsBox h2{
+	background-color: #E5ECF9;
+	font-weight: bold;
+	font-size:12px;
+	color: #3366CC;
+	padding:0;
+	margin:0;
+	padding-left: 4px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+}
+.profileCommentLeft {
+	width:120px;
+	float:left;
+	text-align:center;
+	border-right:#999999 solid 1px;
+	border-top:#999999 solid 1px;
+	padding: 5px;
+	background:#CCCCCC;
+}
+.profileCommentRight {
+	float:left;
+	padding:4px;
+	text-align:left;
+	width:350px;
+	display:table;
+}
+.profileCommentDate {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	color:#666666;
+}
+.commentRow{
+	clear:both;
+	border-bottom:#999999 solid 1px;
+	display:table;
+}
+
+.buttons { 
+ font-family: Verdana, Arial, Helvetica, sans-serif; 
+ font-size: 10px; 
+ background-color: #0063dc; 
+ color: #FFFFFF; 
+ margin-right: 6px; 
+}
+
+.profilePhoto{
+	width:100px;
+	height:100px;
+	border:#CCCCCC solid 1px;
+	margin-left:4px;
+	margin-top:4px;
+	text-align:center;
+	line-height:8em;
+}
+.profilePhoto img {vertical-align:middle; margin:auto; margin-top:10px;}

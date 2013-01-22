@@ -1,0 +1,108 @@
+<html>
+<head>
+<style>
+/*
+ * CometChat 
+ * Copyright (c) 2009 Inscripts - support@inscripts.com | http://www.cometchat.com | http://www.inscripts.com
+ * Version: 1.1
+ */
+
+html{overflow-y:-moz-scrollbars-vertical;}
+body{padding-bottom:30px;}
+#cometchat_base{z-index:1000;z-index:1000;position:fixed;bottom:0;display:block;height:25px;left:15px;background-image:url(../images/bgrepeat.gif);border-left:1px solid #b5b5b5;font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;font-size:11px;}
+#cometchat_chatboxes{height:25px;overflow:hidden;float:right;}
+#cometchat_chatboxes_wide{height:25px;width:0;}
+#cometchat_chatbox_left{float:right;cursor:pointer;width:10px;height:18px;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:3px -350px;padding-left:11px;padding-top:6px;color:#333;border-left:1px solid #ccc;margin-top:1px;}
+#cometchat_chatbox_right{float:right;cursor:pointer;width:17px;height:18px;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:11px -572px;padding-left:3px;padding-top:6px;color:#333;border-left:1px solid #ccc;margin-top:1px;}
+.cometchat_chatbox_right_last{background-position:11px -611px!important;cursor:default!important;color:#a7a7a7!important;}
+.cometchat_chatbox_left_last{background-position:3px -389px!important;cursor:default!important;color:#a7a7a7!important;}
+.cometchat_chatbox_lr{display:none!important;}
+.cometchat_chatbox_lr_mouseover{background-color:#fff!important;}
+#cometchat_optionsbutton{width:25px;border-right:1px solid #ccc;}
+#cometchat_userstab{width:176px;padding-left:9px;}
+.cometchat_userstabclick{background-position:5px 3px!important;padding-left:8px!important;width:177px!important;}
+.cometchat_closebox{width:21px;height:12px;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:4px -934px;float:right;}
+.cometchat_closebox_bottom{width:16px;height:12px;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:1px -1010px;float:right;}
+.cometchat_closebox_bottom_click{background-position:0 -1010px!important;}
+.cometchat_closebox_bottomhover{background-position:1px -1047px!important;}
+.cometchat_chatboxmouseoverclose{background-position:4px -973px!important;}
+.cometchat_name{float:left;}
+#cometchat_chatbox_buttons{float:right;}
+.cometchat_tabmouseover{background-color:#fff!important;}
+.cometchat_tabmouseovertext{text-decoration:underline;}
+.cometchat_tab{margin-top:1px;height:18px;border-left:1px solid #ccc;border-right:1px solid #e5e5e5;float:right;padding-left:10px;padding-top:5px;cursor:pointer;font-weight:bold;width:140px;color:#444;}
+.cometchat_tabclick{background-color:white!important;border-left:1px solid #333!important;border-right:1px solid #333!important;border-bottom:1px solid #333!important;padding-top:4px!important;text-decoration:underline;color:#111!important;}
+.cometchat_usertabclick{width:141px!important;padding-left:9px!important;}
+.cometchat_tabpopup{background-color:#fff;z-index:1000;position:fixed;width:230px;font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;font-size:11px;}
+#cometchat_userstab_popup{width:224px;}
+#cometchat_optionsbutton_popup{width:224px;}
+.cometchat_tabopen{display:block!important;}
+.cometchat_tabtitle{border-right:1px solid #11648f;border-left:1px solid #11648f;border-top:1px solid #11648f;background-color:#3e92bd!important;color:#fff;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;padding:5px;font-weight:bold;cursor:pointer;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;_background-color:#3e92bd!important;background-position:195px -424px;padding-right:0;}
+.cometchat_userstabtitle{text-align:left;border-right:1px solid #11648f;border-left:1px solid #11648f;border-top:1px solid #11648f;background-color:#3e92bd!important;color:#fff;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;padding:5px;font-weight:bold;cursor:pointer;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;_background-color:#3e92bd!important;background-position:205px -424px;}
+.cometchat_chatboxtabtitlemouseover{background-position:195px -457px!important;}
+.cometchat_chatboxtabtitlemouseover2{background-position:205px -457px!important;}
+.cometchat_tabsubtitle{border-right:1px solid #333;border-left:1px solid #333;background-color:#eee;padding:5px;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-size:9px;color:#666;}
+.cometchat_tabcontent{border-right:1px solid #333;border-left:1px solid #333;background-color:#fff;background-image:url(../images/tabbottom.gif);background-repeat:no-repeat;background-position:left bottom;padding-bottom:1px;color:#333;overflow-x:hidden;overflow-y:auto;}
+.cometchat_tabcontenttext{height:200px;border-bottom:1px solid #f6f6f6;padding:5px;width:217px;overflow-x:hidden;overflow-y:auto;}
+.cometchat_userscontent{height:200px;overflow-x:hidden;overflow-y:auto;}
+.cometchat_tabcontentinput{padding:4px 5px 0 25px;border:0;border-top:1px solid #ccc;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:5px -25px;outline:none;}
+.cometchat_textarea{width:195px;border:0;height:18px;overflow:hidden;font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;font-size:11px;color:#444;background-color:#fff;outline:none;}
+.cometchat_userlist_hover{background-color:#d8f2ff!important;color:#000;}
+.cometchat_tooltip_content{background-color:#333;color:#fff;padding:5px;font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;font-size:11px;white-space:nowrap;}
+.cometchat_userlist{cursor:pointer;height:20px;}
+.cometchat_userscontentname{float:left;padding-left:5px;padding-top:3px;padding-bottom:3px;}
+.cometchat_userscontentdot{float:right;background-repeat:no-repeat;background-position:0 2px;width:20px;height:16px;}
+.cometchat_available{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -129px!important;}
+.cometchat_away{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -175px!important;}
+.cometchat_busy{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -221px!important;}
+.cometchat_offline{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -1088px!important;}
+#cometchat_tooltip{background-image:url(../images/pointer.png);background-repeat:no-repeat;background-position:right bottom;z-index:1001;position:fixed;display:none;padding-bottom:4px;}
+.cometchat_tooltip_left{background-position:left bottom!important;}
+.cometchat_closebox_bottom_status{float:left;width:16px;height:16px;background-repeat:no-repeat;background-position:0 -1px;}
+.cometchat_tabalert{width:16px;height:16px;position:absolute;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -537px;color:white;font-size:8px;padding-top:1px;text-align:center;text-decoration:none!important;}
+.cometchat_tabalertlr{width:16px;height:16px;position:absolute;background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -537px;color:white;font-size:8px;padding-top:1px;text-align:center;}
+.cometchat_chatboxmessage{margin-left:1em;}
+.cometchat_chatboxmessagefrom{margin-left:-1em;font-weight:bold;}
+.cometchat_statustextarea{border:1px solid #ccc;width:200px;padding:4px;margin-top:3px;margin-bottom:3px;font-family:'lucida grande',tahoma,verdana,arial,sans-serif;font-size:11px;color:#444;overflow-x:hidden;overflow-y:auto;height:42px;outline:none;}
+.cometchat_optionsstatus{padding-left:2px;float:left;padding-top:1px;cursor:pointer;}
+.cometchat_optionsstatus2{padding-left:10px;float:left;}
+.cometchat_friendtextbox{border:1px solid #ccc;width:200px;padding:2px;margin-top:4px;font-family:'lucida grande',tahoma,verdana,arial,sans-serif;font-size:11px;color:#444;font-weight:normal;}
+.cometchat_tabsubtitle a{color:#000;}
+.cometchat_tabcontent a{color:#287197;}
+.cometchat_gooffline{color:#000;text-decoration:underline;cursor:pointer;}
+.cometchat_user_invisible{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:10px -890px!important;width:16px;height:16px;}
+.cometchat_user_available{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -752px!important;width:16px;height:16px;}
+.cometchat_user_busy{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:10px -798px!important;width:16px;height:16px;}
+#cometchat_userstab_icon{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -753px;width:16px;height:16px;float:left;padding-right:5px;}
+.cometchat_user_invisible2{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -891px!important;}
+.cometchat_user_available2{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -753px!important;}
+.cometchat_user_busy2{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -799px!important;}
+.cometchat_user_away2{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:0 -845px!important;}
+.cometchat_optionsimages{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:10px -309px!important;}
+.cometchat_optionsimages_click{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:10px -310px!important;}
+.cometchat_optionsimages_exclamation{background:url(../images/cometchat.png) no-repeat top left;_background:url(../images/cometchat.gif) no-repeat top left;background-position:10px -263px!important;}
+.cometchat_trayicon{float:left;padding-left:7px;padding-right:7px;border-right:1px solid #ccc;margin-top:1px;padding-top:5px;height:18px;cursor:pointer;}
+.cometchat_smiley{vertical-align:-3px;}
+.cometchat_nofriends{font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;font-size:11px;padding:5px;line-height:1.3em;}
+</style>
+</head>
+
+<div id="cometchat_base" style="width: 873px;">
+	<span id="cometchat_optionsbutton" class="cometchat_tab cometchat_optionsimages cometchat_optionsimages_exclamation"/>
+	<span id="cometchat_userstab" class="cometchat_tab" style="display: none;">
+	<span id="cometchat_userstab_icon" class="cometchat_user_available2"/>
+	<span style="float: left;" id="cometchat_userstab_text">Who's Online (0)</span>
+	</span>
+	<div class="cometchat_trayicon" id="cometchat_trayicon_0"><img src="cometchat/images/icons/home.png"/></div>
+	<div class="cometchat_trayicon" id="cometchat_trayicon_1"><img src="cometchat/images/icons/map.png"/></div>
+	<div class="cometchat_trayicon" id="cometchat_trayicon_2"><img src="cometchat/images/icons/buy.png"/></div>
+	<div id="cometchat_chatbox_right" class="cometchat_chatbox_right_last cometchat_chatbox_lr" style="display: none;"><span class="cometchat_tabtext">0</span><span style="top: -5px; display: none;" class="cometchat_tabalertlr">0</span></div>
+		<div id="cometchat_chatboxes" style="width: 456px; display: none;">
+			<div id="cometchat_chatboxes_wide" style="width: 456px;"><span id="cometchat_user_5" class="cometchat_tab"><div style="float: left;" class="">demo4</div>
+			<div class="cometchat_closebox_bottom_status cometchat_offline"/><div class="cometchat_closebox_bottom"/></span><span id="cometchat_user_4" class="cometchat_tab cometchat_tabmouseover">
+			<div style="float: left;" class="cometchat_tabmouseovertext">demo3</div><div class="cometchat_closebox_bottom_status cometchat_tabmouseovertext cometchat_offline"/><div class="cometchat_closebox_bottom cometchat_tabmouseovertext"/></span><span id="cometchat_user_2" class="cometchat_tab cometchat_tabmouseover">
+			<div style="float: left;" class="cometchat_tabmouseovertext">demo1</div><div class="cometchat_closebox_bottom_status cometchat_tabmouseovertext cometchat_offline"/><div class="cometchat_closebox_bottom cometchat_tabmouseovertext"/></span></div>
+		</div>
+	<div id="cometchat_chatbox_left" class="cometchat_chatbox_left_last cometchat_chatbox_lr" style="display: none;"><span class="cometchat_tabtext">0</span><span style="top: -5px; display: none;" class="cometchat_tabalertlr">0</span></div>
+</div>
+</html>

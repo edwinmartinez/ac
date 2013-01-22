@@ -1,0 +1,4 @@
+[17-Mar-2006 04:55:09] PHP Fatal error:  Call to undefined function:  inlude() in /home/clasific/public_html/amigocupido/foros/login.php on line 22
+[17-Mar-2006 04:56:58] PHP Fatal error:  Call to undefined function:  inlude() in /home/clasific/public_html/amigocupido/foros/login.php on line 22
+[17-Mar-2006 04:58:11] PHP Fatal error:  Cannot redeclare class template in /home/clasific/public_html/amigocupido/foros/includes/template.php on line 30
+[17-Mar-2006 05:21:05] PHP Fatal error:  Call to a member function on a non-object in /home/clasific/public_html/amigocupido/foros/includes/page_header.php on line 66

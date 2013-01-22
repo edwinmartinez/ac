@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteRule ^([^/\.]+)/$ /perfil/$1 [R=301]
+RewriteRule ^fotos/([^/\.]+)/?$ /fotos/$1 [R=301]
+RewriteRule ^([^/\.]+)$ /perfil/index.php?username=$1
+RewriteRule ^id/([^/\.]+)/?$ /perfil/index.php?acid=$1

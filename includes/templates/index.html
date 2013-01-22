@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="{$title|default:"Citas en linea un servicio de citas en linea para buscar pareja. AmigoCupido is a Latin Dating Service"}" />
+<meta name="Keywords" content="citas, citas en linea, citas con hispanos, latin, hispanos, hispanics, latin datin, dating,online dating service, adult dating, free online dating, dating site, dating services, free dating, single dating, christian dating, christian dating service, dating web site, internet dating, community dating general, jewish dating, hispanic dating service, dating personals,  latinas, personals dating services,  personals for single and dating, internet personals dating, International Dating  Services, latin personals, latin american personals, latin  international personals, personals latin america, hot single latinas, latin  single dating, sexy latin single, latin single, single latin female, hispanic latin single, latin american single, latin single web  site, latin dating, latin dating services, latin dating " />
+
+<title>{$title|default:"AmigoCupido.com | Conocer gente en internet"}</title>
+
+<link href="/style_std.css" rel="stylesheet" type="text/css" />
+
+{$head}
+{$js_top_load|default:"<script id=1 language=\"javascript\" src=\"../js/prototype.js\"></script>
+<script language=\"javascript\" src=\"../js/editinplace.js\"></script>
+"}
+
+{$js|default:"<!--js end-->"}
+</head>
+
+<body>
+<div id="headerWords">
+  <h1>AmigoCupido.com - Servicio de Citas en linea y buscar pareja. Diviertete Encontrando tu amor. Latin Dating Service</h1>
+</div>
+<div id="container">
+    <div id="logo">
+        <a href="http://www.amigocupido.com/"><img src="/images/spacer.gif" alt="Amigo Cupido" title="Citas En Linea" width="319" height="80" border="0" /></a>
+    </div>
+{include file='main_nav.tpl' assign=navbar}
+{$navbar}
+  <div id="homeContentWide">
+  
+	
+	{if isset($my_home) }
+	
+	<div class="breadCrumbs">
+	<a href="/mi_cuenta/">{$my_home}</a> / {$title}
+	</div>
+	
+<!--	<div id="accHeadWrap">
+	<a class="accHeadTab{if $acc_tab_class}{$acc_tab_class}{/if}" href="?p=ac">{$my_account_settings}</a>
+	<a class="accHeadTab{if $fo_tab_class}{$fo_tab_class}{/if}" href="?p=fo">{$my_pictures}</a>
+	</div>-->
+	{/if}
+	
+	{block name=content}{/block}
+	
+	{if isset($content) }
+		<div id="contentText">
+		<p>
+		  {$content}
+		</p>
+		</div>
+	{/if}
+	
+	{if isset($content_wide) }
+
+	{$content_wide}
+
+	{/if}	
+	
+	    <div id="footer">
+        <a href="http://www.amigocupido.com/contacto/">Contactanos</a> 
+        <a href="http://www.amigocupido.com/terminos_y_condiciones/">Terminos y Condiciones</a>
+        <a href="/citas-en-linea-acerca.php">Acerca de AmigoCupido</a>
+        </div>
+	
+	</div>
+
+</div>
+
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-595260-2";
+urchinTracker();
+</script>
+
+</body>
+</html>

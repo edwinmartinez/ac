@@ -1,0 +1,65 @@
+[04-Jan-2007 06:43:39] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or '}' in /home/clasific/public_html/amigocupido/includes/captcha/captcha.class.php on line 40
+[04-Jan-2007 06:44:29] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or '}' in /home/clasific/public_html/amigocupido/includes/captcha/captcha.class.php on line 40
+[04-Jan-2007 06:46:14] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or '}' in /home/clasific/public_html/amigocupido/includes/captcha/captcha.class.php on line 40
+[04-Jan-2007 06:46:21] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or '}' in /home/clasific/public_html/amigocupido/includes/captcha/captcha.class.php on line 40
+[04-Jan-2007 06:51:58] PHP Warning:  imagettftext() [<a href='function.imagettftext'>function.imagettftext</a>]: Could not find/open font in /home/clasific/public_html/amigocupido/includes/captcha/captcha.class.php on line 121
+[08-Jan-2011 20:28:32] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:28:32] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:28:32] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:28:36] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:28:36] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:28:36] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:28:59] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:28:59] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:28:59] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:29:21] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:29:21] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:29:21] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:29:32] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:29:32] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:29:32] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:30:05] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:30:05] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:30:05] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:30:12] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:30:12] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:30:12] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:30:43] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:30:43] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:30:43] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:31:08] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:31:08] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:31:08] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:31:27] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:31:27] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:31:27] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:31:32] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:31:32] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:31:32] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:31:38] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:31:38] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:31:38] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:32:13] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:32:13] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:32:13] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:32:48] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:32:48] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:32:48] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:33:24] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:33:24] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:33:24] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:33:38] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:33:38] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:33:38] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:33:42] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:33:42] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:33:42] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:33:45] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:33:45] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:33:45] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:34:10] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:34:10] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:34:10] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0
+[08-Jan-2011 20:34:16] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home1/goosheec/public_html/amigocupido/includes/captcha/captcha.php on line 34
+[08-Jan-2011 20:34:16] PHP Warning:  Unknown: open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in Unknown on line 0
+[08-Jan-2011 20:34:16] PHP Warning:  Unknown: Failed to write session data (files). Please verify that the current setting of session.save_path is correct (/tmp) in Unknown on line 0

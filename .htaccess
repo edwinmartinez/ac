@@ -1,0 +1,181 @@
+#php_flag display_errors on
+#php_value error_reporting 7
+
+#php_value memory_limit 65M
+
+RewriteEngine on
+
+#RewriteBase /wp/
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /wp/index.php [L]
+
+RewriteRule  logout  logout.php 
+RewriteRule  logout/  logout.php 
+RewriteRule  profile/([^/\.]+)/?$ /perfil/index.php?username=$1
+#RewriteRule ^gente$ /gente/ [R=301]
+#RewriteRule  people/ /gente/  [R=301,L]
+RewriteRule ^terminos_y_condiciones/$ /terminos_y_condiciones.php
+
+#---------- photos -------------------#
+RewriteRule ^fotos$ /fotos/ [R=301]
+RewriteRule ^fotos/$ /photos2/ [L]
+#RewriteRule  ^fotos(/)?$ /photos2/
+RewriteRule  fotos/tag/([^/\.]+)/?$ /photos2/index.php?tag=$1
+RewriteRule  fotos/([^/\.]+)/?$ /photos2/index.php?username=$1
+
+RewriteRule ^fotos/(.+)/(.+)$ /photos2/index.php?action=detail&photo_id=$2
+RewriteRule ^registrate/$ /registrate.php [R=301]
+
+RewriteRule ^citas_en_linea_contacto.php$ /contacto/ [R=301]
+RewriteRule ^contact/$ /contacto/ [R=301]
+RewriteRule ^contacto/$ contact.php
+#------------ mi cuenta -------------------#
+RewriteRule ^inicio/$ /mi_cuenta/ [R=301]
+#RewriteBase /mi_cuenta/
+#RewriteCond %{REQUEST_FILENAME} !-f#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^mi_cuenta/([^/\.]*)$ /micuenta/index.php?$1 [L]
+
+#RewriteBase /login/
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^login/([^/\.]*)$ /login/index.php?$1 [R]
+
+#------forgot username and password ----#
+RewriteRule ^pactiv/([^/\.]*)$ /ac/forgotpassword.php?activation=$1
+
+RewriteRule ^olvide_contrasena/ /ac/forgotpassword.php
+RewriteRule ^olvide_apodo/ /ac/forgotusername.php
+
+#------accont actions ---------------#
+RewriteRule ^mi_perfil_contrasena/$ /mi_cuenta/changepassword.php
+
+#-------Blog -----------#
+RewriteRule ^blog/([^/\.]+)/?$ /perfil/myblog.php?username=$1 [L]
+RewriteRule ^blog/([^/\.]+)/([^/\.]+)/?$ /perfil/myblog.php?username=$1&url_slug=$2 [L]
+
+#------profile --------#
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^([^/\.]+)$ /$1/ [R=301]
+
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^([^/\.]+)/$ /perfil/index.php?username=$1 [L]
+
+#------controller --------#
+RewriteRule  ^login(/)?$ /index.php
+
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/\.]+)$ /$1/ [R=301]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/\.]+)/$ /index.php?$1 [L]
+
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+
+deny from 38.99.13.121/32
+deny from 38.99.13.122/31
+deny from 38.99.13.124/31
+deny from 38.99.13.126/32
+deny from 36.99.44.101/32
+deny from 36.99.44.102/31
+deny from 36.99.44.104/31
+deny from 36.99.44.106/32
+
+# spammer of hot chicks
+deny from 66.98.86.29
+# african spammer
+deny from 38.119.107.110
+deny from 82.80.248.0/21
+deny from 62.0.8.0/24
+deny from 84.16.230.45
+deny from 195.2.114.1
+deny from 209.47.94.52
+deny from 81.95.151.
+deny from 218.58.136.4
+deny from 203.69.39.
+deny from 208.53.147.73
+deny from 209.107.217.122
+# from china -- lots of registrations
+deny from 222.186.24.99
+# spammer
+deny from 128.187.97.6
+# spanish spammer mercypeter
+deny from 94.46.240.211
+deny from 213.125.22.196
+
+# african scammers last ips 196.207.219.55, 196.207.198.70
+deny from 196.
+# continued african scammer 41.208.134.45
+deny from 41.
+deny from 85.183.48.79
+# african scammer 213.154.91.76
+deny from 213.154.
+deny from 80.250.32.5
+deny from 64.55.144.9
+
+# russian scammer 77.40.25.99
+deny from 77.40.25.
+# russian scammer 91.144.161.138
+deny from 91.144.161.
+deny from 218.25.99.135
+# i ma good looking nice girl i ma good looking nice girl
+deny from 46.137.190.246
+deny from 60.217.232.53
+deny from 64.62.196.11
+deny from 64.62.196.137
+deny from 67.192.253.140
+deny from 68.68.107.13
+deny from 68.68.107.37
+deny from 66.198.41.11
+deny from 69.22.186.73
+deny from 69.31.103.162
+deny from 69.31.50.160
+deny from 69.42.218.2
+deny from 70.85.112.58
+deny from 80.68.91.152
+deny from 81.219.228.196
+deny from 83.222.92.253
+deny from 83.234.189.197
+deny from 89.253.113.228
+deny from 91.198.227.49
+deny from 91.143.58.1
+deny from 94.29.128.14
+deny from 109.235.49.143
+deny from 111.93.129.218
+deny from 128.187.97.6
+deny from 140.174.9.6
+deny from 144.140.53.252
+deny from 148.222.11.20
+deny from 173.254.192.37
+deny from 174.129.191.129
+deny from 189.52.5.4
+deny from 189.254.250.34
+deny from 194.116.75.136
+deny from 200.42.56.146
+deny from 200.65.129.2
+deny from 200.68.9.226
+deny from 200.136.38.246
+deny from 200.110.36.208
+deny from 203.199.50.19
+deny from 209.107.217.20
+deny from 207.219.7.136
+deny from 207.7.149.39
+deny from 204.2.134.11
+deny from 205.129.191.161
+deny from 209.107.217.8
+deny from 213.0.89.4
+deny from 216.104.41.43
+deny from 217.18.130.11
+# dominican spammer
+deny from 200.26.172.75
