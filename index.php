@@ -7,6 +7,7 @@ require_once 'includes/useraccess.class.php';
 
 session_start();
 
+//
 //let's see if ita a new reg or my page
 //if(isset($HTTP_SESSION_VARS['user_id'])) {
 //	header('Location: '.MEMBER_ACCOUNT_URL);
