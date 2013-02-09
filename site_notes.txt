@@ -1,0 +1,6 @@
+for version 2 of amigocupido
+
+we'll be moving all application images into the /img folder
+all css styles into the /css folder
+
+registration will forward to the new ci-app (codeigniter app) /ci-app/index.php
