@@ -4,3 +4,36 @@ we'll be moving all application images into the /img folder
 all css styles into the /css folder
 
 registration will forward to the new ci-app (codeigniter app) /ci-app/index.php
+
+original code ignited folder are
+-application/
+-system/
+-user_guide/
+-index.php
+-license.txt -deleted
+
+added folders
+-css/ 
+-js/
+-img/
+
+deprecated folders 
+01admin/ //this will be replaced by the applications admin interface
+ac/ -?
+auth/ replace by internal login system
+cometchat/ -?
+foros/ -?
+gente/ -replace by the app internal gente
+images/ -replace by img folder
+includes/ -?
+jchat/ -?
+library/ -?
+login/ -replace by the apps internal login 
+membergallery/ -?
+mensajes/ -?
+micuenta/ -replace by the app internal settings
+mi_cuenta/ -replace by app internal settings
+perfil/ -replace by app internal profile
+photos/ -?
+rating/ internal app rating 
+styles/ -replace by css

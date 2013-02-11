@@ -1,3 +1,4 @@
 .settings
 .project
 *~
+includes/templates/templates_c/*.php

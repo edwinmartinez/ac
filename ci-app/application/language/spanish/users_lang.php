@@ -1,9 +1,10 @@
 <?php
 $lang['users_username'] = 'Usuario';
 $lang['users_password'] = 'Contraseña';
+$lang['users_signin'] = 'Login';
 $lang['users_confirm_password']='Contraseña Otra Vez';
 $lang['users_email'] = 'Email';
-$lang['users_gender'] = 'Sexo';
+$lang['users_gender'] = 'Genero';
 $lang['users_country'] = 'Pais';
 $lang['users_male'] = 'Masculino';
 $lang['users_female'] = 'Femenino';

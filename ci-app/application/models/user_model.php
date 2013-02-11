@@ -31,11 +31,15 @@ class User_model extends CI_Model {
 	 
 	 public function add_user()
 	 {
-	  $data=array(
-	    'user_username'=>$this->input->post('username'),
-	    'user_email'=>$this->input->post('email_address'),
-	    'user_password'=>md5($this->input->post('password')),
-		 'user_gender' => $this->input->post('sex')
+	 	$birthdate = $this->input->post('birth_year').'-'.$this->input->post('birth_month').'-'.$this->input->post('birth_day');
+	 	$data=array(
+		    'user_username' => $this->input->post('username'),
+		    'user_email' => strtolower($this->input->post('email_address')),
+		    'user_password' => md5($this->input->post('password')),
+			'user_gender' => $this->input->post('gender'),
+			'reg_from_ip' => $_SERVER['REMOTE_ADDR'],
+			'user_birthdate' => $birthdate,
+			'user_country_id' => $this->input->post('country')
 	  );
 	  $this->db->insert('users',$data);
 	 }
@@ -57,27 +61,59 @@ class User_model extends CI_Model {
 	 
 	 public function getCountries()
 	 {
-
 		$query = $this->db->query("SELECT * from countries order by countries_name_es asc");
 		return $query->result_array();
-		/*
-			while ($row = mysql_fetch_assoc($result)) {
-			//echo $country .":". $row['countries_id']."<br>";
-				if($country == $row['countries_id']) {$selected = 'selected="selected"'; }
-				else { $selected = ""; }	
-				if(in_array($row['countries_iso_code_2'],$top_countries)){
-					$countries_menu_top .= sprintf("<option value=\"%s\">%s</option>\n",
-						$row['countries_id'],$row['countries_name_es']);
-				}
-				//check for banned countries
-				if(!in_array($row['countries_iso_code_2'],$banned_countries)){
-					$countries_menu_bot .= sprintf("<option %s value=\"%s\">%s</option> \n", $selected,$row['countries_id'], $row['countries_name_es']);  
-				}
-				
-				$menu_div = "<option value=\"\">---------------</option>\n";
-				$countries_menu = $countries_menu_top . $menu_div . $countries_menu_bot;
-			} 
-		 */
 	 }
+	 
+	 public function getValidDobYears()
+	 {
+		//get today
+		$now = new DateTime();
+		//between 17 and 100 years from now
+		//$years17ago= $abs(strtotime($now) - 1);
+		$years100ago = "2009-06-26";
+		
+		$diff = abs(strtotime($date2) - strtotime($date1));
+		
+		$years = floor($diff / (365*60*60*24));
+		$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+		$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+		
+		printf("%d years, %d months, %d days\n", $years, $months, $days);
+		 
+	 }
+	 
+	 function getAge($YYYYMMDD_In){
+                  // Parse Birthday Input Into Local Variables
+                  // Assumes Input In Form: YYYYMMDD
+                  $yIn=substr($YYYYMMDD_In, 0, 4);
+                  $mIn=substr($YYYYMMDD_In, 4, 2);
+                  $dIn=substr($YYYYMMDD_In, 6, 2);
+                
+                  // Calculate Differences Between Birthday And Now
+                  // By Subtracting Birthday From Current Date
+                  $ddiff = date("d") - $dIn;
+                  $mdiff = date("m") - $mIn;
+                  $ydiff = date("Y") - $yIn;
+                
+                  // Check If Birthday Month Has Been Reached
+                  if ($mdiff < 0) 
+                  {
+                        // Birthday Month Not Reached
+                        // Subtract 1 Year From Age
+                        $ydiff--;
+                  } elseif ($mdiff==0)
+                  {
+                        // Birthday Month Currently
+                        // Check If BirthdayDay Passed
+                        if ($ddiff < 0)
+                        {
+                          //Birthday Not Reached
+                          // Subtract 1 Year From Age
+                          $ydiff--;
+                        }
+                  }
+                  return $ydiff; 
+        }
 }
 ?>

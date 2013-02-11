@@ -60,13 +60,14 @@ class User extends CI_Controller{
 	 {
 	  $this->load->library('form_validation');
 	  // field name, error message, validation rules
-	  $this->form_validation->set_rules('sex', 'Sexo', 'trim|required|max_length[1]');
-	  $this->form_validation->set_rules('country', 'lang:users_country', 'trim|required|max_length[25]');
+	 
+	  $this->form_validation->set_rules('country', 'lang:users_country', 'trim|required|max_length[4]');
 	  $this->form_validation->set_rules('birth_day', 'lang:users_day', 'trim|required|max_length[2]');
 	  $this->form_validation->set_rules('birth_month', 'lang:users_month', 'trim|required|max_length[2]');
-	  $this->form_validation->set_rules('birth_year', 'lang:users_year', 'trim|required|max_length[2]');
+	  $this->form_validation->set_rules('birth_year', 'lang:users_year', 'trim|required|max_length[4]|callback_age_check');
+	   $this->form_validation->set_rules('gender', 'lang:users_gender', 'trim|required|max_length[1]');
 	  $this->form_validation->set_rules('username', 'lang:users_username', 'trim|required|min_length[4]|max_length[25]|xss_clean|alpha_dash|is_unique[users.user_username]');
-	  $this->form_validation->set_rules('email_address', 'lang:users_email', 'trim|required|valid_email');
+	  $this->form_validation->set_rules('email_address', 'lang:users_email', 'trim|required|valid_email|is_unique[users.user_email]');
 	  $this->form_validation->set_rules('password', 'lang:users_password', 'trim|required|min_length[6]|max_length[32]');
 	  $this->form_validation->set_rules('confirm_password', 'lang:users_confirm_password', 'trim|required|matches[password]');
 	  
@@ -81,6 +82,23 @@ class User extends CI_Controller{
 	   $this->thank();
 	  }
 	 }
+	 
+	 public function age_check()
+	 {
+	 	$min_age = 18;
+		
+		$age = $this->user_model->getAge($this->input->post('birth_year').$this->input->post('birth_month').$this->input->post('birth_day'));	
+		
+		if ($age < $min_age)
+		{
+			$this->form_validation->set_message('age_check', $this->lang->line('users_min_age_notice'));
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
 	 
 	 public function logout()
 	 {

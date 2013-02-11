@@ -24,8 +24,10 @@ RewriteRule ^fotos/$ /photos2/ [L]
 RewriteRule  fotos/tag/([^/\.]+)/?$ /photos2/index.php?tag=$1
 RewriteRule  fotos/([^/\.]+)/?$ /photos2/index.php?username=$1
 
+#---------- reg -------------------#
 RewriteRule ^fotos/(.+)/(.+)$ /photos2/index.php?action=detail&photo_id=$2
-RewriteRule ^registrate/$ /registrate.php [R=301]
+#RewriteRule ^registrate/$ /registrate.php [R=301]
+RewriteRule ^registrate/([^/\.]*)$ /ci-app/index.php/user/registration/$1 [L]
 
 RewriteRule ^citas_en_linea_contacto.php$ /contacto/ [R=301]
 RewriteRule ^contact/$ /contacto/ [R=301]
