@@ -5,10 +5,12 @@ class User_model extends CI_Model {
 	  parent::__construct();
 	 }
 	 
-	 function login($email,$password)
+	 function login($login,$password)
 	 {
-	  $this->db->where("user_email",$email);
+	  $this->db->where("user_email",$login);
+	  $this->db->or_where('user_username', $login); 
 	  $this->db->where("user_password",$password);
+	  
 	
 	  $query=$this->db->get("users");
 	  if($query->num_rows()>0)
@@ -17,9 +19,9 @@ class User_model extends CI_Model {
 	   {
 	    //add all data to session
 	    $newdata = array(
-	      'user_id'  => $rows->id,
-	      'user_name'  => $rows->username,
-	      'user_email'    => $rows->email,
+	      'user_id'  => $rows->user_id,
+	      'username'  => $rows->user_username,
+	      'user_email'    => $rows->user_email,
 	      'logged_in'  => TRUE,
 	    );
 	   }
@@ -39,7 +41,8 @@ class User_model extends CI_Model {
 			'user_gender' => $this->input->post('gender'),
 			'reg_from_ip' => $_SERVER['REMOTE_ADDR'],
 			'user_birthdate' => $birthdate,
-			'user_country_id' => $this->input->post('country')
+			'user_country_id' => $this->input->post('country'),
+			'user_created' => date('Y-m-d H:i:s', time())
 	  );
 	  $this->db->insert('users',$data);
 	 }

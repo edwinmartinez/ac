@@ -1,11 +1,16 @@
-<div class="container-fluid">
+
+	<?php if($message != ''){ ?>
+	<div class="row-fluid">
+		<div class="span12"><?php echo $message; ?></div>
+	</div>
+	<?php } ?>
 	<div class="row-fluid">
       
 	   
 	    <div class="span8">
 	    	 <div class="hero-unit">
 	      		<h4>Subheading</h4>
-	      		<div id="front-page-inner-image"></div>
+	      		<div id="front-page-inner-image" class="hidden-phone"></div>
 	      		<div id="contentTextHome"><?php echo $this->lang->line('common_content_home'); ?></div>
 	   		</div>
 	   </div>
@@ -103,8 +108,9 @@
 			  </div>
 			  <script type="text/javascript">
 			  	$(document).ready(function(){
-				  $("#register-button").click(function(){
-				     $("#register_form").submit();
+				  $("#register-button").click(function(event){
+				  	event.preventDefault();
+				    $("#register_form").submit();
 				  });
 				});
 			  </script>

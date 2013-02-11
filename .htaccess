@@ -24,10 +24,8 @@ RewriteRule ^fotos/$ /photos2/ [L]
 RewriteRule  fotos/tag/([^/\.]+)/?$ /photos2/index.php?tag=$1
 RewriteRule  fotos/([^/\.]+)/?$ /photos2/index.php?username=$1
 
-#---------- reg -------------------#
 RewriteRule ^fotos/(.+)/(.+)$ /photos2/index.php?action=detail&photo_id=$2
-#RewriteRule ^registrate/$ /registrate.php [R=301]
-RewriteRule ^registrate/([^/\.]*)$ /ci-app/index.php/user/registration/$1 [L]
+RewriteRule ^registrate/$ /registrate.php [R=301]
 
 RewriteRule ^citas_en_linea_contacto.php$ /contacto/ [R=301]
 RewriteRule ^contact/$ /contacto/ [R=301]
@@ -67,8 +65,6 @@ RewriteRule ^blog/([^/\.]+)/([^/\.]+)/?$ /perfil/myblog.php?username=$1&url_slug
 #RewriteRule ^([^/\.]+)/$ /perfil/index.php?username=$1 [L]
 
 #------controller --------#
-RewriteRule  ^login(/)?$ /index.php
-
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -130,6 +126,7 @@ deny from 64.55.144.9
 deny from 77.40.25.
 # russian scammer 91.144.161.138
 deny from 91.144.161.
+deny from 91.241.14.16
 deny from 218.25.99.135
 # i ma good looking nice girl i ma good looking nice girl
 deny from 46.137.190.246
@@ -153,6 +150,7 @@ deny from 89.253.113.228
 deny from 91.198.227.49
 deny from 91.143.58.1
 deny from 94.29.128.14
+deny from 109.163.230.189
 deny from 109.235.49.143
 deny from 111.93.129.218
 deny from 128.187.97.6
@@ -161,8 +159,12 @@ deny from 144.140.53.252
 deny from 148.222.11.20
 deny from 173.254.192.37
 deny from 174.129.191.129
+deny from 188.143.232.244
+deny from 189.16.82.34
 deny from 189.52.5.4
 deny from 189.254.250.34
+deny from 190.219.15.79
+deny from 193.0.212.74
 deny from 194.116.75.136
 deny from 200.42.56.146
 deny from 200.65.129.2
