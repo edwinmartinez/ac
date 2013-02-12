@@ -18,6 +18,11 @@ RewriteEngine on
 #RewriteRule  people/ /gente/  [R=301,L]
 RewriteRule ^terminos_y_condiciones/$ /terminos_y_condiciones.php
 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.php|images|img|css|js|robots\.txt)
+RewriteRule ^(.*)$ /index.php/$1 [L]
+
 #---------- photos -------------------#
 RewriteRule ^fotos$ /fotos/ [R=301]
 RewriteRule ^fotos/$ /photos2/ [L]

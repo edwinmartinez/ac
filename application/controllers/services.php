@@ -1,4 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+/**
+ * @file   services.php
+ * @Author Edwin Martinez (martinmedia@yahoo.com)
+ * @date   September, 2008
+ * @brief  Main services file designed to provide basic rest services.
+ *
+ * This file is intended to be used as a service handler.
+ */
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Services extends CI_Controller{
 	
 	public function __construct()
@@ -11,6 +20,10 @@ class Services extends CI_Controller{
 	 	echo 'services';
 	 }
 	 
+	/*
+	 * @return string
+	 *   loads a generic json view and provides it json encoded data of a specified user or all users.
+	 */
 	 public function users($user_id=-1)
 	 {
 		$this->load->model('user_model');
@@ -22,11 +35,14 @@ class Services extends CI_Controller{
 		}
 		else // get all users
 		{
-			$config['base_url'] = site_url('?offset=0&limit=20');
+			//$config['base_url'] = site_url('?offset=0&limit=20');
+			$data['json'] = '{"users":'.json_encode($this->user_model->get_all()).'}';
 			$this->load->view('json_view', $data);
 			return;
 		}
 	
 	 }
+	 
+
 	
 }

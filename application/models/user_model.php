@@ -117,6 +117,7 @@ class User_model extends CI_Model {
 		$this->db->from('users');	
 		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
 		$this->db->where('users.user_id',$user_id);
+		$this->db->where('users.status',1);
 		$query = $this->db->get();
 		
 		if($query->num_rows()==1)
@@ -130,18 +131,32 @@ class User_model extends CI_Model {
 	}
 	
 	/*
-	* Gets information about a particular user
+	* Gets an array of information about users
 	*/
-	function get_all($user_id)
+	function get_all($limit=20,$offset=0,$shortinfo=TRUE)
 	{
+		$limit = ($limit > 60) ? 60 : $limit ; //let's put a hard limit to the amount of users returned
+		$all_users = array();
+		if ($shortinfo)
+			$this->db->select('user_id, user_username, user_email, user_gender, user_birthdate, user_country_id, countries_name_es, countries_name, user_state_id, user_state_desc, zone_name');
 		$this->db->from('users');	
 		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
-		$this->db->where('users.status',1);
-		$query = $this->db->get();
+		$this->db->join('geo_regions', 'users.user_state_id = geo_regions.zone_id', 'left');
+		//get state
 		
-		if($query->num_rows()==1)
+		$this->db->where('users.status',1);
+		$this->db->order_by("user_created", "desc"); 
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		foreach($query->result() as $row)
 		{
-			return $query->row();
+			$row->state_name = ($row->user_state_id > 0) ? $row->zone_name : $row->user_state_desc ;
+			$all_users[]=$row;
+		}
+		
+		if($query->num_rows()>0)
+		{
+			return $all_users;
 		}
 		else
 		{
@@ -163,7 +178,7 @@ class User_model extends CI_Model {
 		user_city LIKE '%".$this->db->escape_like_str($search)."%' or 
 		CONCAT(`user_first_name`,' ',`user_last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and status=1");		
 		$this->db->order_by("user_id", "desc");
-		
+
 		return $this->db->get();	
 	}
 }

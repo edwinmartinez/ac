@@ -1,7 +1,7 @@
 
 	<div class="row-fluid">
 		<div class="span3">
-			<div>
+			<div class="row">
 			[picture]<br />
 			<?php echo $this->lang->line('common_messages'); ?><br />
 			<?php echo $this->lang->line('common_recent_visits'); ?><br />
@@ -13,12 +13,16 @@
 			<?php echo $this->lang->line('common_logout'); ?><br />
 			</div>
 			
-			<div>
-				<?php echo $this->lang->line('common_my_fav'); ?><br />
+			<div class="row">
+				<h3><?php echo $this->lang->line('common_new_members'); ?></h3>
 			</div>
 			
-			<div>
-				<?php echo $this->lang->line('common_search'); ?><br />
+			<div class="row">
+				<h3><?php echo $this->lang->line('common_my_fav'); ?></h3>
+			</div>
+			
+			<div class="row">
+				<?php echo $this->lang->line('common_search'); ?>
 			</div>
 		</div>
 		
