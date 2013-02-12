@@ -10,9 +10,10 @@ RewriteEngine on
 #RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteRule . /wp/index.php [L]
 
-RewriteRule  logout  logout.php 
-RewriteRule  logout/  logout.php 
-RewriteRule  profile/([^/\.]+)/?$ /perfil/index.php?username=$1
+
+#RewriteRule  logout  logout.php 
+#RewriteRule  logout/  logout.php 
+
 #RewriteRule ^gente$ /gente/ [R=301]
 #RewriteRule  people/ /gente/  [R=301,L]
 RewriteRule ^terminos_y_condiciones/$ /terminos_y_condiciones.php
@@ -64,16 +65,18 @@ RewriteRule ^blog/([^/\.]+)/([^/\.]+)/?$ /perfil/myblog.php?username=$1&url_slug
 #RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteRule ^([^/\.]+)/$ /perfil/index.php?username=$1 [L]
 
+#------commented for codeigniter -----#
+#RewriteRule  p/([^/\.]+)/?$ /index.php/profile/userprofile/$1 [R]
 #------controller --------#
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/\.]+)$ /$1/ [R=301]
+#RewriteBase /
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^([^/\.]+)$ /$1/ [R=301]
 
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/\.]+)/$ /index.php?$1 [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^([^/\.]+)/$ /index.php?$1 [L]
 
 
 <Files 403.shtml>

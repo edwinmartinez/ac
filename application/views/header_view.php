@@ -5,7 +5,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title><?php echo (isset($title)) ? $title : "AmigoCupido" ?> </title>
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap.css" />
- <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/home.css" />
+ <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/ac-v2.css" />
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap-responsive.css" />
  <script src="<?php echo base_url();?>js/jquery.js"></script>
  <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
@@ -26,7 +26,7 @@
             <ul class="nav">
               <li class="active"><a href="#"><?php echo $this->lang->line('common_home'); ?></a></li>
               <li><a href="#about"><?php echo $this->lang->line('common_about'); ?></a></li>
-              <li><a href="#contact"><?php echo $this->lang->line('common_contact'); ?></a></li>
+              
               <?php if(($this->session->userdata('user_name')!="")) { ?>
               	<li><?php echo anchor('user/logout', 'Logout'); ?></li>
               	<?php } ?>

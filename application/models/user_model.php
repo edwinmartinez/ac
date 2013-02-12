@@ -68,23 +68,6 @@ class User_model extends CI_Model {
 		return $query->result_array();
 	 }
 	 
-	 public function getValidDobYears()
-	 {
-		//get today
-		$now = new DateTime();
-		//between 17 and 100 years from now
-		//$years17ago= $abs(strtotime($now) - 1);
-		$years100ago = "2009-06-26";
-		
-		$diff = abs(strtotime($date2) - strtotime($date1));
-		
-		$years = floor($diff / (365*60*60*24));
-		$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-		$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-		
-		printf("%d years, %d months, %d days\n", $years, $months, $days);
-		 
-	 }
 	 
 	 function getAge($YYYYMMDD_In){
                   // Parse Birthday Input Into Local Variables
@@ -118,5 +101,70 @@ class User_model extends CI_Model {
                   }
                   return $ydiff; 
         }
+
+	function count_all()
+	{
+		$this->db->from('users');
+		$this->db->where('status',1);
+		return $this->db->count_all_results();
+	}
+	
+	/*
+	* Gets information about a particular user
+	*/
+	function get_info($user_id)
+	{
+		$this->db->from('users');	
+		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
+		$this->db->where('users.user_id',$user_id);
+		$query = $this->db->get();
+		
+		if($query->num_rows()==1)
+		{
+			return $query->row();
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+	
+	/*
+	* Gets information about a particular user
+	*/
+	function get_all($user_id)
+	{
+		$this->db->from('users');	
+		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
+		$this->db->where('users.status',1);
+		$query = $this->db->get();
+		
+		if($query->num_rows()==1)
+		{
+			return $query->row();
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+	
+	/*
+	Preform a search on customers
+	*/
+	function search($search)
+	{
+		$this->db->from('users');
+		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
+		//$this->db->join('people','customers.person_id=people.person_id');		
+		$this->db->where("(user_first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		user_first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		user_email LIKE '%".$this->db->escape_like_str($search)."%' or 
+		user_city LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`user_first_name`,' ',`user_last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and status=1");		
+		$this->db->order_by("user_id", "desc");
+		
+		return $this->db->get();	
+	}
 }
 ?>

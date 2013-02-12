@@ -1,4 +1,10 @@
 .settings
 .project
+.htaccess-*
+.php.ini.*
+test*.php
+.buildpath
+error_log
+fastphp.ini
 *~
 includes/templates/templates_c/*.php

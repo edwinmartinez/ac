@@ -7,9 +7,22 @@ class Profile extends CI_Controller{
 	  $this->load->model('profile_model');
 	 }
 	 
+	 public function index($profileid='')
+	 {
+	 	$this->userprofile($profileid);
+	 }
+	 
 	 public function myprofile()
 	 {
 		echo 'show my profile'; 
 	 }
+	 
+	 public function userprofile($profileid='')
+	 {
+		echo "userprofile of ";	
+		echo $profileid; 
+	 }
+	 
+	 
 }
 ?>
