@@ -954,12 +954,16 @@ function get_profile_photo($user_id,$bigpic=0){
 		$squarefilename = $basefilename."_sq.".$extention;
 		if($bigpic == 1){
 			$profile_pic = MEMBER_IMG_DIR_URL."/".$uid."/".$largefilename;
-		}else{
+		}
+		else
+		{
 			//$profile_pic = MEMBER_IMG_DIR_URL . "/tb_".$profile_pic_row['photo_filename'];
 			$profile_pic = MEMBER_IMG_DIR_URL ."/".$uid."/".$squarefilename;
 		}
 		
-	}else{
+	}
+	else
+	{
 		if($bigpic == 1){
 			return false;
 		}else{

@@ -367,6 +367,17 @@ $config['proxy_ips'] = '';
 */
 $config['site_name'] = 'AmigoCupido';
 
+/*
+|--------------------------------------------------------------------------
+| Members Images Dir
+|--------------------------------------------------------------------------
+|
+| Typically this will be the name of the dir withing the application
+| lime 
+|
+*/
+$config['member_images_dir'] = 'membergallery'; 
+$config['application_images_dir'] = 'images';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

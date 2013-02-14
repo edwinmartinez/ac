@@ -1,17 +1,17 @@
 
+
+<div class="container-fluid">
 	<div class="row-fluid">
-		<div class="span3">
-			<div class="row">
-			[picture]<br />
-			<?php echo $this->lang->line('common_messages'); ?><br />
-			<?php echo $this->lang->line('common_recent_visits'); ?><br />
-			<?php echo $this->lang->line('common_my_profile'); ?><br />
-			<?php echo $this->lang->line('common_edit_my_profile'); ?><br />
-			<?php echo $this->lang->line('common_my_photos'); ?><br />
-			<?php echo $this->lang->line('common_my_account'); ?><br />
-			<?php echo $this->lang->line('common_my_password'); ?><br />
-			<?php echo $this->lang->line('common_logout'); ?><br />
-			</div>
+		
+		<div class="span2" style="border: 1px solid #ccc;">
+			something here
+			<ul>
+				<div>[picture]</div>
+				
+				<li><?php echo $this->lang->line('common_recent_visits'); ?></li>
+				<li><?php echo $this->lang->line('common_my_photos'); ?></li>
+			</ul>
+			
 			
 			<div class="row">
 				<h3><?php echo $this->lang->line('common_new_members'); ?></h3>
@@ -26,10 +26,11 @@
 			</div>
 		</div>
 		
-  		<div class="span9">
+  		<div class="span10" style="background-color: #CCCCCC;">
   			<h2>Hola, <?php echo $this->session->userdata('username'); ?>!</h2>
   			[the wall]
   		</div>
 	  
 
 	</div><!--<div class="row-fluid">-->
+</div>

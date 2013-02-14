@@ -15,7 +15,7 @@ class User extends CI_Controller{
 	  if(($this->session->userdata('username')!=""))
 	  {
 	  $this->myhome();
-	   //$this->logout();
+	  // redirect('/users/myhome', 'location');
 	  }
 	  else{
 	  	$this->registration_form($message);
@@ -25,6 +25,7 @@ class User extends CI_Controller{
 	 public function myhome()
 	 {
 	  $data['title']= $this->lang->line('common_welcome');
+	  $data['loadjs'] = array('underscore.min.js','backbone.min.js','myhome.js');
 	  $this->load->view('header_view',$data);
 	  $this->load->view('myhome_view.php', $data);
 	  $this->load->view('footer_view',$data);
@@ -32,15 +33,20 @@ class User extends CI_Controller{
 	 
 	 public function login()
 	 {
-	  $email=$this->input->post('login');
-	  $password=md5($this->input->post('pass'));
-	
-	  $result=$this->user_model->login($email,$password);
-	  if($result) $this->myhome();
-	  
-	  //if($result)  redirect('/index_v1.php', 'refresh'); //TODO: fix this line to use the internal login
-	  //if($result) redirect($this->config->item.'/micuenta?p='.$_REQUEST['p']);
-	  else        $this->index();
+	 	$login=$this->input->post('login');
+		$password=md5($this->input->post('pass'));
+	 	if(!empty($login) && !empty($password) ){
+
+		  $result=$this->user_model->login($login,$password);
+		  if($result) $this->myhome();
+		  
+		  //if($result)  redirect('/index_v1.php', 'refresh'); //TODO: fix this line to use the internal login
+		  //if($result) redirect($this->config->item.'/micuenta?p='.$_REQUEST['p']);
+		  else        $this->index();
+		}
+		else{
+			$this->index('Empty Login Vars');
+		}
 	 }
 	 
 	 public function userinfo(){
@@ -52,7 +58,7 @@ class User extends CI_Controller{
 		echo 'user_id:'.$this->session->userdata('user_id')."<br>\n";
 		echo 'user_email:'.$this->session->userdata('user_email')."<br>\n";
 		echo 'logged_id:'.$this->session->userdata('logged_in')."<br>\n";
-		$this->logout();
+		
 	 }
 	 
 	 /*
@@ -134,7 +140,6 @@ class User extends CI_Controller{
 			return TRUE;
 		}
 	}
-
 
 	 
 }

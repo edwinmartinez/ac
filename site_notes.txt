@@ -37,3 +37,96 @@ perfil/ -replace by app internal profile
 photos/ -?
 rating/ internal app rating 
 styles/ -replace by css
+
+
+2013-12-02 4:57am
+downloaded the rest server from
+/* part of the codeigniter restserver from
+* https://github.com/philsturgeon/codeigniter-restserver
+*/
+
+and added the rest controller, rest config, format and REST_controller.php (which goes in the libraries)
+
+Drag and drop the application/libraries/Format.php and application/libraries/REST_Controller.php files 
+into your application's directories. Either autoload the REST_Controller class or require_once it at the top of 
+your controllers to load it into the scope. Additionally, copy the rest.php file from application/config in your 
+application's configuration directory.
+
+SELECT `user_id`, `user_username`, `user_email`, `user_gender`, `photo_filename`, `user_birthdate`, `user_country_id`, 
+`countries_name_es`, `countries_name`, `user_state_id`, `user_state_desc`, `zone_name` 
+FROM (`users`) 
+JOIN `countries` ON `users`.`user_country_id` = `countries`.`countries_id` 
+LEFT JOIN `geo_regions` ON `users`.`user_state_id` = `geo_regions`.`zone_id` 
+LEFT JOIN `users_gallery` ON `users`.`user_id` = `users_gallery`.`photo_uid` 
+WHERE `users_gallery`.`use_in_profile` = 1 
+AND `users`.`status` = 1 
+ORDER BY `user_created` desc LIMIT 20
+
+SELECT `user_id`, `user_username`, `user_email`, `user_gender`, 
+(SELECT photo_filename FROM users_gallery WHERE users_gallery.photo_uid = users.user_id AND users_gallery.use_in_profile = 1) AS photo_filename, 
+`user_birthdate`, `user_country_id`, 
+`countries_name_es`, `countries_name`, `user_state_id`, `user_state_desc`, `zone_name` 
+FROM (`users`) 
+JOIN `countries` ON `users`.`user_country_id` = `countries`.`countries_id` 
+LEFT JOIN `geo_regions` ON `users`.`user_state_id` = `geo_regions`.`zone_id` 
+AND `users`.`status` = 1 
+ORDER BY `user_created` desc LIMIT 20
+
+this function may work
+function getChineseZodiac($year){
+
+    switch ($year % 12) :
+        case  0: return 'Monkey';  // Years 0, 12, 1200, 2004...
+        case  1: return 'Rooster';
+        case  2: return 'Dog';
+        case  3: return 'Boar';
+        case  4: return 'Rat';
+        case  5: return 'Ox';
+        case  6: return 'Tiger';
+        case  7: return 'Rabit';
+        case  8: return 'Dragon';
+        case  9: return 'Snake';
+        case 10: return 'Horse';
+        case 11: return 'Lamb';
+    endswitch;
+}
+
+echo getChineseZodiac(2016);
+
+Changes in db for v2
+Update geo_regions table
+
+insert into geo_regions (zone_country_id,zone_name)
+values
+(47,'Amazonas'),
+(47,'Antioquia'),
+(47,'Arauca'),
+(47,'Atlantico'),
+(47,'Bolivar'),
+(47,'Boyaca'),
+(47,'Caldas'),
+(47,'Caqueta'),
+(47,'Casanare'),
+(47,'Cauca'),
+(47,'Cesar'),
+(47,'Chocó'),
+(47,'Cundinamarca'),
+(47,'Cordoba'),
+(47,'Guainia'),
+(47,'Guaviare'),
+(47,'Huila'),
+(47,'La Guajira'),
+(47,'Magdalena'),
+(47,'Meta'),
+(47,'Nariño'),
+(47,'Norte de Santander'),
+(47,'Putumayo'),
+(47,'Quindio'),
+(47,'Risaralda'),
+(47,'San Andres y Providencia'),
+(47,'Santander'),
+(47,'Sucre'),
+(47,'Tolima'),
+(47,'Valle del Cauca'),
+(47,'Vaupes'),
+(47,'Vichada');

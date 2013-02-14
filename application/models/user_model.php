@@ -133,17 +133,40 @@ class User_model extends CI_Model {
 	/*
 	* Gets an array of information about users
 	*/
-	function get_all($limit=20,$offset=0,$shortinfo=TRUE)
+	function get_all($limit=20,$offset=0,$onlywithphotos=0,$shortinfo=TRUE)
 	{
 		$limit = ($limit > 60) ? 60 : $limit ; //let's put a hard limit to the amount of users returned
 		$all_users = array();
+		$select_rows = array(
+			'user_id',
+			'user_username',
+			'user_email',
+			'user_gender',
+			'user_birthdate',
+			'user_country_id',
+			'countries_name_es',
+			'countries_name',
+			'user_state_id',
+			'user_state_desc',
+			'zone_name'
+		 );
+		 
+		 if($onlywithphotos) {
+		 	$select_rows[] = 'photo_filename';
+		 } else {
+			 $select_rows[] = '(SELECT photo_filename FROM users_gallery WHERE users_gallery.photo_uid = users.user_id AND users_gallery.use_in_profile = 1) AS photo_filename';
+		 }
+		 $select = join(', ', $select_rows);
+		 
 		if ($shortinfo)
-			$this->db->select('user_id, user_username, user_email, user_gender, user_birthdate, user_country_id, countries_name_es, countries_name, user_state_id, user_state_desc, zone_name');
+			$this->db->select($select);
 		$this->db->from('users');	
 		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
 		$this->db->join('geo_regions', 'users.user_state_id = geo_regions.zone_id', 'left');
-		//get state
-		
+		if($onlywithphotos) {
+			$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid', 'left');
+			$this->db->where('users_gallery.use_in_profile',1);
+		}
 		$this->db->where('users.status',1);
 		$this->db->order_by("user_created", "desc"); 
 		$this->db->limit($limit, $offset);
@@ -151,6 +174,12 @@ class User_model extends CI_Model {
 		foreach($query->result() as $row)
 		{
 			$row->state_name = ($row->user_state_id > 0) ? $row->zone_name : $row->user_state_desc ;
+			$row->profile_img = ($row->photo_filename != null)? $this->getProfilePhotoUrl($row->photo_filename) : '';
+			$row->profile_img = $this->getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
+			unset($row->user_state_id);
+			unset($row->user_state_desc);
+			unset($row->zone_name);
+			unset($row->photo_filename);
 			$all_users[]=$row;
 		}
 		
@@ -180,6 +209,62 @@ class User_model extends CI_Model {
 		$this->db->order_by("user_id", "desc");
 
 		return $this->db->get();	
+	}
+	
+	/*
+	 * Get Profile photo from a user ids
+	 */
+	function get_profile_photo($user_id,$bigpic=0){
+			
+		//lets get the picture
+		$this->db->select('user_id, user_username, user_gender, photo_filename');
+		$this->db->from('users');
+		$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid', 'left');
+		$this->db->where('users_gallery.use_in_profile',1);
+		$this->db->where('users.status',1);
+		$this->db->limit(1);
+		
+		
+		if($query->num_rows()>0) 
+		{
+			foreach ($query->result() as $row)
+			{
+			    $profile_pic =  getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
+			}
+			
+		} 		
+		return $profile_pic;
+	}
+
+	// format can be suare or large
+	public function getProfilePhotoUrl($filename_in_db='',$format='square', $gender='')
+	{
+		if(!empty($filename_in_db)) {
+		list($uid,$imgname,$extention) = explode(".", $filename_in_db);
+		$basefilename = $uid.".".$imgname;
+		
+		switch ($format) {
+	    case "large":
+	        $profile_pic = $basefilename."_l.".$extention;
+	        break;
+	    case "square":
+	        $profile_pic = $basefilename."_sq.".$extention;
+	        break;
+		}
+		
+			$member_img_dir_url = base_url().$this->config->item('member_images_dir');
+			return $member_img_dir_url."/".$uid."/".$profile_pic;
+		}
+		
+		else {
+			if (!empty($gender)) { // if we have a gender specified (most likely)
+				return ($gender == 1)? base_url().$this->config->item('application_images_dir')."/nofoto_m.jpg" : base_url().$this->config->item('application_images_dir')."/nofoto_f.jpg"; 
+			}
+			else {
+				return base_url()."images/nofoto_m.jpg";
+			}
+		}
+		 
 	}
 }
 ?>
