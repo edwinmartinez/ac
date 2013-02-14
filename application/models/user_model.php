@@ -229,7 +229,7 @@ class User_model extends CI_Model {
 		{
 			foreach ($query->result() as $row)
 			{
-			    $profile_pic =  getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
+			    $profile_pic =  $this->getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
 			}
 			
 		} 		

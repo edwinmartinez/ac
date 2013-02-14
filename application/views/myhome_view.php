@@ -29,8 +29,23 @@
   		<div class="span10" style="background-color: #CCCCCC;">
   			<h2>Hola, <?php echo $this->session->userdata('username'); ?>!</h2>
   			[the wall]
+  			<div id="main-content">Loading...</div>
   		</div>
 	  
 
 	</div><!--<div class="row-fluid">-->
 </div>
+
+
+ <script type="text/x-mustache-template" id="index-template">
+      <h2>There are {{ count }} items</h2>
+</script>
+<?php 
+ if(isset($loadjs)){
+ 	foreach ($loadjs as $jsscript) {
+		 echo '<script src="' . base_url() . 'js/'.$jsscript.'"></script>'."\n";
+	 }
+ } 
+ ?>
+ <script type="text/javascript">$(function() { MyHome.boot($('#main-content')); });</script>
+ 

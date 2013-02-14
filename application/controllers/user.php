@@ -25,7 +25,13 @@ class User extends CI_Controller{
 	 public function myhome()
 	 {
 	  $data['title']= $this->lang->line('common_welcome');
-	  $data['loadjs'] = array('underscore.min.js','backbone.min.js','myhome.js');
+	  $data['loadjs'] = array(
+	  'underscore.min.js',
+	  'backbone.min.js',
+	  'mustache.js',
+	  'backbone-localstorage.js',
+	  'myhome.js'
+	  );
 	  $this->load->view('header_view',$data);
 	  $this->load->view('myhome_view.php', $data);
 	  $this->load->view('footer_view',$data);

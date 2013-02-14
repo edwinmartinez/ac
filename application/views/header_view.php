@@ -9,15 +9,7 @@
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap-responsive.css" />
  <script src="<?php echo base_url();?>js/jquery.js"></script>
  <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
- <?php 
- if(isset($loadjs)){
- 	foreach ($loadjs as $jsscript) {
-		 echo '<script src="' . base_url() . 'js/'.$jsscript.'"></script>'."\n";
-	 }
- } 
- ?>
- <?php //echo (isset($loadbackbone)) ? '<script src="' . base_url() . 'js/underscore.min.js"></script>' : ''; ?>
- <?php //echo (isset($loadbackbone)) ? '<script src="' . base_url() . 'js/backbone.min.js"></script>' : ''; ?>
+ 
 </head>
 
 <body>	
