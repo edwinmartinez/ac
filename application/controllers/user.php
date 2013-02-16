@@ -146,7 +146,21 @@ class User extends CI_Controller{
 			return TRUE;
 		}
 	}
-
+	
+	public function editaccount () 
+	{ 
+		if(($this->session->userdata('username')!= ''))
+		{
+			$data['user_info'] = $this->user_model->get_info($this->session->userdata('user_id'));
+			var_dump($data['user_info'] );
+			$data['title']= $this->lang->line('common_my_account_settings');
+			
+			$this->load->view('header_view',$data);
+			$this->load->view('editaccount_view.php', $data);
+			$this->load->view('footer_view',$data);
+		}
+	}
+	
 	 
 }
 ?>

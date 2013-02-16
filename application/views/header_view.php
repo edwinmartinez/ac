@@ -29,8 +29,8 @@
         <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->lang->line('common_messages'); ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
+					<li class="nav-header">Mensajes <a href="#">Crear Nuevo Mensaje</a></li>
+                  <li><a href="#">Message 1</a></li>
                   <li><a href="#">Something else here</a></li>
                   <li class="divider"></li>
                   <li class="nav-header">Nav header</li>
@@ -66,9 +66,9 @@
         <li class="dropdown">
                 <a href="#account" id="accountLink" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->lang->line('common_my_account'); ?>  <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#"><?php echo $this->lang->line('common_edit_my_profile'); ?></a></li>
-                  <li><a href="#"><?php echo $this->lang->line('common_my_account_settings'); ?></a></li>
-                  <li><a href="#"><?php echo $this->lang->line('common_privacy_settings'); ?></a></li>
+                  <li><?php echo anchor('user/editprofile', $this->lang->line('common_edit_my_profile')); ?></li>
+                  <li><?php echo anchor('user/editaccount', $this->lang->line('common_my_account_settings')); ?></li>
+                  <li><?php echo anchor('user/editprivacy', $this->lang->line('common_privacy_settings')); ?></li>
                   <li class="divider"></li>
                   <li class="nav-header">Nav header</li>
                   <li><a href="#">Separated link</a></li>
