@@ -378,6 +378,20 @@ $config['site_name'] = 'AmigoCupido';
 */
 $config['member_images_dir'] = 'membergallery'; 
 $config['application_images_dir'] = 'images';
+$config['user_preferences_table'] = 'users_gen_pref';
+$config['top_countries'] = array("US","CA","ES","MX","GT","SV","HN","NI","CR","PA","DO","CU","CL","PR","PE","EC","VE","BO","UY","PY","AR","BR");
+$config['banned_countries'] = array(
+	"AF","AO","BD","SA","BN","BT","KH","TD","LB","RO","IO","MV","MR","KP","IQ",
+	"CI","HR","EG","AE","ET","GA","GM","GH","GS","GP","IR","CC","CK","FJ","JO","KE",
+	"KZ","KI","LS","LV","LY","LT","MO","MG","ML","MU","YT","NA","NR","NP","NE","NG",
+	"NU","OM","NC","PW","PG","PF","QA","CF","RW","RU","EH","WS","AS","SN","SL","SY",
+	"SO","LK","SZ","ZA","SD","SR","TZ","TJ","TP","TG","TK","TO","TN","TV","TM","UA",
+	"UG","UZ","VU","ZR","ZM","ZW","CG","CM","KH","BI","BD","BH","BY","MZ","BW","BJ",
+	"AZ","YE","DJ","MM","MW","KG","BW","BF","CY","KM","ER","GU","CX","SB","SC","NF",
+	"MH","MP","KW","KY","GN","GQ","GW","SJ","TC","VI","VG","WF","KN","VC","VN","PM",
+	"RE","PK","PN","ST","FO","BV","HM","AM","CV","BA"
+	);
+	
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

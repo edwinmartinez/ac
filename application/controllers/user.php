@@ -10,7 +10,7 @@ class User extends CI_Controller{
  	/*
 	Determines if user is loged in 
 	*/
-	 public function index($message='')
+	 public function index($topmessage='')
 	 {
 	  if(($this->session->userdata('username')!=""))
 	  {
@@ -18,23 +18,25 @@ class User extends CI_Controller{
 	  // redirect('/users/myhome', 'location');
 	  }
 	  else{
-	  	$this->registration_form($message);
+	  	$this->registration_form($topmessage);
 	  }
 	 }
 	 
 	 public function myhome()
 	 {
-	  $data['title']= $this->lang->line('common_welcome');
-	  $data['loadjs'] = array(
-	  'underscore.min.js',
-	  'backbone.min.js',
-	  'mustache.js',
-	  'backbone-localstorage.js',
-	  'myhome.js'
-	  );
-	  $this->load->view('header_view',$data);
-	  $this->load->view('myhome_view.php', $data);
-	  $this->load->view('footer_view',$data);
+		$this->load->helper('text');
+		
+		$data['title']= $this->lang->line('common_welcome');
+		$data['loadjs'] = array(
+		'underscore.min.js',
+		'backbone.js',
+		'mustache.js',
+		//'backbone-localstorage.js',
+		'myhome.js'
+		);
+		$this->load->view('header_view',$data);
+		$this->load->view('myhome_view.php', $data);
+		$this->load->view('footer_view',$data);
 	 }
 	 
 	 public function login()
@@ -85,11 +87,11 @@ class User extends CI_Controller{
 
 	 }
 	 
-	 public function registration_form($message='')
+	 public function registration_form($topmessage='')
 	 {
 	   $data['title'] = $this->lang->line('common_home_page_title');
 	   $data['countries'] = $this->user_model->getCountries();
-	   $data['message'] = $message;
+	   $data['topmessage'] = $topmessage;
 	   $this->load->view('header_view',$data);
 	   $this->load->view("registration_view.php", $data);
 	   $this->load->view('footer_view',$data);

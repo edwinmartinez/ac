@@ -1,3 +1,4 @@
+
 (function() {
   var MyHome = {};
   window.MyHome = MyHome;
@@ -6,19 +7,87 @@
     return Mustache.compile($('#'+name+'-template').html());
   };
 
+  // Model ------------------------------
+  MyHome.Message = Backbone.Model.extend({ });
+  
+  // Collection -------------------------------
+  MyHome.Messages = Backbone.Collection.extend({
+  	initialize: function(){
+  		console.log('init messages collection');
+  	},
+  	model:MyHome.Message,
+  	url:'/index.php/api/v1/messages.json'
+  	//,localStorage: new Store("messages")
+  });
+
+  // View ----------------------------------------
+  
+  MyHome.IndexMessages = Backbone.View.extend({
+    template: template('messagesHeader'),
+    initialize: function() {
+      this.messages = new MyHome.Messages();
+      this.messages.on('reset', this.render, this);
+      this.messages.fetch();
+      //console.log(this);
+      console.log('init indexMessages');
+    },
+    render: function() {
+      this.$el.html(this.template(this));
+      this.messages.each(this.addMessage, this);
+      return this;
+    },
+    addMessage: function(message) {
+      var view = new MyHome.IndexMessage({model: message});
+      //this.$('.recipes').append(view.render().el);
+      $('#messagesHeader-title').append(view.render().el);
+    },
+    count: function() {
+      return this.messages.length;
+    }
+  });
+  
+  MyHome.IndexMessage = Backbone.View.extend({
+    template: template('messageItem'),
+    render: function() {
+      this.$el.html(this.template(this));
+      return this;
+    },
+    from_user:        function() { return this.model.get('from_user'); },
+    message_preview: function() { return this.model.get('message_preview'); }
+  });
+
+  // Router --------------------------------
+  MyHome.Router = Backbone.Router.extend({
+    initialize: function(options) {
+      this.el = options.el
+    },
+    routes: {
+      "": "index"
+    },
+    index: function() {
+      var view = new MyHome.IndexMessages();
+      this.el.empty();
+      this.el.append(view.render().el);
+    }
+  });
+
+//recipes
+  /*  
   MyHome.Recipe = Backbone.Model.extend({
   });
+
 
   MyHome.Recipes = Backbone.Collection.extend({
     localStorage: new Store("recipes")
   });
+  
 
   MyHome.Index = Backbone.View.extend({
     template: template('index'),
     initialize: function() {
       this.recipes = new MyHome.Recipes();
       this.recipes.on('all', this.render, this);
-      this.recipes.fetch({ success: this.fetchSuccess, error: this.fetchError });
+      this.recipes.fetch();
       //this.fetch({ success: this.fetchSuccess, error: this.fetchError });
       console.log('init index');
     },
@@ -31,7 +100,7 @@
     }
   });
 
-  /*
+
    * To do:
    *
    * * MyHome.Index.Form
@@ -42,7 +111,7 @@
    * * MyHome.Recipe
    *   A view that renders an individual recipe
    *   Also, a delete button to remove it
-   */
+
 
   MyHome.Router = Backbone.Router.extend({
     initialize: function(options) {
@@ -57,7 +126,7 @@
       this.el.append(view.render().el);
     }
   });
-
+   */
   MyHome.boot = function(container) {
     container = $(container);
     var router = new MyHome.Router({el: container})

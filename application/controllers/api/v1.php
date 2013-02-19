@@ -89,7 +89,46 @@ class V1 extends REST_Controller
         }
     }
 
+    function messages_get()  // read
+    {
+    	$this->load->helper('text');
+       // $users = $this->user_model->get_all($this->get('limit') );
+        //$users = $this->user_model->get_all();
 
+        $messages = array(
+			array('id' => 1, 'from_user' => 'SomeGuy', 'email' => 'example1@example.com', 'message_preview' => character_limiter('Hi I was wondering if you are or some message in here that we are going to read in preview',37,'...')),
+			array('id' => 2, 'from_user' => 'Tulu User', 'email' => 'example2@example.com', 'message_preview' => 'Short message would go here'),
+			array('id' => 3, 'from_user' => 'Scotty', 'email' => 'example3@example.com', 'message_preview' => 'Another message that can be viewed in here'),
+			array('id' => 4, 'from_user' => 'Scotty', 'email' => 'example3@example.com', 'message_preview' => 'so.. i forgot to tell you that')
+		);
+        
+        if($messages)
+        {
+            $this->response($messages, 200); // 200 being the HTTP response code
+        }
+
+        else
+        {
+            $this->response(array('error' => 'Couldn\'t find any messages!'), 404);
+        }
+    }
+
+    function messages_post() //create
+    {
+        //$this->message_model->updateUser( $this->get('id') );
+        $message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
+        
+        $this->response($message, 200); // 200 being the HTTP response code
+    }
+	
+	
+	public function messages_put() //update
+	{
+		var_dump($this->put('message_id'));
+	}
+	
+	
+	
 	public function send_post()
 	{
 		var_dump($this->request->body);

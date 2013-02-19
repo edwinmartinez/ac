@@ -36,5 +36,13 @@ class Message_model extends CI_Model {
 		WHERE privmsgs_to_userid = ". $_SESSION['user_id']."
 		AND privmsgs_type IN (" . PRIVMSGS_NEW_MAIL . ", " . PRIVMSGS_UNREAD_MAIL . ")";
 	}
+	
+	public function update_message_status($message_id,$status_type)
+	{
+		$this->db->set('privmsgs_type', $status_type);
+		$this->db->where("privmsgs_id",$message_id);
+		$query=$this->db->update("phpbb_privmsgs");
+		return TRUE;
+	}
 }
 ?>

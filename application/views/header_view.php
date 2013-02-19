@@ -11,6 +11,13 @@
  <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
  
 </head>
+ <script type="text/x-mustache-template" id="messagesHeader-template">
+ 	Msgs {{ count }}  <b class="caret"></b>
+ </script>
+ 
+ <script type="text/x-mustache-template" id="messageItem-template">
+	<li><a href="#">{{ from_user }}: {{ message_preview }}</a></li> 
+ </script>
 
 <body>	
 	<div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,21 +28,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <!--<div class="brandMobile hidden-desktop"></div>-->
+          <div class="brandDesktop">
           <a class="brand" href="<?php echo base_url();?>" alt="AmigoCupido"><img src="<?php echo base_url();?>img/logo.png" width="149" height="43"></a>
           <div id="site-slogan" class="visible-desktop"><?php echo $this->lang->line('common_slogan'); ?></div>
-
+		</div>
  <?php if(($this->session->userdata('username')!="")): ?>          
         <div class="nav">
         <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->lang->line('common_messages'); ?> <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-					<li class="nav-header">Mensajes <a href="#">Crear Nuevo Mensaje</a></li>
-                  <li><a href="#">Message 1</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="messagesHeader-container">m()</span></a>
+                <ul class="dropdown-menu dropdown-messages">
+					<li class="nav-header" id="messagesHeader-title">Mensajes <a href="#">Crear Nuevo Mensaje</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li class="nav-header">Nav header</li>
+					<li><a href="#">Separated link</a></li>
+					<li><a href="#">One more separated link</a></li>
                 </ul>
               </li>
     	</div>

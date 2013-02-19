@@ -89,5 +89,9 @@
 	 }
  } 
  ?>
- <script type="text/javascript">$(function() { MyHome.boot($('#main-content')); });</script>
+ <script type="text/javascript">
+   $(function() { 
+ 	  MyHome.boot($('#messagesHeader-container')); 
+ 	});
+ </script>
  

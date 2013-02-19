@@ -1,7 +1,7 @@
 
-	<?php if($message != ''){ ?>
+	<?php if($topmessage != ''){ ?>
 	<div class="row-fluid">
-		<div class="span12"><?php echo $message; ?></div>
+		<div class="span12"><?php echo $topmessage; ?></div>
 	</div>
 	<?php } ?>
 	<div class="row-fluid">

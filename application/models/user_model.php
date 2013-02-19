@@ -45,6 +45,9 @@ class User_model extends CI_Model {
 			'user_created' => date('Y-m-d H:i:s', time())
 	  );
 	  $this->db->insert('users',$data);
+	  //get the last inserts id and insert it in gen_prefs
+	  $this->db->set('user_id', $this->db->insert_id()); 
+	  $this->db->insert($this->config->item('user_preferences_table')); 
 	 }
 	 
 	 public function check_username_exists($username)
@@ -61,10 +64,23 @@ class User_model extends CI_Model {
 		$this->db->from('users');
 		return $this->db->count_all_results();
 	 }
-	 
-	 public function getCountries()
+
+
+	/*
+	 * Get countries - get all app approved countries
+	 *
+	 */
+	public function getCountries()
 	 {
-		$query = $this->db->query("SELECT * from countries order by countries_name_es asc");
+	 	
+		$this->db->where_not_in('countries_iso_code_2', $this->config->item('banned_countries'));	
+		$this->db->order_by("countries_name_es", "asc"); 
+		$this->db->from('countries');
+		$query = $this->db->get();
+		foreach($query->result() as $row)
+		{
+			
+		}
 		return $query->result_array();
 	 }
 	 
