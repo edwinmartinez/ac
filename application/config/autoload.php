@@ -95,7 +95,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('common','error','users');
+$autoload['language'] = array('common','error','users','messages');
 
 
 /*

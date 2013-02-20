@@ -27,13 +27,6 @@ class User extends CI_Controller{
 		$this->load->helper('text');
 		
 		$data['title']= $this->lang->line('common_welcome');
-		$data['loadjs'] = array(
-		'underscore.min.js',
-		'backbone.js',
-		'mustache.js',
-		//'backbone-localstorage.js',
-		'myhome.js'
-		);
 		$this->load->view('header_view',$data);
 		$this->load->view('myhome_view.php', $data);
 		$this->load->view('footer_view',$data);

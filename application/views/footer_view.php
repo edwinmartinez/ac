@@ -17,4 +17,23 @@
 </div><!--/.fluid-container-->
 
 </body>
+<?php 
+	$loadjs = array(
+			'underscore.min.js',
+			'backbone.js',
+			'mustache.js',
+			//'backbone-localstorage.js',
+			'myhome.js'
+	);
+
+ 	foreach ($loadjs as $jsscript) {
+		 echo '<script src="' . base_url() . 'js/'.$jsscript.'"></script>'."\n";
+	 }
+  
+ ?>
+  <script type="text/javascript">
+   $(function() { 
+ 	  MyHome.boot($('#messagesHeader-container')); 
+ 	});
+ </script>
 </html>

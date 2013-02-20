@@ -13,11 +13,15 @@ class Message_model extends CI_Model {
 	  parent::__construct();
 	 }
 
-	function get_new_messages() {
-		$this->db->where("privmsgs_to_userid",$login);
+	function get_new_messages($user_id) {
+		if(empty($user_id)) return FALSE;
+		$this->db->from('users');	
+		$this->db->join('phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_to_userid');
+		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
+		$this->db->where("privmsgs_to_userid",$user_id);
 		$this->db->where('privmsgs_type IN('.$this->privmsgs_new_mail.', '.$this->privmsgs_unread_mail.')'); 
 
-		$query=$this->db->get("phpbb_privmsgs");
+		//$query=$this->db->get("phpbb_privmsgs");
 		return $query->result_array();
 		if($query->num_rows()>0)
 		{

@@ -172,10 +172,19 @@ label {
 /*
  * message menu
  */
+#messagesInit {
+	margin:auto;
+	text-align: center;
+	color: #98AAB1;
+}
 .dropdown-messages{
 	font-size: .8em;
 	min-width: 280px;
 	left: -130px;
+}
+.notif-counter {
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 9px;
 }
 
 .navbar .nav > li > .dropdown-messages::before {
