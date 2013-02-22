@@ -9,7 +9,15 @@
 			
 			
 			<div class="row">
-				<h3><?php echo $this->lang->line('common_new_members'); ?></h3>
+			<?php foreach ($messages as $message) {
+					echo '<div class="messageUnit" style="margin-bottom: 20px;">';
+					
+					echo $message['username']."<br>\n";
+					echo $message['message']."\n";
+					echo '</div>';				  
+			  }
+			?>
+				
 			</div>
 
 		</div>
@@ -20,7 +28,8 @@
   			
   			
   		<div id="main-content">
-  			<div id="messagesInit"><?php echo $this->lang->line('messages_select_a_message'); ?></div>
+  			<div id="messagesInit"><?php echo $this->lang->line('messages_there_are_no_selected_conversations'); ?></div>
+
   		</div>
   		
   		

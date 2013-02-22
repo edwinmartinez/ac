@@ -11,25 +11,31 @@ class Message_model extends CI_Model {
 	 public function __construct()
 	 {
 	  parent::__construct();
+	  $this->load->helper('text');
 	 }
 
 	function get_new_messages($user_id) {
 		if(empty($user_id)) return FALSE;
+		$this->db->select('privmsgs_id as id, user_username as username, LEFT(privmsgs_text,33) as message, privmsgs_date',FALSE);
 		$this->db->from('users');	
-		$this->db->join('phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_to_userid');
+		$this->db->join('phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
 		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
 		$this->db->where("privmsgs_to_userid",$user_id);
+		$this->db->where("users.status",1);
 		$this->db->where('privmsgs_type IN('.$this->privmsgs_new_mail.', '.$this->privmsgs_unread_mail.')'); 
-
+		$query = $this->db->get();
 		//$query=$this->db->get("phpbb_privmsgs");
 		return $query->result_array();
+		/*
 		if($query->num_rows()>0)
 		{
 			foreach($query->result() as $rows)
 			{
 				
 			}
-		}	  
+		}
+		 * 
+		 */	  
 		//$CurrentTime		= time();
 
 	}
