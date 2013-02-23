@@ -15,12 +15,15 @@ class Message_model extends CI_Model {
 	 }
 
 	function get_new_messages($user_id,$limit=30,$offset=0) {
+
 		if(empty($user_id)) return FALSE;
+		$this->load->helper('text');
+		
 		$this->db->select('privmsgs_id as msg_id, 
 			users.user_id as from_uid, 
 			user_username as from_username,
 			count(*) as count,
-			LEFT(privmsgs_text,33) as msg_text, 
+			LEFT(privmsgs_text,100) as msg_text, 
 			FROM_UNIXTIME(privmsgs_date) as msg_date,
 			privmsgs_date as msg_timestamp',FALSE);
 		$this->db->from('users');
@@ -37,19 +40,21 @@ class Message_model extends CI_Model {
 		
 		if($query->num_rows() > 0)
 		{
-			$from_users = array();	
+			$results = array();	
 			foreach($query->result() as $rows)
 			{
 				//$rows[] = array('from_photo' => 'photo');
 				//echo $this->user_model->get_profile_photo($rows->from_uid)."<br>";
-				
+				$rows->msg_text = character_limiter($rows->msg_text,37,'...');
 				$rows->from_profile_img = $this->user_model->get_profile_photo($rows->from_uid);
-				var_dump($rows);
-				echo "<br />";
+				$results[] = $rows;
+				//var_dump($rows);
+				//echo "<br />";
 			}
 		}
 		 
-		 return $query->result_array();  
+		 //return $query->result_array();  
+		 return $results;
 		//$CurrentTime		= time();
 
 	}

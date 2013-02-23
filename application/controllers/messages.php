@@ -17,7 +17,7 @@ class Messages extends CI_Controller{
 	 public function index()
 	 {
 		 //$this->lang->load('messages');
-		 $data['messages'] = $this->message_model->get_new_messages(3267);
+		$data['messages'] = $this->message_model->get_new_messages(3267);
 		
 		$data['title']= $this->lang->line('common_welcome');
 		$this->load->view('header_view',$data);

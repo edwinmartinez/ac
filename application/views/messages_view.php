@@ -8,12 +8,13 @@
 			</ul>
 			
 			<div class="row-fluid">
-			<?php foreach ($messages as $message) {
+			<?php  /*foreach ($messages as $message) {
 					echo '<div class="messageUnit" style="margin-bottom: 20px;">';
 					echo "<div class=\"messageUnit-from\"><a href=\"/profile/".$message['from_username'].'">'.$message['from_username'].'</a></div>'."\n";
 					echo '<div class="messageUnit-message">'.$message['msg_text'].'</div>'."\n";
-					echo '</div>';				  
-			  }
+					echo '</div>';	
+									
+			  }*/	
 			?>	
 			</div>
 		</div>
@@ -34,3 +35,10 @@
 
 	</div><!--<div class="row-fluid">-->
 </div>
+
+<script type="text/x-mustache-template" id="messageUnit-template">
+	<div class="messageUnit">
+		<div class="messageUnit-from">{{ from_username }}</div>
+		<div class="messageUnit-message">{{ msg_text }}</div>
+	</div>
+</script>
