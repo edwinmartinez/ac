@@ -238,8 +238,9 @@ class User_model extends CI_Model {
 		$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid', 'left');
 		$this->db->where('users_gallery.use_in_profile',1);
 		$this->db->where('users.status',1);
+		$this->db->where('users_gallery.photo_uid',$user_id);
 		$this->db->limit(1);
-		
+		$query = $this->db->get();
 		
 		if($query->num_rows()>0) 
 		{

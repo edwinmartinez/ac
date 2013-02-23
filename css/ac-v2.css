@@ -177,6 +177,14 @@ label {
 	text-align: center;
 	color: #98AAB1;
 }
+.l-sidebar-left {
+	font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.messageUnit {
+	font-size:.8em;
+}
+
 .dropdown-messages{
 	font-size: .8em;
 	min-width: 280px;

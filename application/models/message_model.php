@@ -14,28 +14,42 @@ class Message_model extends CI_Model {
 	  $this->load->helper('text');
 	 }
 
-	function get_new_messages($user_id) {
+	function get_new_messages($user_id,$limit=30,$offset=0) {
 		if(empty($user_id)) return FALSE;
-		$this->db->select('privmsgs_id as id, user_username as username, LEFT(privmsgs_text,33) as message, privmsgs_date',FALSE);
-		$this->db->from('users');	
-		$this->db->join('phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
+		$this->db->select('privmsgs_id as msg_id, 
+			users.user_id as from_uid, 
+			user_username as from_username,
+			count(*) as count,
+			LEFT(privmsgs_text,33) as msg_text, 
+			FROM_UNIXTIME(privmsgs_date) as msg_date,
+			privmsgs_date as msg_timestamp',FALSE);
+		$this->db->from('users');
+		//$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid','left');	
+		$this->db->join('(select * from phpbb_privmsgs m2 order by m2.privmsgs_date desc) phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
 		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
 		$this->db->where("privmsgs_to_userid",$user_id);
 		$this->db->where("users.status",1);
-		$this->db->where('privmsgs_type IN('.$this->privmsgs_new_mail.', '.$this->privmsgs_unread_mail.')'); 
+		$this->db->where('privmsgs_type IN('.$this->privmsgs_new_mail.', '.$this->privmsgs_unread_mail.')');
+	 	$this->db->group_by('from_username');
+		$this->db->order_by("msg_timestamp", "desc"); 
 		$query = $this->db->get();
-		//$query=$this->db->get("phpbb_privmsgs");
-		return $query->result_array();
-		/*
-		if($query->num_rows()>0)
+		
+		
+		if($query->num_rows() > 0)
 		{
+			$from_users = array();	
 			foreach($query->result() as $rows)
 			{
+				//$rows[] = array('from_photo' => 'photo');
+				//echo $this->user_model->get_profile_photo($rows->from_uid)."<br>";
 				
+				$rows->from_profile_img = $this->user_model->get_profile_photo($rows->from_uid);
+				var_dump($rows);
+				echo "<br />";
 			}
 		}
-		 * 
-		 */	  
+		 
+		 return $query->result_array();  
 		//$CurrentTime		= time();
 
 	}
