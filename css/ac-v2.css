@@ -181,10 +181,27 @@ label {
 	font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Garuda,Verdana,Tahoma,sans-serif;
 }
 
-.messageUnit {
-	font-size:.8em;
+.messageItem {
+	font-size:1em;
+	margin-bottom: 8px;
+	border-bottom: #CCCCCC solid 1px;
+	padding-left: 8px;
+	overflow:hidden;
 }
-
+.messageItem-user img {
+	width: 25px;
+	height: 25px;
+	float:left;
+}
+.messageItem-username {
+	float:left;
+	margin-top: 8px;
+	margin-left: 8px;
+}
+.messageItem-msg {
+	clear: both;
+	
+}
 .dropdown-messages{
 	font-size: .8em;
 	min-width: 280px;
@@ -196,10 +213,10 @@ label {
 }
 
 .navbar .nav > li > .dropdown-messages::before {
-	left:189px;
+	left:179px;
 }
 .navbar .nav > li > .dropdown-messages::after {
-	left:190px;
+	left:180px;
 }
 
 #footer {

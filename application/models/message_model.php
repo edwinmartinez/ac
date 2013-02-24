@@ -14,12 +14,13 @@ class Message_model extends CI_Model {
 	  $this->load->helper('text');
 	 }
 
-	function get_new_messages($user_id,$limit=15,$offset=0) {
+	function get_new_messages($user_id,$limit=10,$offset=0) {
 
 		if(empty($user_id)) return FALSE;
-		$this->load->helper('text');
+	
 		
 		$this->db->select('privmsgs_id as msg_id, 
+			privmsgs_type as msg_type,
 			users.user_id as from_uid, 
 			user_username as from_username,
 			count(*) as count,
@@ -46,8 +47,10 @@ class Message_model extends CI_Model {
 			{
 				//$rows[] = array('from_photo' => 'photo');
 				//echo $this->user_model->get_profile_photo($rows->from_uid)."<br>";
+				$rows->msg_thread_username = $rows->from_username;
+				unset($rows->from_username);
 				$rows->msg_text = character_limiter($rows->msg_text,37,'...');
-				$rows->from_profile_img = $this->user_model->get_profile_photo($rows->from_uid);
+				$rows->msg_thread_username_img_url = $this->user_model->get_profile_photo($rows->from_uid);
 				$results[] = $rows;
 				//var_dump($rows);
 				//echo "<br />";
@@ -73,6 +76,26 @@ class Message_model extends CI_Model {
 		$this->db->where("privmsgs_id",$message_id);
 		$query=$this->db->update("phpbb_privmsgs");
 		return TRUE;
+	}
+
+	public function get_messages_thread($user_id, $user_thread='') 
+	{
+		if(empty($user_id)) return FALSE;
+		if(empty($user_thread)) return FALSE;
+		
+		
+		$this->db->select('privmsgs_id as msg_id, 
+			privmsgs_type as msg_type,
+			users.user_id as from_uid, 
+			user_username as from_username,
+			count(*) as count,
+			privmsgs_text as msg_text, 
+			FROM_UNIXTIME(privmsgs_date) as msg_date,
+			privmsgs_date as msg_timestamp',FALSE);
+		$this->db->from('users');
+		$this->db->where("privmsgs_to_userid",$user_id);
+		$this->db->join('(select * from phpbb_privmsgs m2 order by m2.privmsgs_date desc) phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
+		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
 	}
 }
 ?>

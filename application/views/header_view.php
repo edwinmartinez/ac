@@ -17,17 +17,23 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">m {{ count }} <b class="caret"></b></a>
                 <ul class="dropdown-menu dropdown-messages">
 					<li class="nav-header" id="messagesHeader-title">Mensajes <a href="#">Crear Nuevo Mensaje</a></li>
-					<li><a href="#">Something else here</a></li>
+					
 					<li class="divider"></li>
-					<li class="nav-header">Nav header</li>
-					<li><a href="#">Separated link 2</a></li>
-			
+				
                 </ul>
               
  </script>
  
  <script type="text/x-mustache-template" id="messageItem-template">
-	<div class="messageItem-username">{{ from_user }}</div> <div class="messageItem-msg"><a href="#">{{ msg_text }}</a></div>
+ 	<div class="messageItem">
+		<div class="messageItem-user">
+			<div class="messageItem-userImg"><img src="{{msg_user_img_url}}" /></div> 
+			<div class="messageItem-username">{{msg_user}}</div>
+		</div> 
+		<div class="messageItem-msg">
+			<a href="#">{{ msg_text }}</a>
+		</div>
+	</div>
  </script>
 
 <body>	

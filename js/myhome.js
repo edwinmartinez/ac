@@ -56,7 +56,8 @@
       this.$el.html(this.template(this));
       return this;
     },
-    from_user:        function() { return this.model.get('from_username'); },
+    msg_user:        function() { return this.model.get('msg_thread_username'); },
+    msg_user_img_url: function() { return this.model.get('msg_thread_username_img_url'); },
     msg_text: function() { return this.model.get('msg_text'); }
   });
 
