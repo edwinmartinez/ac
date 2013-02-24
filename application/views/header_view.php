@@ -10,14 +10,24 @@
  <script src="<?php echo base_url();?>js/jquery.js"></script>
  <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
  
- 
 </head>
+ 
  <script type="text/x-mustache-template" id="messagesHeader-template">
- 	Msgs {{ count }}  <b class="caret"></b>
+ 	       
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">m {{ count }} <b class="caret"></b></a>
+                <ul class="dropdown-menu dropdown-messages">
+					<li class="nav-header" id="messagesHeader-title">Mensajes <a href="#">Crear Nuevo Mensaje</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li class="nav-header">Nav header</li>
+					<li><a href="#">Separated link 2</a></li>
+			
+                </ul>
+              
  </script>
  
  <script type="text/x-mustache-template" id="messageItem-template">
-	<li><a href="#">{{ from_user }}: {{ message_preview }}</a></li> 
+	<div class="messageItem-username">{{ from_user }}</div> <div class="messageItem-msg"><a href="#">{{ msg_text }}</a></div>
  </script>
 
 <body>	
@@ -35,19 +45,7 @@
           <div id="site-slogan" class="visible-desktop"><?php echo $this->lang->line('common_slogan'); ?></div>
 		</div>
  <?php if(($this->session->userdata('username')!="")): ?>          
-        <div class="nav">
-        <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="messagesHeader-container">m()</span></a>
-                <ul class="dropdown-menu dropdown-messages">
-					<li class="nav-header" id="messagesHeader-title">Mensajes <a href="#">Crear Nuevo Mensaje</a></li>
-					<li><a href="#">Something else here</a></li>
-					<li class="divider"></li>
-					<li class="nav-header">Nav header</li>
-					<li><a href="#">Separated link</a></li>
-					<li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-    	</div>
+        <div class="nav" id="msgDropdown"> </div>
  <?php endif; ?>         
           <div class="nav-collapse collapse"> 
           	

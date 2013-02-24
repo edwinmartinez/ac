@@ -23,6 +23,9 @@
   // View ----------------------------------------
   
   MyHome.IndexMessages = Backbone.View.extend({
+  	tagName: 'li',
+  	className:'dropdown',
+  	idName:'msgDropdown',
     template: template('messagesHeader'),
     initialize: function() {
       this.messages = new MyHome.Messages();
@@ -38,8 +41,8 @@
     },
     addMessage: function(message) {
       var view = new MyHome.IndexMessage({model: message});
-      //this.$('.recipes').append(view.render().el);
-      $('#messagesHeader-title').append(view.render().el);
+      this.$('.dropdown-messages').append(view.render().el);
+      //$('#messagesHeader-title').append(view.render().el);
     },
     count: function() {
       return this.messages.length;
@@ -47,13 +50,14 @@
   });
   
   MyHome.IndexMessage = Backbone.View.extend({
+  	tagName: 'li',
     template: template('messageItem'),
     render: function() {
       this.$el.html(this.template(this));
       return this;
     },
-    from_user:        function() { return this.model.get('from_user'); },
-    message_preview: function() { return this.model.get('message_preview'); }
+    from_user:        function() { return this.model.get('from_username'); },
+    msg_text: function() { return this.model.get('msg_text'); }
   });
 
   // Router --------------------------------

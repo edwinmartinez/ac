@@ -33,7 +33,7 @@
  ?>
   <script type="text/javascript">
    $(function() { 
- 	  MyHome.boot($('#messagesHeader-container')); 
+ 	  MyHome.boot($('#msgDropdown')); 
  	});
  </script>
 </html>

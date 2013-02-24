@@ -14,7 +14,7 @@ class Message_model extends CI_Model {
 	  $this->load->helper('text');
 	 }
 
-	function get_new_messages($user_id,$limit=30,$offset=0) {
+	function get_new_messages($user_id,$limit=15,$offset=0) {
 
 		if(empty($user_id)) return FALSE;
 		$this->load->helper('text');
@@ -35,6 +35,7 @@ class Message_model extends CI_Model {
 		$this->db->where('privmsgs_type IN('.$this->privmsgs_new_mail.', '.$this->privmsgs_unread_mail.')');
 	 	$this->db->group_by('from_username');
 		$this->db->order_by("msg_timestamp", "desc"); 
+		$this->db->limit($limit,$offset);
 		$query = $this->db->get();
 		
 		
