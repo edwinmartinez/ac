@@ -58,7 +58,9 @@
     },
     msg_user:        function() { return this.model.get('msg_thread_username'); },
     msg_user_img_url: function() { return this.model.get('msg_thread_username_img_url'); },
-    msg_text: function() { return this.model.get('msg_text'); }
+    msg_text: function() { return this.model.get('msg_text'); },
+    msg_type: function() { return this.model.get('msg_type'); },
+   msg_date: function() { return this.model.get('msg_date'); }
   });
 
   // Router --------------------------------

@@ -16,16 +16,22 @@
  	       
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">m {{ count }} <b class="caret"></b></a>
                 <ul class="dropdown-menu dropdown-messages">
-					<li class="nav-header" id="messagesHeader-title">Mensajes <a href="#">Crear Nuevo Mensaje</a></li>
-					
+					<li class="nav-header" id="messagesHeader-title">
+						<div>
+							<a href="<?php echo base_url().'messages/'; ?>"><?php echo $this->lang->line('messages_messages'); ?></a> 
+						</div>
+						<div>
+							<a href="#">Crear Nuevo Mensaje</a></li>
+						</div>
 					<li class="divider"></li>
+					<div>something</div>
 				
                 </ul>
               
  </script>
  
  <script type="text/x-mustache-template" id="messageItem-template">
- 	<div class="messageItem">
+ 	<div class="messageItem {{msg_type}}">
 		<div class="messageItem-user">
 			<div class="messageItem-userImg"><img src="{{msg_user_img_url}}" /></div> 
 			<div class="messageItem-username">{{msg_user}}</div>
@@ -33,6 +39,7 @@
 		<div class="messageItem-msg">
 			<a href="#">{{ msg_text }}</a>
 		</div>
+		<div class="messageItem-date">{{ msg_date }}</div>
 	</div>
  </script>
 

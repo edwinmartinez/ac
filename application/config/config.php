@@ -376,7 +376,7 @@ $config['site_name'] = 'AmigoCupido';
 | lime 
 |
 */
-$config['member_images_dir'] = 'membergallery'; 
+$config['member_images_dir'] = 'membergallery';  
 $config['application_images_dir'] = 'images';
 $config['user_preferences_table'] = 'users_gen_pref';
 $config['top_countries'] = array("US","CA","ES","MX","GT","SV","HN","NI","CR","PA","DO","CU","CL","PR","PE","EC","VE","BO","UY","PY","AR","BR");

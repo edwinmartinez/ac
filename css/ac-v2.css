@@ -183,24 +183,31 @@ label {
 
 .messageItem {
 	font-size:1em;
-	margin-bottom: 8px;
+	margin-bottom: 0px;
 	border-bottom: #CCCCCC solid 1px;
-	padding-left: 8px;
+	padding: 4px;
 	overflow:hidden;
 }
+div.new {
+	background-color: #D5E8FB;
+}
 .messageItem-user img {
-	width: 25px;
-	height: 25px;
+	width: 40px;
+	height: 40px;
 	float:left;
 }
 .messageItem-username {
-	float:left;
-	margin-top: 8px;
-	margin-left: 8px;
+	
+	margin-top: 0px;
+	margin-left: 46px;
+	font-weight: bold;
 }
 .messageItem-msg {
-	clear: both;
 	
+	margin-left: 46px;
+}
+.messageItem-date {
+	margin-left: 46px;
 }
 .dropdown-messages{
 	font-size: .8em;
