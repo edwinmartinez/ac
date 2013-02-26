@@ -189,7 +189,8 @@ label {
 	overflow:hidden;
 }
 div.new {
-	background-color: #D5E8FB;
+	background-color: #eceff5;
+	background: rgba(237,239,245,0.98);
 }
 .messageItem-user img {
 	width: 40px;

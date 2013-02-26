@@ -28,7 +28,6 @@ class Message_model extends CI_Model {
 			FROM_UNIXTIME(privmsgs_date) as msg_date,
 			privmsgs_date as msg_timestamp',FALSE);
 		$this->db->from('users');
-		//$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid','left');	
 		$this->db->join('(select * from phpbb_privmsgs m2 order by m2.privmsgs_date desc) phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
 		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
 		$this->db->where("privmsgs_to_userid",$user_id);
@@ -102,24 +101,30 @@ class Message_model extends CI_Model {
 		return TRUE;
 	}
 
-	public function get_messages_thread($user_id, $user_thread='') 
+	public function get_messages_thread($user_id, $uid_thread='') 
 	{
 		if(empty($user_id)) return FALSE;
-		if(empty($user_thread)) return FALSE;
+		//if(empty($user_thread)) return FALSE;
 		
 		
 		$this->db->select('privmsgs_id as msg_id, 
 			privmsgs_type as msg_type,
 			users.user_id as from_uid, 
-			user_username as from_username,
-			count(*) as count,
+			users.user_username as from_username,
+			u2.user_username as to_username,
 			privmsgs_text as msg_text, 
 			FROM_UNIXTIME(privmsgs_date) as msg_date,
 			privmsgs_date as msg_timestamp',FALSE);
 		$this->db->from('users');
-		$this->db->where("privmsgs_to_userid",$user_id);
-		$this->db->join('(select * from phpbb_privmsgs m2 order by m2.privmsgs_date desc) phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
+		$this->db->join('phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
+		$this->db->join('users u2', 'u2.user_id = phpbb_privmsgs.privmsgs_to_userid');
 		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
+		$where = "privmsgs_to_userid = '".$user_id."' AND privmsgs_from_userid = '".$uid_thread."' OR privmsgs_to_userid= '".$uid_thread."' AND privmsgs_from_userid = '".$user_id."'";
+		$this->db->where($where);
+		$this->db->group_by('msg_date'); // TODO: will need to update db to get rid of dups because old system puts a dup row with a privmsgs type 2 (sent email)
+		//$this->db->limit($limit,$offset);
+		$query = $this->db->get();
+		return $query->result_array();
 	}
 }
 ?>

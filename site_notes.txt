@@ -92,3 +92,26 @@ function getChineseZodiac($year){
 }
 
 echo getChineseZodiac(2016);
+
+
+//---------- getting the most messaged users
+select count(*) as count, user_username, user_first_name, user_last_name, privmsgs_to_userid as uid from phpbb_privmsgs m
+join users on users.user_id = m.privmsgs_to_userid group by privmsgs_to_userid having count>50 order by count desc limit 20
+
+//---------- getting messages from and to
+SELECT 
+privmsgs_id as msg_id, privmsgs_type as msg_type, 
+users.user_id as from_uid, 
+users.user_username as from_username, 
+
+u2.user_username as to_username,
+privmsgs_text as msg_text, 
+FROM_UNIXTIME(privmsgs_date) as msg_date, privmsgs_date as msg_timestamp 
+FROM (`users`) 
+JOIN phpbb_privmsgs ON `users`.`user_id` = `phpbb_privmsgs`.`privmsgs_from_userid` 
+
+join users as u2 on u2.user_id = `phpbb_privmsgs`.`privmsgs_to_userid` 
+JOIN `phpbb_privmsgs_text` ON `phpbb_privmsgs`.`privmsgs_id` = `phpbb_privmsgs_text`.`privmsgs_text_id` 
+WHERE `privmsgs_to_userid` = 60 and privmsgs_from_userid =5046
+or  `privmsgs_to_userid` = 5046 and privmsgs_from_userid =60
+
