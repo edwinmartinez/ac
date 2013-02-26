@@ -14,15 +14,15 @@ class Message_model extends CI_Model {
 	  $this->load->helper('text');
 	 }
 
-	function get_new_messages($user_id,$limit=5,$offset=0) {
+	function get_new_messages($user_id,$limit=8,$offset=0) {
 
 		if(empty($user_id)) return FALSE;
 	
 		
-		$this->db->select('privmsgs_id as msg_id, 
+		$this->db->select('privmsgs_id as msg_id, user_gender,
 			privmsgs_type as msg_type_code,
 			users.user_id as from_uid, 
-			user_username as from_username,
+			users.user_username as from_username,
 			count(*) as count,
 			LEFT(privmsgs_text,100) as msg_text, 
 			FROM_UNIXTIME(privmsgs_date) as msg_date,

@@ -235,22 +235,21 @@ class User_model extends CI_Model {
 		//lets get the picture
 		$this->db->select('user_id, user_username, user_gender, photo_filename');
 		$this->db->from('users');
-		$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid', 'left');
-		$this->db->where('users_gallery.use_in_profile',1);
+		$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid and users_gallery.use_in_profile = 1', 'left');
 		$this->db->where('users.status',1);
-		$this->db->where('users_gallery.photo_uid',$user_id);
+		$this->db->where('users.user_id',$user_id);
 		$this->db->limit(1);
 		$query = $this->db->get();
 		
 		if($query->num_rows()>0) 
 		{
-			foreach ($query->result() as $row)
-			{
-			    $profile_pic =  $this->getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
+			foreach ($query->result() as $row) {
+			    $this->profile_pic =  $this->getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
 			}
-			
-		} 		
-		return $profile_pic;
+			return $this->profile_pic;
+		} else {
+			return base_url()."images/nofoto_m.jpg";
+		}	
 	}
 
 	// format can be suare or large

@@ -114,7 +114,7 @@ class V1 extends REST_Controller
     	$this->load->helper('text');
        // $users = $this->user_model->get_all($this->get('limit') );
         //$users = $this->user_model->get_all();
-		$messages = $this->message_model->get_new_messages(3267);
+		$messages = $this->message_model->get_new_messages(60); //3267
 
         if($messages)
         {
