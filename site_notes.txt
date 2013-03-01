@@ -115,3 +115,27 @@ JOIN `phpbb_privmsgs_text` ON `phpbb_privmsgs`.`privmsgs_id` = `phpbb_privmsgs_t
 WHERE `privmsgs_to_userid` = 60 and privmsgs_from_userid =5046
 or  `privmsgs_to_userid` = 5046 and privmsgs_from_userid =60
 
+
+SELECT user_username, photo_uid
+FROM  `users` 
+LEFT JOIN users_gallery g ON g.photo_uid = users.user_id
+WHERE user_id =15467
+LIMIT 0 , 30
+
+SELECT `user_id`, `user_username`, `user_gender`, photo_uid, `photo_filename`
+FROM (`users`) 
+LEFT JOIN `users_gallery` ON `users`.`user_id` = `users_gallery`.`photo_uid` 
+WHERE `users_gallery`.`use_in_profile` = 1 
+AND `users`.`status` = 1 
+AND `users_gallery`.`photo_uid` = '15467' LIMIT 1
+
+
+////-----------------
+get real new message count
+show thread
+show reply form
+wire the reply form
+build the reply process
+
+build shell profile
+show my friends

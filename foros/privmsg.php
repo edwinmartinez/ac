@@ -227,8 +227,12 @@ else if ( $mode == 'read' )
 	//
 	// Major query obtains the message ...
 	//
-	$sql = "SELECT u.username AS username_1, u.user_id AS user_id_1, u2.username AS username_2, u2.user_id AS user_id_2, u.user_sig_bbcode_uid, u.user_posts, u.user_from, u.user_website, u.user_email, u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_avatar, pm.*, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text
-		FROM " . PRIVMSGS_TABLE . " pm, " . PRIVMSGS_TEXT_TABLE . " pmt, " . USERS_TABLE . " u, " . USERS_TABLE . " u2 
+	$sql = "SELECT u.username AS username_1, u.user_id AS user_id_1, u2.username AS username_2, u2.user_id AS user_id_2, 
+	u.user_sig_bbcode_uid, u.user_posts, u.user_from, u.user_website, u.user_email, 
+	u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_avatar, 
+	pm.*, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text
+		FROM " . PRIVMSGS_TABLE . " pm, " . PRIVMSGS_TEXT_TABLE . " pmt, " . USERS_TABLE
+		 . " u, " . USERS_TABLE . " u2 
 		WHERE pm.privmsgs_id = $privmsgs_id
 			AND pmt.privmsgs_text_id = pm.privmsgs_id 
 			$pm_sql_user 

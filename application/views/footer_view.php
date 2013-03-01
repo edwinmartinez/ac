@@ -25,6 +25,10 @@
 			//'backbone-localstorage.js',
 			'myhome.js'
 	);
+	if ($this->uri->segment(1) == 'messages')
+	{
+	   // $loadjs[] = 'mymsgs.js';
+	}
 
  	foreach ($loadjs as $jsscript) {
 		 echo '<script src="' . base_url() . 'js/'.$jsscript.'"></script>'."\n";
@@ -33,6 +37,7 @@
  ?>
   <script type="text/javascript">
    $(function() { 
+   	<?php if(!empty($thread_username)) echo 'MyHome.thread_username = \''. $thread_username . '\';'."\n"; ?>
  	  MyHome.boot($('#msgDropdown')); 
  	});
  </script>

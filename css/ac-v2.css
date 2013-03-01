@@ -215,6 +215,37 @@ div.new {
 	min-width: 280px;
 	left: -130px;
 }
+
+.messageItem {
+	cursor: pointer;
+}
+
+#messageList {
+	font-size: .8em;
+	list-style: none;
+}
+
+/* --------------- Messages page ------------------------------- */
+#threadMessageList {
+	margin:0;
+	padding:0;	
+}
+
+#threadMessageList > li {
+	list-style-type: none;
+	margin: 20px 0;
+	padding: 8px 20px 7px;
+	/*border-bottom:#B5B5B5 solid 1px;*/
+}
+.ThreadMessageItem-fromImg {
+	width: 33px;
+	height: 33px;
+	float: left;
+	margin-right: 10px;
+}
+.ThreadMessageItem-text {
+	margin-left: 43px;
+}
 .notif-counter {
 	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 	font-size: 9px;

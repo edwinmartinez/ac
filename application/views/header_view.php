@@ -31,10 +31,10 @@
  </script>
  
  <script type="text/x-mustache-template" id="messageItem-template">
- 	<div class="messageItem {{msg_type}}">
+ 	<div class="messageItem {{msg_type}}" rel="<?php echo base_url();?>messages/index/{{msg_thread_username}}">
 		<div class="messageItem-user">
 			<div class="messageItem-userImg"><img src="{{msg_user_img_url}}" /></div> 
-			<div class="messageItem-username">{{msg_user}}</div>
+			<div class="messageItem-username">{{msg_thread_username}}</div>
 		</div> 
 		<div class="messageItem-msg">
 			<a href="#">{{ msg_text }}</a>
@@ -57,7 +57,7 @@
           <a class="brand" href="<?php echo base_url();?>" alt="AmigoCupido"><img src="<?php echo base_url();?>img/logo.png" width="149" height="43"></a>
           <div id="site-slogan" class="visible-desktop"><?php echo $this->lang->line('common_slogan'); ?></div>
 		</div>
- <?php if(($this->session->userdata('username')!="")): ?>          
+ <?php if(($this->session->userdata('username')!="")): // msg menu insertion-------------------------- ?>          
         <div class="nav" id="msgDropdown"> </div>
  <?php endif; ?>         
           <div class="nav-collapse collapse"> 

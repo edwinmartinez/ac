@@ -95,8 +95,10 @@ class V1 extends REST_Controller
     	$this->load->helper('text');
        // $users = $this->user_model->get_all($this->get('limit') );
         //$users = $this->user_model->get_all();
-		$messages = $this->message_model->get_messages_thread(60,1638);
+        // TODO: check for login
+		$messages = $this->message_model->get_messages_thread($this->session->userdata('user_id'),$this->get('thread_username'));
 
+		
         if($messages)
         {
             $this->response($messages, 200); // 200 being the HTTP response code
@@ -114,7 +116,7 @@ class V1 extends REST_Controller
     	$this->load->helper('text');
        // $users = $this->user_model->get_all($this->get('limit') );
         //$users = $this->user_model->get_all();
-		$messages = $this->message_model->get_new_messages(60); //3267
+		$messages = $this->message_model->get_messages(60); //3267
 
         if($messages)
         {

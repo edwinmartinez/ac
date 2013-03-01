@@ -14,9 +14,27 @@ class Message_model extends CI_Model {
 	  $this->load->helper('text');
 	 }
 
-	function get_new_messages($user_id,$limit=8,$offset=0) {
+	public function get_messages($user_id = '',$limit=10,$offset=0)
+	{
+		return $this->get_inbox($user_id,$limit,$offset);
+	}
 
-		if(empty($user_id)) return FALSE;
+/*
+ * Gets messages for the provided user_id 
+ * if no user_id is provided it will try to user the session user_id
+ */
+	function get_inbox($user_id = '',$limit=10,$offset=0) {
+
+		if(empty($user_id) ) {
+			if($this->session->userdata('user_id') == '') {
+				echo 'no user provided';
+				return FALSE;
+			} else {
+				$user_id = $this->session->userdata('user_id');
+			}
+		}
+		
+		//return FALSE;
 	
 		
 		$this->db->select('privmsgs_id as msg_id, user_gender,
@@ -28,11 +46,11 @@ class Message_model extends CI_Model {
 			FROM_UNIXTIME(privmsgs_date) as msg_date,
 			privmsgs_date as msg_timestamp',FALSE);
 		$this->db->from('users');
-		$this->db->join('(select * from phpbb_privmsgs m2 order by m2.privmsgs_date desc) phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
+		$this->db->join('(select * from phpbb_privmsgs m2 group by m2.privmsgs_date order by m2.privmsgs_date desc) phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
 		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
 		$this->db->where("privmsgs_to_userid",$user_id);
 		$this->db->where("users.status",1);
-		//$this->db->where('privmsgs_type IN('.$this->privmsgs_new_mail.', '.$this->privmsgs_unread_mail.')');
+		$this->db->where('privmsgs_type IN('.$this->privmsgs_read_mail.','.$this->privmsgs_new_mail.', '.$this->privmsgs_unread_mail.')');
 	 	$this->db->group_by('from_username');
 		$this->db->order_by("msg_timestamp", "desc"); 
 		$this->db->limit($limit,$offset);
@@ -42,47 +60,21 @@ class Message_model extends CI_Model {
 		if($query->num_rows() > 0)
 		{
 			$results = array();	
-			foreach($query->result() as $rows)
+			foreach($query->result() as $row)
 			{
-				//$rows[] = array('from_photo' => 'photo');
-				//echo $this->user_model->get_profile_photo($rows->from_uid)."<br>";
-				$rows->msg_thread_username = $rows->from_username;
-				unset($rows->from_username);
-				$rows->msg_text = character_limiter($rows->msg_text,32,'...');
-				$rows->msg_thread_username_img_url = $this->user_model->get_profile_photo($rows->from_uid);
-				switch ($rows->msg_type_code) {
-					case $this->privmsgs_read_mail:
-						$rows->msg_type = 'read';
-						break;
-					case $this->privmsgs_new_mail:
-						$rows->msg_type = 'new';
-						break;
-					case $this->privmsgs_sent_mail:
-						$rows->msg_type = 'sent';
-						break;
-					case $this->privmsgs_saved_in_mail:
-						$rows->msg_type = 'savedin';
-						break;
-					case $this->privmsgs_saved_out_mail:
-						$rows->msg_type = 'savedout';
-						break;
-					case $this->privmsgs_unread_mail:
-						$rows->msg_type = 'unread';
-						break;
-					default:
-						$rows->msg_type = 'unknown';
-						break;
-				}
-				unset($rows->msg_type_code);
-				$results[] = $rows;
-				//var_dump($rows);
-				//echo "<br />";
+				$row->msg_thread_username = $row->from_username;
+				unset($row->from_username);
+				$row->msg_text = character_limiter($row->msg_text,32,'...');
+				$row->msg_thread_username_img_url = $this->user_model->get_profile_photo($row->from_uid);
+				$row->msg_type = $this->get_message_type($row->msg_type_code);
+				unset($row->msg_type_code);
+				$results[] = $row;
 			}
 		}
 		 
 		 //return $query->result_array();  
 		 return $results;
-		//$CurrentTime		= time();
+		
 
 	}
 	
@@ -101,12 +93,27 @@ class Message_model extends CI_Model {
 		return TRUE;
 	}
 
-	public function get_messages_thread($user_id, $uid_thread='') 
+	public function get_messages_thread($user_id='', $username_thread='', $limit=20, $offset=0) 
 	{
-		if(empty($user_id)) return FALSE;
+		if(empty($user_id) ) {
+			if($this->session->userdata('user_id') == '') {
+				echo 'no user provided';
+				return FALSE;
+			} else {
+				$user_id = $this->session->userdata('user_id');
+			}
+		}
 		//if(empty($user_thread)) return FALSE;
+		$this->uid_thread = $this->get_user_id($username_thread);
+		$this->load->model('user_model');
+		$this->profile_images = array();
 		
+		$this->profile_images[$user_id] = $this->user_model->get_profile_photo($user_id);
+		$this->profile_images[$this->uid_thread] = $this->user_model->get_profile_photo($this->uid_thread);
 		
+		//$username_thread_profile_img_url = $this->user_model->get_profile_photo($this->uid_thread);
+		
+
 		$this->db->select('privmsgs_id as msg_id, 
 			privmsgs_type as msg_type,
 			users.user_id as from_uid, 
@@ -119,12 +126,67 @@ class Message_model extends CI_Model {
 		$this->db->join('phpbb_privmsgs', 'users.user_id = phpbb_privmsgs.privmsgs_from_userid');
 		$this->db->join('users u2', 'u2.user_id = phpbb_privmsgs.privmsgs_to_userid');
 		$this->db->join('phpbb_privmsgs_text', 'phpbb_privmsgs.privmsgs_id = phpbb_privmsgs_text.privmsgs_text_id');
-		$where = "privmsgs_to_userid = '".$user_id."' AND privmsgs_from_userid = '".$uid_thread."' OR privmsgs_to_userid= '".$uid_thread."' AND privmsgs_from_userid = '".$user_id."'";
+		$where = "privmsgs_to_userid = '".$user_id."' AND privmsgs_from_userid = '".$this->uid_thread."' OR privmsgs_to_userid= '".$this->uid_thread."' AND privmsgs_from_userid = '".$user_id."'";
 		$this->db->where($where);
 		$this->db->group_by('msg_date'); // TODO: will need to update db to get rid of dups because old system puts a dup row with a privmsgs type 2 (sent email)
-		//$this->db->limit($limit,$offset);
+		$this->db->limit($limit,$offset);
 		$query = $this->db->get();
-		return $query->result_array();
+		if($query->num_rows() > 0)
+		{
+			$this->results = array();	
+			foreach($query->result() as $row)
+			{
+				$row->from_username_img_url = $this->profile_images[$row->from_uid];
+				$this->results[] = $row;
+			}
+		}
+		//return $query->result_array();
+		return $this->results;
+	}
+	
+	public function get_message_type($msg_type_code)
+	{
+		switch ($msg_type_code) {
+					case $this->privmsgs_read_mail:
+						$this->msg_type = 'read';
+						break;
+					case $this->privmsgs_new_mail:
+						$this->msg_type = 'new';
+						break;
+					case $this->privmsgs_sent_mail:
+						$this->msg_type = 'sent';
+						break;
+					case $this->privmsgs_saved_in_mail:
+						$this->msg_type = 'savedin';
+						break;
+					case $this->privmsgs_saved_out_mail:
+						$this->msg_type = 'savedout';
+						break;
+					case $this->privmsgs_unread_mail:
+						$this->msg_type = 'unread';
+						break;
+					default:
+						$this->msg_type = 'unknown';
+						break;
+				}
+		return $this->msg_type;
+	}
+	
+	public function get_user_id($username)
+	{
+		$this->db->select('user_id');
+		$this->db->where('user_username', $username);
+		$this->db->from('users');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row(); 
+		   return $row->user_id;
+		} else {
+			return FALSE;
+		}
 	}
 }
+
+
 ?>
