@@ -109,6 +109,26 @@ class V1 extends REST_Controller
             $this->response(array('error' => 'Couldn\'t find any messages!'), 404);
         }
     }
+	
+	function messagethread_post() //create
+    {
+        $this->load->model('message_model');
+        $this->load->library('form_validation');
+		$this->msg_text = $this->post('msg_text',TRUE);
+		/*
+		if ( ! is_array($str)) {
+            return (trim($str) == '') ? FALSE : TRUE;
+        } else {
+            return ( ! empty($str));
+        }*/
+		$this->message = $this->message_model->new_message($this->session->userdata('username'), $this->post('to_username'), $this->msg_text);
+		
+		
+
+        //$message = array('id' => $this->get('id'), 'msg_text' => $this->post('msg_text',TRUE).' '.$this->input->ip_address(), 'msg_date'=>'2013-03-03 18:43:29', 'message' => 'ADDED!');
+        
+        $this->response($this->message, 200); // 200 being the HTTP response code
+    }
 
     function messages_get()  // read
     {
@@ -116,7 +136,7 @@ class V1 extends REST_Controller
     	$this->load->helper('text');
        // $users = $this->user_model->get_all($this->get('limit') );
         //$users = $this->user_model->get_all();
-		$messages = $this->message_model->get_messages(60); //3267
+		$messages = $this->message_model->get_messages($this->session->userdata('user_id')); // TODO: fix this
 
         if($messages)
         {
@@ -131,7 +151,7 @@ class V1 extends REST_Controller
 
     function messages_post() //create
     {
-        //$this->message_model->updateUser( $this->get('id') );
+        //$this->message_model->updateUser($this->session->userdata('user_id'), $this->post('to_username'), $this->post('msg_reply_text') );
         $message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
         
         $this->response($message, 200); // 200 being the HTTP response code

@@ -38,6 +38,14 @@ photos/ -?
 rating/ internal app rating 
 styles/ -replace by css
 
+db changes:::::::::::::::::::::
+
+ALTER TABLE  `phpbb_privmsgs` 
+ADD  `privmsgs_ip_address` INT( 10 ) UNSIGNED NULL DEFAULT NULL COMMENT  'ip address of sendee' 
+AFTER  `privmsgs_date`
+
+gotten structure from http://daipratt.co.uk/mysql-store-ip-address/
+
 
 2013-12-02 4:57am
 downloaded the rest server from

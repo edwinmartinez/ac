@@ -27,6 +27,8 @@ class Messages extends CI_Controller{
 		 //$this->lang->load('messages');
 		$data['messages'] =  empty($thread_username)? FALSE:$this->message_model->get_messages_thread($this->session->userdata('user_id'),$thread_username);
 		$data['thread_username'] =  empty($thread_username)? FALSE:$thread_username;
+		$data['username'] = $this->session->userdata('username');
+		$data['username_img_url'] = $this->user_model->get_profile_photo($this->session->userdata('user_id'));
 		//$data['messages'] =  $this->message_model->get_messages();
 		//$data['messages'] = $this->message_model->get_messages(3267);
 		

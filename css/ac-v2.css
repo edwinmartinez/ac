@@ -226,6 +226,19 @@ div.new {
 }
 
 /* --------------- Messages page ------------------------------- */
+ul#sidebarMessagesNav{
+	margin:0;
+	padding:0;
+	margin-left: 4px;
+	margin-top: 4px;
+	position: relative;
+	display: block;
+}
+#sidebarMessagesNav li {
+	display: inline;
+	list-style-type: none;
+	margin-right: 10px;
+}
 #threadMessageList {
 	margin:0;
 	padding:0;	
@@ -243,8 +256,37 @@ div.new {
 	float: left;
 	margin-right: 10px;
 }
+.threadMessageItem-from {
+	float: left;
+}
+.ThreadMessageItem-time {
+	float: right;
+}
 .ThreadMessageItem-text {
 	margin-left: 43px;
+	margin-top: -8px;
+	clear:both;
+	font-size: .9em;
+}
+.threadMessageItem-replyField {
+	width: 80%;
+}
+.messageThreadForm {
+	background-color: #f5f5f5;
+	padding-top: 20px;
+	border-top: 1px solid #e5e5e5;
+}
+.messageThreadForm .controls {
+	margin-left: 10px;
+
+}
+.messageThreadForm .form-actions {
+	padding-left: 10px;
+    padding: 0px 12px 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border-top: none;
 }
 .notif-counter {
 	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;

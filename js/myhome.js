@@ -20,31 +20,37 @@
   	url:'/index.php/api/v1/messages.json'
   });
 
-  MyHome.ThreadMessagesCollection = Backbone.Collection.extend({
+  MyHome.ThreadMessages = Backbone.Collection.extend({
   	initialize: function(){
   		console.log('init messagesThread collection thread_username:'+MyHome.thread_username);
   		this.url = '/index.php/api/v1/messagethread.json?thread_username='+MyHome.thread_username;
+  		
   	},
   	model:MyHome.ThreadMessage
   });
 
   // View --------------------------------------------------------------
-MyHome.ThreadMessages = Backbone.View.extend({
+MyHome.ThreadMessagesIndex = Backbone.View.extend({
   	tagName: 'div',
-  	//className:'dropdown',
-  	//idName:'msgDropdown',
     template: template('messagesThread'),
     initialize: function() {
-      this.messages = new MyHome.ThreadMessagesCollection();
-      this.messages.on('reset', this.render, this);
+     this.messages = new MyHome.ThreadMessages();
+      //this.messages.on('reset', this.render, this);
+      this.messages.on('all',   this.render, this);
       this.messages.fetch();
-      console.log('init threadMessages');
-      console.log(this);
+      console.log('init threadMessagesIndex');
+      //console.log(this);
     },
     render: function() {
       this.$el.html(this.template(this));
       this.messages.each(this.addMessage, this);
+      //var form = new MyHome.ThreadMessages.Form({collection: this.messages});
+      //this.$el.append(form.render().el);
       return this;
+    },
+    refetch: function() {
+    	this.messages.fetch({remove: false});
+    	console.log('hi');
     },
     addMessage: function(message) {
 		var view = new MyHome.ThreadMessage({model: message});
@@ -57,6 +63,53 @@ MyHome.ThreadMessages = Backbone.View.extend({
     },
     count: function() {
       return this.messages.length;
+    }
+  });
+ 
+   
+  MyHome.ThreadMessage = Backbone.View.extend({
+  	tagName: 'li',
+    template: template('messageThreadItem'),
+    render: function() {
+      this.$el.html(this.template(this));
+      return this;
+    },
+    //msg_user:        function() { return this.model.get('msg_thread_username'); },
+    //msg_user_img_url: function() { return this.model.get('msg_thread_username_img_url'); },
+    id: function() { return this.model.get('msg_id'); },
+    msg_text: function() { return this.model.get('msg_text'); },
+    //msg_type: function() { return this.model.get('msg_type'); },
+   	//msg_time: function() { return $.timeago(this.model.get('msg_date')); },
+   	msg_time: function() { return this.model.get('msg_date'); },
+   	from_username_img_url: function() { return this.model.get('from_username_img_url'); },
+   	from_username: function() { return this.model.get('from_username'); },
+   	to_username: function() { return this.model.get('to_username'); }
+  }); 
+  
+
+  MyHome.ThreadMessages.Form = Backbone.View.extend({
+    tagName: 'form',
+    className: 'form-horizontal messageThreadForm',
+    template: template('messageThreadForm'),
+    events: {
+      'submit': 'add'
+    },
+    render: function() {
+     this.$el.html(this.template(this));
+     console.log('form render');
+     return this;
+    },
+    add: function(event) {
+      event.preventDefault();
+		$('#msg_reply_text').val($.trim($('#msg_reply_text').val())); //trim it
+		if( this.$('#msg_reply_text').val().length != 0 ) { //if the value has something
+			this.collection.create({
+		       msg_text: this.$('#msg_reply_text').val(),
+		        to_username: MyHome.thread_username,
+		        
+			});
+			this.render();
+		}
     }
   });
 
@@ -92,24 +145,6 @@ MyHome.ThreadMessages = Backbone.View.extend({
       return this.messages.length;
     }
   });
- 
-   
-  MyHome.ThreadMessage = Backbone.View.extend({
-  	tagName: 'li',
-    template: template('messageThreadItem'),
-    render: function() {
-      this.$el.html(this.template(this));
-      return this;
-    },
-    //msg_user:        function() { return this.model.get('msg_thread_username'); },
-    //msg_user_img_url: function() { return this.model.get('msg_thread_username_img_url'); },
-    msg_text: function() { return this.model.get('msg_text'); },
-    //msg_type: function() { return this.model.get('msg_type'); },
-   	//msg_date: function() { return this.model.get('msg_date'); },
-   	from_username_img_url: function() { return this.model.get('from_username_img_url'); },
-   	from_username: function() { return this.model.get('from_username'); },
-   	to_username: function() { return this.model.get('to_username'); }
-  }); 
   
   
   MyHome.IndexMessages = Backbone.View.extend({
@@ -132,6 +167,9 @@ MyHome.ThreadMessages = Backbone.View.extend({
     addMessage: function(message) {
       var view = new MyHome.IndexMessage({model: message});
       this.$('.dropdown-messages').append(view.render().el);
+      $('div.messageItem').click(function(){
+			document.location.href = $(this).attr('rel');
+		});
       //$('#messagesHeader-title').append(view.render().el);
     },
     count: function() {
@@ -150,9 +188,27 @@ MyHome.ThreadMessages = Backbone.View.extend({
     msg_user_img_url: function() { return this.model.get('msg_thread_username_img_url'); },
     msg_text: function() { return this.model.get('msg_text'); },
     msg_type: function() { return this.model.get('msg_type'); },
-   	msg_date: function() { return this.model.get('msg_date'); },
+   	msg_time: function() { return $.timeago(this.model.get('msg_date')); },
    	msg_thread_username: function() { return this.model.get('msg_thread_username'); }
   });
+
+
+	MyHome.SelectedThread = function(){
+		var threadView = new MyHome.ThreadMessagesIndex();
+        	$('#main-content').empty();
+        	$('#main-content').append(threadView.render().el);
+        	var form = new MyHome.ThreadMessages.Form({collection: threadView.messages});
+      //this.$el.append(form.render().el);
+      	//template: template('messageItem'),
+        	$('#messagesRespond').html(form.render().el);
+        	return this;
+        	/*setInterval(function(){
+        		//$('#main-content').empty();
+        		//$('#main-content').html(threadView.render().el);
+        		//MyHome.ThreadMessages().fetch();
+        		threadView.refetch();
+        		},5000);*/
+	}
 
   // Router --------------------------------
   MyHome.Router = Backbone.Router.extend({
@@ -172,11 +228,8 @@ MyHome.ThreadMessages = Backbone.View.extend({
       	var sidebarView = new MyHome.SidebarMessages();
       	$('#messageList').empty();
       	$('#messageList').append(sidebarView.render().el);
-      	
         if(MyHome.thread_username.length) { //we are looking at a selected thread
-        	var threadView = new MyHome.ThreadMessages();
-        	$('#main-content').empty();
-        	$('#main-content').append(threadView.render().el);
+        	MyHome.SelectedThread();	
         }
         
       }

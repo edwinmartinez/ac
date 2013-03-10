@@ -8,6 +8,7 @@ $lang['messages_other'] = 'Otros';
 $lang['messages_unread'] = 'No leidos';
 $lang['messages_archived'] = 'Archivados';
 $lang['messages_spam'] = 'Spam';
+$lang['messages_reply'] = 'Responder';
 $lang['messages_cannot_answer_to_conversation'] = 'No puedes responder a esta conversación';
 $lang['messages_new_message'] = 'Mensaje Nuevo';
 $lang['messages_there_are_no_selected_conversations'] = 'No hay conversaciones seleccionadas';

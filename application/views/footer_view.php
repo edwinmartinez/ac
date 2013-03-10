@@ -19,6 +19,7 @@
 </body>
 <?php 
 	$loadjs = array(
+			'jquery.timeago.js',
 			'underscore.min.js',
 			'backbone.js',
 			'mustache.js',
@@ -37,7 +38,13 @@
  ?>
   <script type="text/javascript">
    $(function() { 
-   	<?php if(!empty($thread_username)) echo 'MyHome.thread_username = \''. $thread_username . '\';'."\n"; ?>
+  
+   	<?php if($this->uri->segment(1) == 'messages') {
+   		 echo 'MyHome.username = '."'".$username."';\n";
+   		 echo 'MyHome.username_img_url = '."'".$username_img_url."';\n";
+		 echo 'MyHome.thread_username = '."'".$thread_username."';\n";
+	}	
+   	?>
  	  MyHome.boot($('#msgDropdown')); 
  	});
  </script>

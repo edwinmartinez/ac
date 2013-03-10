@@ -10,8 +10,8 @@ class Message_model extends CI_Model {
 	
 	 public function __construct()
 	 {
-	  parent::__construct();
-	  $this->load->helper('text');
+		parent::__construct();
+		$this->load->helper('text');
 	 }
 
 	public function get_messages($user_id = '',$limit=10,$offset=0)
@@ -129,6 +129,7 @@ class Message_model extends CI_Model {
 		$where = "privmsgs_to_userid = '".$user_id."' AND privmsgs_from_userid = '".$this->uid_thread."' OR privmsgs_to_userid= '".$this->uid_thread."' AND privmsgs_from_userid = '".$user_id."'";
 		$this->db->where($where);
 		$this->db->group_by('msg_date'); // TODO: will need to update db to get rid of dups because old system puts a dup row with a privmsgs type 2 (sent email)
+		$this->db->order_by("msg_timestamp", "desc");
 		$this->db->limit($limit,$offset);
 		$query = $this->db->get();
 		if($query->num_rows() > 0)
@@ -141,7 +142,7 @@ class Message_model extends CI_Model {
 			}
 		}
 		//return $query->result_array();
-		return $this->results;
+		return array_reverse($this->results);
 	}
 	
 	public function get_message_type($msg_type_code)
@@ -172,6 +173,66 @@ class Message_model extends CI_Model {
 		return $this->msg_type;
 	}
 	
+	public function new_message($from_username='', $to_username, $msg_text, $msg_type='')
+	{
+		// let's take care of the from_user_id
+		if(empty($from_username) ) {
+			if($this->session->userdata('user_id') == '') {
+				echo 'no from username provided';
+				return FALSE;
+			} else {
+				$this->from_user_id = $this->session->userdata('user_id');
+			}
+		} else {
+			$this->from_user_id = $this->get_user_id($from_username);
+		}
+		if(empty($to_username)) {
+			echo 'no to_username provided';
+			die;
+		}
+
+		$this->to_user_id = $this->get_user_id($to_username);
+		
+		$this->msg_text = $msg_text;
+		
+		$this->msg_type = (empty($msg_type))? $this->privmsgs_unread_mail:$msg_type;
+	
+		$data=array(
+		    'privmsgs_from_userid' => $this->from_user_id,
+		    'privmsgs_to_userid' => $this->to_user_id,
+		    'privmsgs_subject' => 'msg',
+		    'privmsgs_type' => $msg_type,
+			'privmsgs_date' => time(),
+			'privmsgs_ip_address' => ip2long($this->input->ip_address()) //using the new field
+		);
+		$this->db->insert('phpbb_privmsgs',$data);
+		//get the last inserts id and insert it in gen_prefs
+		$this->msg_id = $this->db->insert_id();
+		$data = array();
+		$data = array(
+			'privmsgs_text_id' => $this->msg_id,
+			'privmsgs_text' => $msg_text
+		);
+		$this->db->insert('phpbb_privmsgs_text',$data);
+
+		$this->load->model('user_model');
+		
+		
+			
+		$message = array(
+			'msg_id' => $this->msg_id,
+			'msg_date' => time(),
+			'msg_text' => $this->msg_text,
+			'from_username' => $from_username,
+			'from_username_img_url' => $this->user_model->get_profile_photo($this->from_user_id),
+			'to_username' => $to_username
+			
+		);
+		
+		
+		return $message;
+	}
+	
 	public function get_user_id($username)
 	{
 		$this->db->select('user_id');
@@ -186,7 +247,8 @@ class Message_model extends CI_Model {
 			return FALSE;
 		}
 	}
+	
+	
 }
-
 
 ?>

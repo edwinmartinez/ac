@@ -24,7 +24,7 @@
 							<a href="#">Crear Nuevo Mensaje</a></li>
 						</div>
 					<li class="divider"></li>
-					<div>something</div>
+				
 				
                 </ul>
               
@@ -39,7 +39,7 @@
 		<div class="messageItem-msg">
 			<a href="#">{{ msg_text }}</a>
 		</div>
-		<div class="messageItem-date">{{ msg_date }}</div>
+		<div class="messageItem-date">{{ msg_time }}</div>
 	</div>
  </script>
 
