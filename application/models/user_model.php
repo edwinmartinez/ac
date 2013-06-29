@@ -210,7 +210,7 @@ class User_model extends CI_Model {
 	}
 	
 	/*
-	Preform a search on customers
+	Perform a search on customers
 	*/
 	function search($search)
 	{
@@ -218,7 +218,7 @@ class User_model extends CI_Model {
 		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
 		//$this->db->join('people','customers.person_id=people.person_id');		
 		$this->db->where("(user_first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
-		user_first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		user_last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
 		user_email LIKE '%".$this->db->escape_like_str($search)."%' or 
 		user_city LIKE '%".$this->db->escape_like_str($search)."%' or 
 		CONCAT(`user_first_name`,' ',`user_last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and status=1");		

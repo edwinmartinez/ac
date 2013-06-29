@@ -5,8 +5,9 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title><?php echo (isset($title)) ? $title : "AmigoCupido" ?> </title>
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap.css" />
- <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/ac-v2.css" />
+ <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/ac-v2.css"  media="all" />
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap-responsive.css" />
+ <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/jquery.jscrollpane.css"  media="all" />
  <script src="<?php echo base_url();?>js/jquery.js"></script>
  <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
  

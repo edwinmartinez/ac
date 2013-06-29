@@ -32,30 +32,53 @@
   // View --------------------------------------------------------------
 MyHome.ThreadMessagesIndex = Backbone.View.extend({
   	tagName: 'div',
+  	className: 'messagesThreadWrapper',
     template: template('messagesThread'),
     initialize: function() {
      this.messages = new MyHome.ThreadMessages();
       //this.messages.on('reset', this.render, this);
-      this.messages.on('all',   this.render, this);
+      this.messages.on('reset',   this.render, this);
       this.messages.fetch();
+		
+		this.paneSettings = {
+					showArrows: false
+				};
+		this.pane = $('#threadMessages');
+		//this.pane.jScrollPane(this.paneSettings);
+		this.paneApi = this.pane.jScrollPane(this.paneSettings).data('jsp');
+		//this.paneApi.reinitialise();
+		//$('#threadMessages').jScrollPane();
+		
       console.log('init threadMessagesIndex');
       //console.log(this);
     },
     render: function() {
-      this.$el.html(this.template(this));
-      this.messages.each(this.addMessage, this);
-      //var form = new MyHome.ThreadMessages.Form({collection: this.messages});
-      //this.$el.append(form.render().el);
-      return this;
+		this.$el.html(this.template(this));
+		this.messages.each(this.addMessage, this);
+		//var form = new MyHome.ThreadMessages.Form({collection: this.messages});
+		//this.$el.append(form.render().el);
+		
+		var element = $('#threadMessages').jScrollPane(this.paneSettings);
+		var api = element.data('jsp');
+		
+		console.log('paneApi',element);
+		
+		//$('#threadMessages').jScrollPane(this.paneSettings).data('jsp').scrollToBottom();
+		//element.data('jsp').scrollToBottom();
+		//this.paneApi.reinitialise();
+		
+		
+		return this;
     },
     refetch: function() {
     	this.messages.fetch({remove: false});
-    	console.log('hi');
+    	console.log('refecthing');
     },
     addMessage: function(message) {
 		var view = new MyHome.ThreadMessage({model: message});
 		this.$('#threadMessageList').append(view.render().el);
 		console.log('added message to thread');
+		//var api = element.data('jsp');
 		$('div.messageItem').click(function(){
 			document.location.href = $(this).attr('rel');
 		});
@@ -105,8 +128,7 @@ MyHome.ThreadMessagesIndex = Backbone.View.extend({
 		if( this.$('#msg_reply_text').val().length != 0 ) { //if the value has something
 			this.collection.create({
 		       msg_text: this.$('#msg_reply_text').val(),
-		        to_username: MyHome.thread_username,
-		        
+		        to_username: MyHome.thread_username
 			});
 			this.render();
 		}
@@ -123,12 +145,12 @@ MyHome.ThreadMessagesIndex = Backbone.View.extend({
       this.messages = new MyHome.Messages();
       this.messages.on('reset', this.render, this);
       this.messages.fetch();
-      //console.log(this);
       console.log('init sidebarMessages');
     },
     render: function() {
       this.$el.html(this.template(this));
       this.messages.each(this.addMessage, this);
+      
       console.log(this);
       return this;
     },
@@ -139,6 +161,7 @@ MyHome.ThreadMessagesIndex = Backbone.View.extend({
 		$('div.messageItem').click(function(){
 			document.location.href = $(this).attr('rel');
 		});
+		
       //$('#messagesHeader-title').append(view.render().el);
     },
     count: function() {

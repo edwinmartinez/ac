@@ -226,6 +226,13 @@ div.new {
 }
 
 /* --------------- Messages page ------------------------------- */
+div.l-sidebar-left {
+	
+}
+#sidebarMessageList {
+	max-height: 400px;
+	overflow: auto;
+}
 ul#sidebarMessagesNav{
 	margin:0;
 	padding:0;
@@ -238,6 +245,10 @@ ul#sidebarMessagesNav{
 	display: inline;
 	list-style-type: none;
 	margin-right: 10px;
+}
+#threadMessages {
+	max-height: 400px;
+	overflow: auto;
 }
 #threadMessageList {
 	margin:0;
