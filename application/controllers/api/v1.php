@@ -155,24 +155,6 @@ class V1 extends REST_Controller
         $this->response($message, 200); // 200 being the HTTP response code
     }
 	
-	function users_get()  // read
-    {
-		$this->load->model('message_model');
-    	$this->load->helper('text');
-       // $users = $this->user_model->get_all($this->get('limit') );
-        //$users = $this->user_model->get_all();
-		$messages = $this->message_model->get_messages($this->session->userdata('user_id')); // TODO: fix this
-
-		if($messages)
-        {
-            $this->response($messages, 200); // 200 being the HTTP response code
-        }
-
-        else
-        {
-            $this->response(array('error' => 'Couldn\'t find any messages!'), 404);
-        }
-    }
 	
 	public function messages_put() //update
 	{
