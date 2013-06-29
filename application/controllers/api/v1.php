@@ -98,12 +98,10 @@ class V1 extends REST_Controller
         // TODO: check for login
 		$messages = $this->message_model->get_messages_thread($this->session->userdata('user_id'),$this->get('thread_username'));
 
-		
         if($messages)
         {
             $this->response($messages, 200); // 200 being the HTTP response code
         }
-
         else
         {
             $this->response(array('error' => 'Couldn\'t find any messages!'), 404);

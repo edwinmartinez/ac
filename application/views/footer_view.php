@@ -23,6 +23,9 @@
 			'underscore.min.js',
 			'backbone.js',
 			'mustache.js',
+			'jquery.mousewheel.js',
+			'jquery.jscrollpane.min.js',
+			//'jquery.nicescroll.min.js',
 			//'backbone-localstorage.js',
 			'myhome.js'
 	);

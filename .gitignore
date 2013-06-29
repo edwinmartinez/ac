@@ -6,5 +6,6 @@ test*.php
 .buildpath
 error_log
 fastphp.ini
+registrate-closed.php
 *~
 includes/templates/templates_c/*.php

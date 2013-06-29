@@ -58,8 +58,9 @@
 	</div>
 </script>
 
+<!-- Reply form -->
 <script type="text/x-mustache-template" id="messageThreadForm-template">
-		      <fieldset>
+	<fieldset>
 		<div class='control-group'>
           <div class='controls'>
             <textarea class='input-xlarge threadMessageItem-replyField' id="msg_reply_text" name="msg_reply_text"></textarea>
@@ -68,5 +69,5 @@
 		        <div class="form-actions">
 		          <button type="submit" class="btn btn-primary"><?php echo $this->lang->line('messages_reply'); ?></button>
 		        </div>
-		      </fieldset>
+	</fieldset>
 </script>
