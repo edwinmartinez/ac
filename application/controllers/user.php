@@ -43,7 +43,7 @@ class User extends CI_Controller{
 		  
 		  //if($result)  redirect('/index_v1.php', 'refresh'); //TODO: fix this line to use the internal login
 		  //if($result) redirect($this->config->item.'/micuenta?p='.$_REQUEST['p']);
-		  else        $this->index();
+		  else        $this->index($this->lang->line('error_invalid_username_or_password'));
 		}
 		else{
 			$this->index('Empty Login Vars');

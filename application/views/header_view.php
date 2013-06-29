@@ -72,7 +72,7 @@
          
               	<?php endif;  ?>
             </ul>
-            <?  if($this->session->userdata('username') == '' ) :?>
+            <?php  if($this->session->userdata('username') == '' ) :?>
 		           <?php echo form_open("user/login",'class="navbar-form pull-right"'); ?>
 		              <input class="span2" name="login" type="text" placeholder="<?php echo $this->lang->line('users_email'); ?>">
 		              <input class="span2" name="pass" type="password" placeholder="<?php echo $this->lang->line('users_password'); ?>">
