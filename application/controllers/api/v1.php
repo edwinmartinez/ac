@@ -70,8 +70,10 @@ class V1 extends REST_Controller
  
     function users_get()
     {
-       // $users = $this->user_model->get_all($this->get('limit') );
-        $users = $this->user_model->get_all();
+    	$get_all_options['offset'] = 0;
+		//$get_all_options['country_id'] = 10;
+		$get_all_options['gender'] = '1';	
+        $users = $this->user_model->get_all($get_all_options);
         /*$users = array(
 			array('id' => 1, 'from_username' => 'Some Guy', 'email' => 'example1@example.com'),
 			array('id' => 2, 'name' => 'Person Face', 'email' => 'example2@example.com'),
@@ -93,8 +95,6 @@ class V1 extends REST_Controller
     {
 		$this->load->model('message_model');
     	$this->load->helper('text');
-       // $users = $this->user_model->get_all($this->get('limit') );
-        //$users = $this->user_model->get_all();
         // TODO: check for login
 		$messages = $this->message_model->get_messages_thread($this->session->userdata('user_id'),$this->get('thread_username'));
 
@@ -132,8 +132,6 @@ class V1 extends REST_Controller
     {
 		$this->load->model('message_model');
     	$this->load->helper('text');
-       // $users = $this->user_model->get_all($this->get('limit') );
-        //$users = $this->user_model->get_all();
 		$messages = $this->message_model->get_messages($this->session->userdata('user_id')); // TODO: fix this
 
         if($messages)

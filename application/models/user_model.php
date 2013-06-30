@@ -149,43 +149,73 @@ class User_model extends CI_Model {
 	/*
 	* Gets an array of information about users
 	*/
-	function get_all($limit=20,$offset=0,$onlywithphotos=0,$shortinfo=TRUE)
+	//function get_all($limit=20,$offset=0,$onlywithphotos=0,$shortinfo=TRUE)
+	function get_all($options=array())
 	{
-		$limit = ($limit > 60) ? 60 : $limit ; //let's put a hard limit to the amount of users returned
+		$default_options = array (
+			'limit' => 20,
+			'offset' => 0,
+			'gender' => FALSE, // FALSE, 1 = male or 2 = female
+			'onlywithphotos' => 0,
+			'shortinfo' => TRUE,
+			'country_id' => FALSE,
+			'state_id' => FALSE,
+			'last_login' => FALSE,
+			'status' => 1,
+			'group'=> FALSE // groups: newregs
+		);
+		$options = array_merge($default_options,$options);
+		$options['limit'] = ($options['limit'] > 60) ? 60 : $options['limit'] ; //let's put a hard limit to the amount of users returned
 		$all_users = array();
 		$select_rows = array(
 			'user_id',
 			'user_username',
 			'user_email',
-			'user_gender',
+			'user_gender', // 1 = male, 2 = female
 			'user_birthdate',
 			'user_country_id',
 			'countries_name_es',
 			'countries_name',
 			'user_state_id',
 			'user_state_desc',
-			'zone_name'
+			'zone_name',
+			'user_last_login'
 		 );
 		 
-		 if($onlywithphotos) {
+		 if($options['onlywithphotos']) {
 		 	$select_rows[] = 'photo_filename';
 		 } else {
 			 $select_rows[] = '(SELECT photo_filename FROM users_gallery WHERE users_gallery.photo_uid = users.user_id AND users_gallery.use_in_profile = 1) AS photo_filename';
 		 }
 		 $select = join(', ', $select_rows);
 		 
-		if ($shortinfo)
+		if ($options['shortinfo'])
 			$this->db->select($select);
 		$this->db->from('users');	
 		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
 		$this->db->join('geo_regions', 'users.user_state_id = geo_regions.zone_id', 'left');
-		if($onlywithphotos) {
+		if($options['onlywithphotos']) {
 			$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid', 'left');
 			$this->db->where('users_gallery.use_in_profile',1);
 		}
-		$this->db->where('users.status',1);
-		$this->db->order_by("user_created", "desc"); 
-		$this->db->limit($limit, $offset);
+		if (!empty($options['gender'])) {
+			$this->db->where("users.user_gender",$options['gender']);
+		}
+		//pull either state or country id
+		if(!empty($options['state_id'])) {
+			$this->db->where("users.user_state_id",$options['state_id']);
+		} elseif (!empty($options['country_id'])) {
+			$this->db->where("users.user_country_id",$options['country_id']);
+		}
+		if($options['status'] != 1) { //if it's other than 1
+			$this->db->where('users.status',$options['status']);
+		} else {
+				$this->db->where('users.status',1);
+		}	
+		if(empty($options['group']) || $options['group'] == 'newregs') {
+			$this->db->order_by("user_created", "desc");
+		} 
+		$this->db->limit($options['limit'], $options['offset']);
 		$query = $this->db->get();
 		foreach($query->result() as $row)
 		{
