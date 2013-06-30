@@ -379,6 +379,12 @@ $config['site_name'] = 'AmigoCupido';
 $config['member_images_dir'] = 'membergallery';  
 $config['application_images_dir'] = 'images';
 $config['user_preferences_table'] = 'users_gen_pref';
+$config['friends_table'] = 'buddies';
+$config['favorite_people_table'] = 'users_fav_people';
+$config['profile_comments_table'] = 'users_profile_comments';
+$config['user_pass_reset_table'] = 'users_pass_reset';
+$config['user_prefs_table'] = 'users_gen_pref';
+$config['countries_table'] = 'countries';
 $config['top_countries'] = array("US","CA","ES","MX","GT","SV","HN","NI","CR","PA","DO","CU","CL","PR","PE","EC","VE","BO","UY","PY","AR","BR");
 $config['banned_countries'] = array(
 	"AF","AO","BD","SA","BN","BT","KH","TD","LB","RO","IO","MV","MR","KP","IQ",

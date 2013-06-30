@@ -147,7 +147,7 @@ class User_model extends CI_Model {
 	}
 	
 	/*
-	* Gets an array of information about users
+	* Returns an array of information about users
 	*/
 	//function get_all($limit=20,$offset=0,$onlywithphotos=0,$shortinfo=TRUE)
 	function get_all($options=array())
@@ -312,5 +312,51 @@ class User_model extends CI_Model {
 		}
 		 
 	}
+	
+	
+	function add_to_fav($user_id,$fav_uid){
+
+		if($user_id == "" || $fav_uid =="") {
+			echo $this->lang->line('error_error_while_processing');
+			return false;
+		}
+		$fav_users_table = $this->config->item('favorite_people_table');
+		//let's check if the user has allready requested the addition
+		
+		$this->db->from($fav_users_table);	
+		$this->db->where('user_id',$user_id);
+		$this->db->where('fav_uid',$fav_uid);
+		$query = $this->db->get();
+		
+		if($query->num_rows() == 0)
+		{
+			$sql = "INSERT into ".$fav_users_table." (user_uid, fav_uid, date) ".
+					"VALUES(".$user_id.", ".$fav_uid.", NOW())";
+			$this->db->query($sql);
+			return $this->db->affected_rows();
+		}
+		else
+		{
+			echo $this->lang->line('error_allready_added_to_fav');
+			return FALSE;
+		}
+	
+	}
+	
+	function delete_fav($user_id, $fav_uid){
+
+		if($user_id == "" || $fav_uid =="") {
+			echo $this->lang->line('error_error_while_processing');
+			return false;
+		}
+		$fav_users_table = $this->config->item('favorite_people_table');
+		$sql = "INSERT into ".$fav_users_table." (user_uid, fav_uid, date) ".
+				"VALUES(".$user_id.", ".$fav_uid.", NOW())";
+		$sql = "DELETE from ".$fav_users_table." WHERE user_uid = ".$user_id." AND fav_uid = ".$fav_uid;
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+	
+	
 }
 ?>
