@@ -53,7 +53,7 @@ class V1 extends REST_Controller
     
     function user_post()
     {
-        //$this->some_model->updateUser( $this->get('id') );
+        //$this->user_model->updateUser( $this->get('id') );
         $message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
         
         $this->response($message, 200); // 200 being the HTTP response code
@@ -61,7 +61,7 @@ class V1 extends REST_Controller
     
     function user_delete()
     {
-    	//$this->some_model->deletesomething( $this->get('id') );
+    	//$this->user_model->deleteuser( $this->get('id') );
         $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
         
         $this->response($message, 200); // 200 being the HTTP response code
@@ -70,7 +70,6 @@ class V1 extends REST_Controller
  
     function users_get()
     {
-       // $users = $this->user_model->get_all($this->get('limit') );
         $users = $this->user_model->get_all();
         /*$users = array(
 			array('id' => 1, 'from_username' => 'Some Guy', 'email' => 'example1@example.com'),
@@ -82,7 +81,6 @@ class V1 extends REST_Controller
         {
             $this->response($users, 200); // 200 being the HTTP response code
         }
-
         else
         {
             $this->response(array('error' => 'Couldn\'t find any users!'), 404);
