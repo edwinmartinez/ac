@@ -220,8 +220,8 @@ class User_model extends CI_Model {
 		foreach($query->result() as $row)
 		{
 			$row->state_name = ($row->user_state_id > 0) ? $row->zone_name : $row->user_state_desc ;
-			$row->profile_img = ($row->photo_filename != null)? $this->getProfilePhotoUrl($row->photo_filename) : '';
-			$row->profile_img = $this->getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
+			$row->profile_img = ($row->photo_filename != null)? $this->get_profile_photo_url($row->photo_filename) : '';
+			$row->profile_img = $this->get_profile_photo_url($row->photo_filename,'square',$row->user_gender);
 			unset($row->user_state_id);
 			unset($row->user_state_desc);
 			unset($row->zone_name);
@@ -274,7 +274,7 @@ class User_model extends CI_Model {
 		if($query->num_rows()>0) 
 		{
 			foreach ($query->result() as $row) {
-			    $this->profile_pic =  $this->getProfilePhotoUrl($row->photo_filename,'square',$row->user_gender);
+			    $this->profile_pic =  $this->get_profile_photo_url($row->photo_filename,'square',$row->user_gender);
 			}
 			return $this->profile_pic;
 		} else {
@@ -283,7 +283,7 @@ class User_model extends CI_Model {
 	}
 
 	// format can be suare or large
-	public function getProfilePhotoUrl($filename_in_db='',$format='square', $gender='')
+	public function get_profile_photo_url($filename_in_db='',$format='square', $gender='')
 	{
 		if(!empty($filename_in_db)) {
 		list($uid,$imgname,$extention) = explode(".", $filename_in_db);
