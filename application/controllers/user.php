@@ -12,24 +12,31 @@ class User extends CI_Controller{
 	*/
 	 public function index($topmessage='')
 	 {
-	  if(($this->session->userdata('username')!=""))
-	  {
-	  $this->myhome();
-	  // redirect('/users/myhome', 'location');
-	  }
-	  else{
-	  	$this->registration_form($topmessage);
-	  }
+		$this->checkUserLogin();
 	 }
 	 
 	 public function myhome()
 	 {
+	 	$username = $this->session->userdata('username');
+	 	if(empty($username)){
+	 		$this->registration_form();
+		}
 		$this->load->helper('text');
-		
 		$data['title']= $this->lang->line('common_welcome');
 		$this->load->view('header_view',$data);
 		$this->load->view('myhome_view.php', $data);
 		$this->load->view('footer_view',$data);
+	 }
+	 
+	 public function checkUserLogin() {
+	 	if(($this->session->userdata('username')!=""))
+		  {
+		  	$this->myhome();
+		  // redirect('/myhome', 'location');
+		  }
+		  else{
+		  	$this->registration_form();
+		  }
 	 }
 	 
 	 public function login()
@@ -39,7 +46,8 @@ class User extends CI_Controller{
 	 	if(!empty($login) && !empty($password) ){
 
 		  $result=$this->user_model->login($login,$password);
-		  if($result) $this->myhome();
+		  //if($result) $this->myhome();
+		  if($result) redirect('/myhome', 'location');
 		  
 		  //if($result)  redirect('/index_v1.php', 'refresh'); //TODO: fix this line to use the internal login
 		  //if($result) redirect($this->config->item.'/micuenta?p='.$_REQUEST['p']);

@@ -93,7 +93,7 @@
                   <li class="divider"></li>
                   <li class="nav-header">Nav header</li>
                   <li><a href="#">Separated link</a></li>
-                  <li><?php echo anchor('user/logout', 'Logout'); ?></li>
+                  <li><?php echo anchor('/logout', 'Logout'); ?></li>
                 </ul>
               </li>
     	</div>

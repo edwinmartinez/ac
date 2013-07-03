@@ -27,7 +27,8 @@
 			'jquery.jscrollpane.min.js',
 			//'jquery.nicescroll.min.js',
 			//'backbone-localstorage.js',
-			'myhome.js'
+			'myhome.js',
+			'users.js'
 	);
 	if ($this->uri->segment(1) == 'messages')
 	{

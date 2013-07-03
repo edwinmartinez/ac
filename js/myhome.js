@@ -319,7 +319,7 @@ MyHome.ThreadMessagesIndex = Backbone.View.extend({
     container = $(container);
     var router = new MyHome.Router({el: container})
     Backbone.history.start();
-  }
+  };
 
 
 })()

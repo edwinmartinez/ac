@@ -40,6 +40,8 @@
 
 //$route['default_controller'] = "welcome";
 $route['default_controller'] = 'user';
+$route['myhome'] = 'user/myhome';
+$route['logout'] = 'user/logout';
 $route['privacy-policy']   = 'content/privacy_policy';
 $route['terms-of-service'] = 'content/terms_of_service';
 $route['404_override'] = '';
