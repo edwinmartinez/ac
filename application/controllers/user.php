@@ -19,7 +19,8 @@ class User extends CI_Controller{
 	 {
 	 	$username = $this->session->userdata('username');
 	 	if(empty($username)){
-	 		$this->registration_form();
+	 		//$this->registration_form();
+			redirect('/', 'location');
 		}
 		$this->load->helper('text');
 		$data['title']= $this->lang->line('common_welcome');
@@ -31,8 +32,8 @@ class User extends CI_Controller{
 	 public function checkUserLogin() {
 	 	if(($this->session->userdata('username')!=""))
 		  {
-		  	$this->myhome();
-		  // redirect('/myhome', 'location');
+		  	//$this->myhome();
+		  	redirect('/myhome', 'location');
 		  }
 		  else{
 		  	$this->registration_form();

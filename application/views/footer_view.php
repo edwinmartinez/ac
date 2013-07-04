@@ -27,12 +27,14 @@
 			'jquery.jscrollpane.min.js',
 			//'jquery.nicescroll.min.js',
 			//'backbone-localstorage.js',
-			'myhome.js',
-			'users.js'
+			//'myhome.js',
+			//'users.js'
 	);
-	if ($this->uri->segment(1) == 'messages')
-	{
-	   // $loadjs[] = 'mymsgs.js';
+	if ($this->uri->segment(1) == 'messages') {
+	    $loadjs[] = 'myhome.js';
+	} elseif ($this->uri->segment(1) == 'myhome') {
+		$loadjs[] = 'myhome.js';
+		$loadjs[] = 'users.js';
 	}
 
  	foreach ($loadjs as $jsscript) {
@@ -47,9 +49,12 @@
    		 echo 'MyHome.username = '."'".$username."';\n";
    		 echo 'MyHome.username_img_url = '."'".$username_img_url."';\n";
 		 echo 'MyHome.thread_username = '."'".$thread_username."';\n";
-	}	
-   	?>
+	}
+	if ($this->uri->segment(1) == 'messages' || $this->uri->segment(1) == 'myhome') {	?>
  	  MyHome.boot($('#msgDropdown')); 
+ 	  Backbone.history.start();
+ 	
+ 	<?php } ?>
  	});
  </script>
 </html>

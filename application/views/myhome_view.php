@@ -13,11 +13,12 @@
 			
 			
 			<div class="row">
-				<h3><?php echo $this->lang->line('common_new_members'); ?></h3>
+				<h4><?php echo $this->lang->line('common_new_members'); ?></h4>
+				<div class="new-users">nothing</div>
 			</div>
 			
 			<div class="row">
-				<h3><?php echo $this->lang->line('common_my_fav'); ?></h3>
+				<h4><?php echo $this->lang->line('common_my_fav'); ?></h4>
 			</div>
 			
 			<div class="row">
@@ -26,7 +27,7 @@
 		</div>
 		
   		<div class="span10" style="background-color: #CCCCCC;">
-  			<h2>Hola, <?php echo $this->session->userdata('username'); ?>!</h2>
+  			<h3>Hola, <?php echo $this->session->userdata('username'); ?>!</h3>
   			[the wall]
   			
   			
@@ -39,4 +40,9 @@
 
 	</div><!--<div class="row-fluid">-->
 </div>
+<script type="text/template" id="user-template">
+	<div class="messageThreadItem">
+		<a href="#">{{ username }}</a>
+	</div>
+</script>
  
