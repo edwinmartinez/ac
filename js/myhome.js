@@ -1,7 +1,6 @@
 
-(function() {
-  var MyHome = {};
-  window.MyHome = MyHome;
+var MyHome = (function(MyHome) {
+
 	
   var template = function(name) {
     return Mustache.compile($('#'+name+'-template').html());
@@ -29,111 +28,110 @@
   	model:MyHome.ThreadMessage
   });
 
-  // View --------------------------------------------------------------
-MyHome.ThreadMessagesIndex = Backbone.View.extend({
-  	tagName: 'div',
-  	className: 'messagesThreadWrapper',
-    template: template('messagesThread'),
-    initialize: function() {
-     this.messages = new MyHome.ThreadMessages();
-      //this.messages.on('reset', this.render, this);
-      this.messages.on('reset',   this.render, this);
-      this.messages.fetch();
-		
-		this.paneSettings = {
-					showArrows: false
-				};
-		this.pane = $('#threadMessages');
-		//this.pane.jScrollPane(this.paneSettings);
-		this.paneApi = this.pane.jScrollPane(this.paneSettings).data('jsp');
-		//this.paneApi.reinitialise();
-		//$('#threadMessages').jScrollPane();
-		
-      console.log('init threadMessagesIndex');
-      //console.log(this);
-    },
-    render: function() {
-		this.$el.html(this.template(this));
-		this.messages.each(this.addMessage, this);
-		//var form = new MyHome.ThreadMessages.Form({collection: this.messages});
-		//this.$el.append(form.render().el);
-		
-		var element = $('#threadMessages').jScrollPane(this.paneSettings);
-		var api = element.data('jsp');
-		
-		console.log('paneApi',element);
-		
-		//$('#threadMessages').jScrollPane(this.paneSettings).data('jsp').scrollToBottom();
-		//element.data('jsp').scrollToBottom();
-		//this.paneApi.reinitialise();
-		
-		
-		return this;
-    },
-    refetch: function() {
-    	this.messages.fetch({remove: false});
-    	console.log('refecthing');
-    },
-    addMessage: function(message) {
-		var view = new MyHome.ThreadMessage({model: message});
-		this.$('#threadMessageList').append(view.render().el);
-		console.log('added message to thread');
-		//var api = element.data('jsp');
-		$('div.messageItem').click(function(){
-			document.location.href = $(this).attr('rel');
-		});
-      //$('#messagesHeader-title').append(view.render().el);
-    },
-    count: function() {
-      return this.messages.length;
-    }
-  });
+	  // View --------------------------------------------------------------
+	MyHome.ThreadMessagesIndex = Backbone.View.extend({
+	  	tagName: 'div',
+	  	className: 'messagesThreadWrapper',
+	    template: template('messagesThread'),
+	    initialize: function() {
+	     this.messages = new MyHome.ThreadMessages();
+	      //this.messages.on('reset', this.render, this);
+	      this.messages.on('reset',   this.render, this);
+	      this.messages.fetch();
+			
+			this.paneSettings = {
+						showArrows: false
+					};
+			this.pane = $('#threadMessages');
+			//this.pane.jScrollPane(this.paneSettings);
+			this.paneApi = this.pane.jScrollPane(this.paneSettings).data('jsp');
+			//this.paneApi.reinitialise();
+			//$('#threadMessages').jScrollPane();
+			
+	      console.log('init threadMessagesIndex');
+	      //console.log(this);
+	    },
+	    render: function() {
+			this.$el.html(this.template(this));
+			this.messages.each(this.addMessage, this);
+			//var form = new MyHome.ThreadMessages.Form({collection: this.messages});
+			//this.$el.append(form.render().el);
+			
+			var element = $('#threadMessages').jScrollPane(this.paneSettings);
+			var api = element.data('jsp');
+			
+			console.log('paneApi',element);
+			
+			//$('#threadMessages').jScrollPane(this.paneSettings).data('jsp').scrollToBottom();
+			//element.data('jsp').scrollToBottom();
+			//this.paneApi.reinitialise();
+			
+			
+			return this;
+	    },
+	    refetch: function() {
+	    	this.messages.fetch({remove: false});
+	    	console.log('refecthing');
+	    },
+	    addMessage: function(message) {
+			var view = new MyHome.ThreadMessage({model: message});
+			this.$('#threadMessageList').append(view.render().el);
+			console.log('added message to thread');
+			//var api = element.data('jsp');
+			$('div.messageItem').click(function(){
+				document.location.href = $(this).attr('rel');
+			});
+	      //$('#messagesHeader-title').append(view.render().el);
+	    },
+	    count: function() {
+	      return this.messages.length;
+	    }
+	});
  
    
-  MyHome.ThreadMessage = Backbone.View.extend({
-  	tagName: 'li',
-    template: template('messageThreadItem'),
-    render: function() {
-      this.$el.html(this.template(this));
-      return this;
-    },
-    //msg_user:        function() { return this.model.get('msg_thread_username'); },
-    //msg_user_img_url: function() { return this.model.get('msg_thread_username_img_url'); },
-    id: function() { return this.model.get('msg_id'); },
-    msg_text: function() { return this.model.get('msg_text'); },
-    //msg_type: function() { return this.model.get('msg_type'); },
-   	//msg_time: function() { return $.timeago(this.model.get('msg_date')); },
-   	msg_time: function() { return this.model.get('msg_date'); },
-   	from_username_img_url: function() { return this.model.get('from_username_img_url'); },
-   	from_username: function() { return this.model.get('from_username'); },
-   	to_username: function() { return this.model.get('to_username'); }
-  }); 
+	MyHome.ThreadMessage = Backbone.View.extend({
+	  	tagName: 'li',
+	    template: template('messageThreadItem'),
+	    render: function() {
+	      this.$el.html(this.template(this));
+	      return this;
+	    },
+	    //msg_user:        function() { return this.model.get('msg_thread_username'); },
+	    //msg_user_img_url: function() { return this.model.get('msg_thread_username_img_url'); },
+	    id: function() { return this.model.get('msg_id'); },
+	    msg_text: function() { return this.model.get('msg_text'); },
+	    //msg_type: function() { return this.model.get('msg_type'); },
+	   	//msg_time: function() { return $.timeago(this.model.get('msg_date')); },
+	   	msg_time: function() { return this.model.get('msg_date'); },
+	   	from_username_img_url: function() { return this.model.get('from_username_img_url'); },
+	   	from_username: function() { return this.model.get('from_username'); },
+	   	to_username: function() { return this.model.get('to_username'); }
+	}); 
   
 
-  MyHome.ThreadMessages.Form = Backbone.View.extend({
-    tagName: 'form',
-    className: 'form-horizontal messageThreadForm',
-    template: template('messageThreadForm'),
-    events: {
-      'submit': 'add'
-    },
-    render: function() {
-     this.$el.html(this.template(this));
-     console.log('form render');
-     return this;
-    },
-    add: function(event) {
-      event.preventDefault();
-		$('#msg_reply_text').val($.trim($('#msg_reply_text').val())); //trim it
-		if( this.$('#msg_reply_text').val().length != 0 ) { //if the value has something
-			this.collection.create({
-		       msg_text: this.$('#msg_reply_text').val(),
-		        to_username: MyHome.thread_username
-			});
-			this.render();
-		}
-    }
-  });
+	MyHome.ThreadMessages.Form = Backbone.View.extend({
+	    tagName: 'form',
+	    className: 'form-horizontal messageThreadForm',
+	    template: template('messageThreadForm'),
+	    events: {
+	      'submit': 'add'
+	    },
+	    render: function() {
+	     this.$el.html(this.template(this));
+	     return this;
+	    },
+	    add: function(event) {
+	      event.preventDefault();
+			$('#msg_reply_text').val($.trim($('#msg_reply_text').val())); //trim it
+			if( this.$('#msg_reply_text').val().length != 0 ) { //if the value has something
+				this.collection.create({
+			       msg_text: this.$('#msg_reply_text').val(),
+			        to_username: MyHome.thread_username
+				});
+				this.render();
+			}
+	    }
+	});
 
 
   MyHome.SidebarMessages = Backbone.View.extend({
@@ -235,91 +233,47 @@ MyHome.ThreadMessagesIndex = Backbone.View.extend({
 
   // Router --------------------------------
   MyHome.Router = Backbone.Router.extend({
-    initialize: function(options) {
-      this.el = options.el
-    },
-    routes: {
-      "": "index"
-    },
-    index: function() {
-      var view = new MyHome.IndexMessages();
-      this.el.empty();
-      this.el.append(view.render().el);
-      //does the messageList (the side bar for messages) exists then we are in the /messages area
-      // so we should do something
-      if($('#messageList').length) {
-      	var sidebarView = new MyHome.SidebarMessages();
-      	$('#messageList').empty();
-      	$('#messageList').append(sidebarView.render().el);
-        if(MyHome.thread_username.length) { //we are looking at a selected thread
-        	MyHome.SelectedThread();	
-        }
-        
-      }
-    }
-  });
-
-//recipes
-  /*  
-  MyHome.Recipe = Backbone.Model.extend({
-  });
-
-
-  MyHome.Recipes = Backbone.Collection.extend({
-    localStorage: new Store("recipes")
-  });
-  
-
-  MyHome.Index = Backbone.View.extend({
-    template: template('index'),
-    initialize: function() {
-      this.recipes = new MyHome.Recipes();
-      this.recipes.on('all', this.render, this);
-      this.recipes.fetch();
-      //this.fetch({ success: this.fetchSuccess, error: this.fetchError });
-      console.log('init index');
-    },
-    render: function() {
-      this.$el.html(this.template(this));
-      return this;
-    },
-    count: function() {
-      return this.recipes.length;
-    }
+	    initialize: function(options) {
+	      	this.el = options.el
+	    },
+	    routes: {
+	      	"": "index"
+	    },
+	    index: function() {
+	    	
+		      var view = new MyHome.IndexMessages();
+		      this.el.empty();
+		      this.el.append(view.render().el);
+		      
+		      //does the messageList (the side bar for messages) exists then we are in the /messages area
+		      // so we should do something
+		      if($('#messageList').length) {
+			      	var sidebarView = new MyHome.SidebarMessages();
+			      	$('#messageList').empty();
+			      	$('#messageList').append(sidebarView.render().el);
+			        if(MyHome.thread_username.length) { //we are looking at a selected thread
+			        	MyHome.SelectedThread();	
+			        }
+		      }
+		      
+		      //we check if the users module is loaded. the users.js module defines MyHome.Member
+		      // so we test for that
+		      if(MyHome.User){
+		      	//console.log('member',MyHome.Member);
+		      	console.log('myhome page');
+		      	var newUsersView = new MyHome.NewUsersList();
+		      	$('.new-users').empty();
+		      	$('.new-users').append(newUsersView.render());
+		      }
+	    }
   });
 
 
-   * To do:
-   *
-   * * MyHome.Index.Form
-   *   A view that renders a form which can be submitted
-   *   to create a new recipe
-   * * MyHome.Index should add a subview for each
-   *   recipe in the database
-   * * MyHome.Recipe
-   *   A view that renders an individual recipe
-   *   Also, a delete button to remove it
+	MyHome.boot = function(container) {
+	    container = $(container);
+	    MyHome.router = new MyHome.Router({el: container})
+	    //Backbone.history.start();
+	};
 
-
-  MyHome.Router = Backbone.Router.extend({
-    initialize: function(options) {
-      this.el = options.el
-    },
-    routes: {
-      "": "index"
-    },
-    index: function() {
-      var view = new MyHome.Index();
-      this.el.empty();
-      this.el.append(view.render().el);
-    }
-  });
-   */
-  MyHome.boot = function(container) {
-    container = $(container);
-    var router = new MyHome.Router({el: container})
-    Backbone.history.start();
-  };
-
-
-})()
+	return MyHome;
+})( MyHome || {} );
