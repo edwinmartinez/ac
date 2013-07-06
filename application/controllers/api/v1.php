@@ -70,7 +70,8 @@ class V1 extends REST_Controller
  
     function users_get()
     {
-    	$get_all_options['offset'] = 0;
+    	$page = $this->get('page');
+		$results_per_page = $this->get('rpp');
 		//$get_all_options['country_id'] = 10;
 		$get_all_options['gender'] = FALSE;	
         $users = $this->user_model->get_all($get_all_options);

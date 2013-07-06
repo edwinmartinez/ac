@@ -21,6 +21,7 @@ RewriteRule ^terminos_y_condiciones/$ /terminos_y_condiciones.php
 
 #RewriteRule ^messages/(.*)$ /index.php/messages/index/$1 [L]
 
+# codeigniter rules -----------------
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond $1 !^(index\.php|images|img|css|js|robots\.txt)
