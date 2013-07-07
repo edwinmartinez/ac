@@ -1,30 +1,66 @@
 /**
  * @author Edwin
+ * https://www.youtube.com/watch?v=HsEw2i4wQMM
  */
 
 var MyHome = (function(MyHome) {
 	console.log(MyHome); 
+	
+	var template = function(name) {
+		return Mustache.compile($('#'+name+'-template').html());
+	};
+
 	MyHome.User = Backbone.Model.extend({ });
 	
 	MyHome.Users = Backbone.Collection.extend({
-	  	//model:MyHome.User,
+	  	initialize: function(){
+  			console.log('init users collection');
+  		},
+	  	model:MyHome.User,
 	  	url:'/api/v1/users.json'
-	});
-	//MyHome.router - 
+	}); 
 	
 	MyHome.NewUsersList = Backbone.View.extend({
-		el: '.new-users',
+		//el: '.new-users',
+		tagName:'div',
+		template: template('user-list'),
 		initialize: function() {
-			//_.bindAll(this); //Make all methods in this class have `this` bound to this class
+			this.newUsers = new MyHome.Users();
+			this.newUsers.on('reset', this.render, this);
+			this.newUsers.fetch();
 		},
 		render: function() {
-			var that = this;
-			var newUsers = new MyHome.Users();
-			newUsers.fetch({
-				success: function(newUsers) { that.$el.html('something should show here'); }
-			});
-			
+			this.$el.html(this.template(this));
+			this.newUsers.each(this.renderNewUser, this);
+      		return this;
+			/*newUsers.fetch({
+				success: function(newUsers) { 
+					var template = _.template($('#user-list-template').html(), {users: newUsers.models});
+            		that.$el.html(template);
+				}
+			}); */
+		},
+		renderNewUser:function(user) {
+			//console.log(user);
+			var view = new MyHome.UserView({model: user});
+			$('.new-users-container').append(view.render().el);
+			//$('div.messageItem').click(function(){
+				//document.location.href = $(this).attr('rel');
+			//});
 		}
+		//username: function() { return this.model.get('user_username'); }
+	});
+	
+	
+	MyHome.UserView = Backbone.View.extend({
+  		tagName: 'div',
+    	template: template('user-unit'),
+    	render: function() {
+			this.$el.html(this.template(this));
+			return this;
+		},
+    	//msg_user:        function() { return this.model.get('msg_thread_username'); },
+		username: function() { return this.model.get('user_username'); }
 	});
 	
 	return MyHome;

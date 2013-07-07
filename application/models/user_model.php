@@ -170,7 +170,7 @@ class User_model extends CI_Model {
 		$select_rows = array(
 			'user_id',
 			'user_username',
-			'user_email',
+			//'user_email',
 			'user_gender', // 1 = male, 2 = female
 			'user_birthdate',
 			'user_country_id',

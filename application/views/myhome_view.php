@@ -14,7 +14,7 @@
 			
 			<div class="row">
 				<h4><?php echo $this->lang->line('common_new_members'); ?></h4>
-				<div class="new-users">nothing</div>
+				<div class="new-users-container"></div>
 			</div>
 			
 			<div class="row">
@@ -40,9 +40,24 @@
 
 	</div><!--<div class="row-fluid">-->
 </div>
-<script type="text/template" id="user-template">
-	<div class="messageThreadItem">
-		<a href="#">{{ username }}</a>
+
+<script type="text/x-mustache-template" id="user-list-template">
+		
+</script>
+
+<script type="text/x-mustache-template" id="user-unit-template">
+		<div class="ThreadMessageItem-text">{{username}}</div>
+</script>
+
+<script type="text/template" id="users-template">
+	<div>
+		<% _.each(newUsers, function(user) { %>
+          <div class="userListItem">
+          	<% console.log(user); %>
+            <%= htmlEncode(user.get('username')) %>
+          </div>
+        <% }); %>
+		
 	</div>
 </script>
  
