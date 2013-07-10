@@ -46,18 +46,12 @@
 </script>
 
 <script type="text/x-mustache-template" id="user-unit-template">
-		<div class="ThreadMessageItem-text">{{username}}</div>
-</script>
-
-<script type="text/template" id="users-template">
-	<div>
-		<% _.each(newUsers, function(user) { %>
-          <div class="userListItem">
-          	<% console.log(user); %>
-            <%= htmlEncode(user.get('username')) %>
-          </div>
-        <% }); %>
-		
-	</div>
+<div class="userUnit">
+		<div class="userUnit-imgDiv"><img class="userUnit-img" src="{{profile_img}}" /></div>
+		<div class="userUnit-info">
+			<div class="userUnit-age">{{age}}</div>
+			<div class="userUnit-username">{{username}}</div>
+		</div>
+</div>
 </script>
  

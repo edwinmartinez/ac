@@ -247,7 +247,7 @@ $config['encryption_key'] = '554321';
 */
 $config['sess_cookie_name']		= 'ac_session';
 $config['sess_expiration']		= 7200;
-$config['sess_expire_on_close']	= FALSE;
+$config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= FALSE;
 $config['sess_table_name']		= 'ac_sessions';

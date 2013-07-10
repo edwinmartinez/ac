@@ -311,6 +311,27 @@ ul#sidebarMessagesNav{
 	left:180px;
 }
 
+
+/* --------------- myhome ----------------------- */
+.new-users-container {
+	
+}
+.userUnit {
+	width: 160px;
+	clear: both;
+	margin-top: 4px;
+	background-color: #ccc;
+}
+img.userUnit-img {
+	width: 40px;
+	border: 1px solid #CCCCCC;
+}
+.userUnit-imgDiv {
+	float:left;
+}
+.userUnit-info{
+	margin-left: 4px;
+}
 #footer {
   padding: 60px;
   margin-top: 30px;

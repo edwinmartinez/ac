@@ -60,7 +60,11 @@ var MyHome = (function(MyHome) {
 			return this;
 		},
     	//msg_user:        function() { return this.model.get('msg_thread_username'); },
-		username: function() { return this.model.get('user_username'); }
+		username: function() { return this.model.get('user_username'); },
+		age: function() { return this.model.get('age'); },
+		user_gender: function() { return this.model.get('user_gender'); },
+		user_id: function() { return this.model.get('user_id'); },
+		profile_img: function() { return this.model.get('profile_img'); }
 	});
 	
 	return MyHome;

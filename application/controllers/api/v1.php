@@ -73,7 +73,8 @@ class V1 extends REST_Controller
     	$page = $this->get('page');
 		$results_per_page = $this->get('rpp');
 		//$get_all_options['country_id'] = 10;
-		$get_all_options['gender'] = FALSE;	
+		$get_all_options['gender'] = $this->session->userdata('seeks_gender');
+		$get_all_options['limit'] = 12;
         $users = $this->user_model->get_all($get_all_options);
         
         if($users)

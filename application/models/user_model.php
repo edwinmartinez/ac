@@ -21,6 +21,7 @@ class User_model extends CI_Model {
 	    $newdata = array(
 	      'user_id'  => $rows->user_id,
 	      'username'  => $rows->user_username,
+	      'seeks_gender' => $rows->user_seeks_gender,
 	      'user_email'    => $rows->user_email,
 	      'logged_in'  => TRUE,
 	    );
@@ -222,6 +223,7 @@ class User_model extends CI_Model {
 			$row->state_name = ($row->user_state_id > 0) ? $row->zone_name : $row->user_state_desc ;
 			$row->profile_img = ($row->photo_filename != null)? $this->get_profile_photo_url($row->photo_filename) : '';
 			$row->profile_img = $this->get_profile_photo_url($row->photo_filename,'square',$row->user_gender);
+			$row->age = $this->age_from_dob($row->user_birthdate);
 			unset($row->user_state_id);
 			unset($row->user_state_desc);
 			unset($row->zone_name);
@@ -357,6 +359,16 @@ class User_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 	
+	function age_from_dob($dob) {
+
+		list($y,$m,$d) = explode('-', $dob);
+		if (($m = (date('m') - $m)) < 0) {
+		    $y++;
+		} elseif ($m == 0 && date('d') - $d < 0) {
+		    $y++;
+		}
+		return date('Y') - $y;
+	}
 	
 }
 ?>
