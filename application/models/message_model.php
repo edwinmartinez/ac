@@ -104,7 +104,7 @@ class Message_model extends CI_Model {
 			}
 		}
 		//if(empty($user_thread)) return FALSE;
-		$this->uid_thread = $this->get_user_id($username_thread);
+		$this->uid_thread = $this->common->get_user_id($username_thread);
 		$this->load->model('user_model');
 		$this->profile_images = array();
 		
@@ -184,14 +184,14 @@ class Message_model extends CI_Model {
 				$this->from_user_id = $this->session->userdata('user_id');
 			}
 		} else {
-			$this->from_user_id = $this->get_user_id($from_username);
+			$this->from_user_id = $this->common->get_user_id($from_username);
 		}
 		if(empty($to_username)) {
 			echo 'no to_username provided';
 			die;
 		}
 
-		$this->to_user_id = $this->get_user_id($to_username);
+		$this->to_user_id = $this->common->get_user_id($to_username);
 		
 		$this->msg_text = $msg_text;
 		
@@ -231,21 +231,6 @@ class Message_model extends CI_Model {
 		
 		
 		return $message;
-	}
-	
-	public function get_user_id($username)
-	{
-		$this->db->select('user_id');
-		$this->db->where('user_username', $username);
-		$this->db->from('users');
-		$query = $this->db->get();
-		if ($query->num_rows() > 0)
-		{
-		   $row = $query->row(); 
-		   return $row->user_id;
-		} else {
-			return FALSE;
-		}
 	}
 	
 	

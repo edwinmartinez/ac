@@ -260,10 +260,18 @@ var MyHome = (function(MyHome) {
 		      // so we test for that
 		      if(MyHome.User){
 		      	//console.log('member',MyHome.Member);
-		      	console.log('myhome page');
+		      	console.log('users.js is loaded... starting');
 		      	var newUsersView = new MyHome.NewUsersList();
 		      	$('.new-users').empty();
 		      	$('.new-users').append(newUsersView.render());
+		      }
+		      
+		      if(MyHome.Userfeed){
+		      	//console.log('member',MyHome.Member);
+		      	console.log('statusfeed.js is loaded... starting');
+		      	var newUserFeed = new MyHome.UserFeedsView();
+		      	$('#feeds-container').empty();
+		      	$('#feeds-container').append(newUserFeed.render());
 		      }
 	    }
   });

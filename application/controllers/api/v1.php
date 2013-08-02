@@ -155,7 +155,52 @@ class V1 extends REST_Controller
 		var_dump($this->put('message_id'));
 	}
 	
+	public function statusfeed_get_old()
+	{
+		$out = array('id' => '43', 'statusfeed_username' => 'someuser', 'statusfeed_content' => 'some content here');
+        
+        $this->response($out, 200); // 200 being the HTTP response code
+	}
 	
+	function statusfeed_get()  // read --------------------------------------------------------
+    {
+		$this->load->model('user_model');
+    	$this->load->helper('text');
+		$user_id = $this->session->userdata('user_id');
+        // TODO: check for login
+        if(!empty($user_id)) {
+        	$feeds_per_page = $this->get('feeds_per_page');
+			$offset = $this->get('offset');
+			if(empty($feeds_per_page)) { $feeds_per_page = 10; }
+			$offset = ($offset >= 0)? $offset:0;
+			$ret_array = $this->user_model->get_statusfeed($user_id,$feeds_per_page,$offset);
+	
+	        if($ret_array)
+	        {
+	            $this->response($ret_array, 200); // 200 being the HTTP response code
+	        }
+	        else
+	        {
+	            $this->response(array('error_id'=>2,'error' => 'No feeds to show!'), 404);
+	        }
+		} else { //user not logged
+			$this->response(array('error_id'=>1,'error' => 'You need to log in!'), 404);
+		}
+    }
+	
+	public function statusfeed_post() // new --------------------------------------
+	{
+		$this->load->model('user_model');
+        $this->load->library('form_validation');
+		$user_id = $this->session->userdata('user_id');
+		if(!empty($user_id)) {
+			$this->status_text = $this->post('status_text',TRUE);
+			$this->statuspost = $this->user_model->new_statuspost($this->session->userdata('username'), $this->post('to_username'), $this->status_text);
+			$this->response($this->statuspost,200);
+		} else { //user not logged
+			$this->response(array('error_id'=>1,'error' => 'You need to log in!'), 404);
+		}
+	}
 	
 	public function send_post()
 	{

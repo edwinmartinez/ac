@@ -35,6 +35,7 @@
 	} elseif ($this->uri->segment(1) == 'myhome') {
 		$loadjs[] = 'myhome.js';
 		$loadjs[] = 'users.js';
+		$loadjs[] = 'users-statusfeed.js';
 	}
 
  	foreach ($loadjs as $jsscript) {

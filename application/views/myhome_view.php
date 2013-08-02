@@ -32,7 +32,7 @@
   			
   			
   			
-  		<div id="main-content">Loading...</div>
+  		<div id="feeds-container">Loading...</div>
   		
   		
   		</div>
@@ -53,5 +53,28 @@
 			<div class="userUnit-username">{{username}}</div>
 		</div>
 </div>
+</script>
+
+<script type="text/x-mustache-template" id="wall-list-template">
+	
+</script>
+
+<script type="text/x-mustache-template" id="wall-unit-template">
+	<div>{{username}}</div>
+	<div>{{statusfeed_content}}</div>
+</script>
+
+<!-- status form -->
+<script type="text/x-mustache-template" id="statusForm-template">
+	<fieldset>
+		<div class='control-group'>
+          <div class='controls'>
+            <input type="text" class='input-xlarge threadMessageItem-replyField' id="status_text" name="status_text" />
+          </div>
+        </div>
+		        <div class="form-actions">
+		          <button type="submit" class="btn btn-primary"><?php echo $this->lang->line('common_post'); ?></button>
+		        </div>
+	</fieldset>
 </script>
  

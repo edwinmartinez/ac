@@ -77,6 +77,7 @@ $lang['common_there_are_errors_in_form'] = 'Existe uno o mas errores en esta for
 $lang['common_field'] = 'casilla';
 $lang['common_subscribe'] = 'Registrame';
 $lang['common_save'] = 'Guardar';
+$lang['common_post'] = 'Post';
 $lang['common_searching...'] = 'Buscando...';
 $lang['common_new_members'] = 'Nuevos Miembros';
 $lang['common_file'] = 'Archivo';

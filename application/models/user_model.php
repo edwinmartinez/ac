@@ -192,9 +192,9 @@ class User_model extends CI_Model {
 		 
 		if ($options['shortinfo'])
 			$this->db->select($select);
-		$this->db->from('users');	
-		$this->db->join('countries', 'users.user_country_id = countries.countries_id');
-		$this->db->join('geo_regions', 'users.user_state_id = geo_regions.zone_id', 'left');
+			$this->db->from('users');	
+			$this->db->join('countries', 'users.user_country_id = countries.countries_id');
+			$this->db->join('geo_regions', 'users.user_state_id = geo_regions.zone_id', 'left');
 		if($options['onlywithphotos']) {
 			$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid', 'left');
 			$this->db->where('users_gallery.use_in_profile',1);
@@ -368,6 +368,112 @@ class User_model extends CI_Model {
 		    $y++;
 		}
 		return date('Y') - $y;
+	}
+	
+	//-------------------------------------------------------------------------
+	public function get_statusfeed($my_uid, $feeds_per_page=10, $offset=0) {
+		$this->my_user_id = $my_uid;
+		
+		/*if(empty($my_username) ) {
+			if($this->session->userdata('user_id') == '') {
+				echo 'no for username provided';
+				return FALSE;
+			} else {
+				$this->my_user_id = $this->session->userdata('user_id');
+			}
+		} else {
+			$this->my_user_id = $this->common->get_user_id($my_username);
+		}
+		*/
+		
+		$select_rows = array(
+			'users.user_username as status_username',
+			'user_gender',
+			'photo_filename',
+			'status_id',
+			'status_uid',
+			'status_text',
+			'status_date',
+		);
+		$select = join(', ', $select_rows);
+		
+		$this->db->select($select);
+		$this->db->from('users_status');
+		$this->db->join('buddies','buddies.buddy_uid = status_uid');
+		$this->db->join('users','users.user_id = status_uid');
+		$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid and users_gallery.use_in_profile = 1', 'left');
+		$this->db->where('buddies.confirmed',1);
+		$this->db->where('buddies.user_uid',$this->my_user_id);
+		$this->db->where('users.status',1);
+		//$this->db->where('status_uid','buddies.buddy_uid');
+		$this->db->order_by("status_date", "desc");
+		$this->db->limit(10, $offset);
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0)
+		{
+			$this->results = array();	
+			foreach($query->result() as $row)
+			{
+				//$row->from_username_img_url = $this->profile_images[$row->status_uid];
+				$row->profile_pic =  $this->get_profile_photo_url($row->photo_filename,'square',$row->user_gender);
+				unset($row->photo_filename);
+				$this->results[] = $row;
+				
+			}
+		}
+		return($this->results);
+		//return array_reverse($this->results);
+	}
+
+
+	public function new_statuspost($from_username = '', $to_username = FALSE, $status_text, $status_visibility = '')
+	{
+		// let's take care of the from_user_id
+		if(empty($from_username) ) {
+			if($this->session->userdata('user_id') == '') {
+				echo 'no from username provided';
+				return FALSE;
+			} else {
+				$this->from_user_id = $this->session->userdata('user_id');
+			}
+		} else {
+			$this->from_user_id = $this->common->get_user_id($from_username);
+		}
+		if(!empty($to_username)) {
+			$this->to_user_id = $this->common->get_user_id($to_username);
+		} 
+		
+		$this->status_text = $status_text;
+		
+	
+		$data=array(
+		    'status_uid' => $this->from_user_id,
+		    'status_text' => mysql_real_escape_string(strip_tags($this->status_text)),
+		    'status_visibility' => 1,
+			//'status_date' => time(),
+			'status_ip_address' => ip2long($this->input->ip_address()) //using the new field
+		);
+		if(!empty($this->to_user_id)){
+			$data['status_to_uid'] = $this->to_user_id;
+		}
+		$this->db->insert('users_status',$data);
+		//get the last inserts id and insert it in gen_prefs
+		$this->status_id = $this->db->insert_id();
+		
+			
+		$out = array(
+			'status_id' => $this->status_id,
+			'status_date' => time(),
+			'status_text' => $this->status_text,
+			'from_username' => $from_username,
+			'from_username_img_url' => $this->get_profile_photo($this->from_user_id),
+			'to_username' => $to_username
+			
+		);
+		
+		
+		return $out;
 	}
 	
 }
