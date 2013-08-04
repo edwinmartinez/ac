@@ -8,8 +8,10 @@
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/ac-v2.css"  media="all" />
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap-responsive.css" />
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/jquery.jscrollpane.css"  media="all" />
- <script src="<?php echo base_url();?>js/jquery.js"></script>
+ <!--<script src="<?php echo base_url();?>js/jquery.js"></script>-->
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
  <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
+ 
  
 </head>
  
@@ -87,7 +89,7 @@
         <li class="dropdown">
                 <a href="#account" id="accountLink" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->lang->line('common_my_account'); ?>  <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><?php echo anchor('user/editprofile', $this->lang->line('common_edit_my_profile')); ?></li>
+                  <li><?php echo anchor('editprofile', $this->lang->line('common_edit_my_profile')); ?></li>
                   <li><?php echo anchor('user/editaccount', $this->lang->line('common_my_account_settings')); ?></li>
                   <li><?php echo anchor('user/editprivacy', $this->lang->line('common_privacy_settings')); ?></li>
                   <li class="divider"></li>
