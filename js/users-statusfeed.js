@@ -54,7 +54,7 @@ var MyHome = (function(MyHome) {
 	
 	MyHome.UserFeedView = Backbone.View.extend({
   		tagName: 'div',
-  		className: 'wallUnit',
+  		className: 'wall-unit',
     	template: template('wall-unit'),
     	render: function() {
 			this.$el.html(this.template(this));

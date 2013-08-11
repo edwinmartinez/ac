@@ -220,6 +220,21 @@ div.new {
 	cursor: pointer;
 }
 
+.wall-unit{
+	clear:both;
+	padding-top: 20px;
+}
+.wall-unit .profile-pic {
+	width:50px;
+	height: auto;
+	float: left;
+	padding-right: 10px;
+}
+
+.wall-unit .statusfeed_content {
+	background: #EEEEEE;
+}
+
 #messageList {
 	font-size: .8em;
 	list-style: none;

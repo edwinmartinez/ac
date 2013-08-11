@@ -65,8 +65,22 @@ class User_model extends CI_Model {
 		$this->db->from('users');
 		return $this->db->count_all_results();
 	 }
+	
+	public function verify_password($uid, $password)
+	{
+		$this->db->where("user_id",$uid);
+		$this->db->where("user_password",$password);
+		$this->db->from('users');
+		return ($this->db->count_all_results() > 0)? TRUE : FALSE;
+	}
 
-
+	public function change_password($uid, $new_pass)
+	{
+		$data = array('user_password' => $new_pass);
+		$this->db->where('user_id', $uid);
+		$this->db->update('users', $data); 
+		return ($this->db->affected_rows() > 0)? TRUE: FALSE;
+	}
 	/*
 	 * Get countries - get all app approved countries
 	 *
@@ -85,6 +99,12 @@ class User_model extends CI_Model {
 		return $query->result_array();
 	 }
 	 
+	 function change_email($uid, $new_email) {
+		$data = array('user_email' => $new_email);
+		$this->db->where('user_id', $uid);
+		$this->db->update('users', $data); 
+		return ($this->db->affected_rows() > 0)? TRUE: FALSE;
+	 }
 	 
 	 function getAge($YYYYMMDD_In){
                   // Parse Birthday Input Into Local Variables

@@ -26,13 +26,11 @@
 			</div>
 		</div>
 		
-  		<div class="span10" style="background-color: #CCCCCC;">
+  		<div class="span10">
   			<h3>Hola, <?php echo $this->session->userdata('username'); ?>!</h3>
-  			[the wall]
+
   			
-  			
-  			
-  		<div id="feeds-container">Loading...</div>
+  			<div id="feeds-container">Loading...</div>
   		
   		
   		</div>
@@ -60,8 +58,9 @@
 </script>
 
 <script type="text/x-mustache-template" id="wall-unit-template">
-	<div>{{username}}</div>
-	<div>{{statusfeed_content}}</div>
+	<div class="profile-pic"><img src="{{profile_pic}}" /></div>
+	<div class="statusfeed_username">{{username}}</div>
+	<div class="statusfeed_content">{{statusfeed_content}}</div>
 </script>
 
 <!-- status form -->

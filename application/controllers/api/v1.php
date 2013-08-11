@@ -202,6 +202,55 @@ class V1 extends REST_Controller
 		}
 	}
 	
+	public function emailchange_post() {
+		//$this->load->helper(array('form', 'url'));
+		$this->load->helper('email');
+		$this->load->model('user_model');
+		$user_id = $this->session->userdata('user_id');
+		$new_email = $this->post('user_email');
+		$new_email = $this->security->xss_clean($new_email);
+		$new_email = str_replace('[removed]', '', $new_email);
+		if(!empty($user_id)) {
+			//if ($this->form_validation->run() === FALSE) {
+			if (valid_email($new_email)){
+				if($this->user_model->change_email($user_id, $new_email)) {
+					$out = array('success'=> 'true', 'user_email' => $new_email);
+				} else {
+					$out = array('success' => 'false', 'error'=>'could not update db');
+				}
+			} else {
+				$out = array('success' => FALSE, 'error'=>'not valid','email'=>$new_email);
+			}
+        	$this->response($out, 200); // 200 being the HTTP response code
+		} else {
+			$out = array('success' => 'false','error' => 'not logged in' );
+		}
+		
+	}
+	
+	public function changepassword_post()
+	{
+		$user_id = $this->session->userdata('user_id');
+		if(!empty($user_id)) {
+			$this->load->model('user_model');
+			$old_pass = md5($this->post('old_password'));
+			$new_pass = md5($this->post('new_password'));
+			$password_ok = $this->user_model->verify_password($user_id, $old_pass);
+			if($password_ok){
+				if($this->user_model->change_password($user_id, $new_pass)) {
+					$out = array('success'=> 'true', 'message' => 'password changed');
+				} else {
+					$out = array('success' => 'false', 'error'=>'could not update db');
+				}
+			} else {
+				$out = array('success' => 'false', 'error'=>'wrong password');
+			}
+		} else {
+			$out = array('success' => 'false','error' => 'not logged in' );
+		}
+		$this->response($out, 200); // 200 being the HTTP response code
+	}
+	
 	public function send_post()
 	{
 		var_dump($this->request->body);
