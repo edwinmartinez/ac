@@ -214,16 +214,16 @@ class V1 extends REST_Controller
 			//if ($this->form_validation->run() === FALSE) {
 			if (valid_email($new_email)){
 				if($this->user_model->change_email($user_id, $new_email)) {
-					$out = array('success'=> 'true', 'user_email' => $new_email);
+					$out = array('success'=> 'true', 'message' => $this->lang->line('common_email_has_been_changed'), 'new_email' => $new_email);
 				} else {
-					$out = array('success' => 'false', 'error'=>'could not update db');
+					$out = array('success' => 'false', 'message'=> $this->lang->line('common_could_not_update_db'));
 				}
 			} else {
-				$out = array('success' => FALSE, 'error'=>'not valid','email'=>$new_email);
+				$out = array('success' => FALSE, 'message'=> $this->lang->line('common_enter_a_valid_email'));
 			}
         	$this->response($out, 200); // 200 being the HTTP response code
 		} else {
-			$out = array('success' => 'false','error' => 'not logged in' );
+			$out = array('success' => 'false','message' => 'not logged in');
 		}
 		
 	}
@@ -237,16 +237,20 @@ class V1 extends REST_Controller
 			$new_pass = md5($this->post('new_password'));
 			$password_ok = $this->user_model->verify_password($user_id, $old_pass);
 			if($password_ok){
-				if($this->user_model->change_password($user_id, $new_pass)) {
-					$out = array('success'=> 'true', 'message' => 'password changed');
+				if($old_pass == $new_pass) {
+					$out = array('success' => 'false', 'message'=> $this->lang->line('common_password_could_not_be_changed'));
 				} else {
-					$out = array('success' => 'false', 'error'=>'could not update db');
+					if($this->user_model->change_password($user_id, $new_pass)) {
+						$out = array('success'=> 'true', 'message' => $this->lang->line('common_password_has_been_changed'));
+					} else {
+						$out = array('success' => 'false', 'message'=> $this->lang->line('common_could_not_update_db'));
+					}
 				}
 			} else {
-				$out = array('success' => 'false', 'error'=>'wrong password');
+				$out = array('success' => 'false', 'message' => $this->lang->line('common_wrong_password') );
 			}
 		} else {
-			$out = array('success' => 'false','error' => 'not logged in' );
+			$out = array('success' => 'false','message' => 'not logged in' );
 		}
 		$this->response($out, 200); // 200 being the HTTP response code
 	}
