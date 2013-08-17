@@ -42,7 +42,8 @@
 $route['default_controller'] = 'user';
 $route['myhome'] = 'user/myhome';
 $route['logout'] = 'user/logout';
-$route['editprofile'] = 'user/editaccount';
+$route['editaccount'] = 'user/editaccount';
+$route['editaprofile'] = 'user/editprofile';
 $route['privacy-policy']   = 'content/privacy_policy';
 $route['terms-of-service'] = 'content/terms_of_service';
 $route['404_override'] = '';

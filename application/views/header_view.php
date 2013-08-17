@@ -65,17 +65,16 @@
           <div class="nav-collapse collapse"> 
           	
             <ul class="nav">
-              <li class="active"><a href="#"><?php echo $this->lang->line('common_home'); ?></a></li>
-              
-              
-              <?php if(($this->session->userdata('username')!="")) : ?>
+            	<?php if(($this->session->userdata('username')!="")) : ?>
+              	<li class="active"><a href="#"><?php echo $this->lang->line('common_home'); ?></a></li>
               	<li><?php echo anchor('user/timeline', $this->session->userdata('username')); // TODO: correct this link  ?></li>
               	<li><?php echo anchor('user/friendfinder', $this->lang->line('common_people_search')); ?></li>
          
               	<?php endif;  ?>
             </ul>
             <?php  if($this->session->userdata('username') == '' ) :?>
-		           <?php echo form_open("user/login",'class="navbar-form pull-right"'); ?>
+		           <?php $attributes = array('class' => 'navbar-form pull-right', 'id' => 'loginForm', 'autocomplete' => 'off'); 
+		           		echo form_open("user/login",$attributes); ?>
 		              <input class="span2" name="login" type="text" placeholder="<?php echo $this->lang->line('users_email'); ?>" autocomplete="off">
 		              <input class="span2" name="pass" type="password" placeholder="<?php echo $this->lang->line('users_password'); ?>" autocomplete="off">
 		              <button type="submit" class="btn"><?php echo $this->lang->line('users_signin'); ?></button>
@@ -89,11 +88,10 @@
                 <a href="#account" id="accountLink" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->lang->line('common_my_account'); ?>  <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><?php echo anchor('editprofile', $this->lang->line('common_edit_my_profile')); ?></li>
-                  <li><?php echo anchor('user/editaccount', $this->lang->line('common_my_account_settings')); ?></li>
+                  <li><?php echo anchor('editaccount', $this->lang->line('common_my_account_settings')); ?></li>
                   <li><?php echo anchor('user/editprivacy', $this->lang->line('common_privacy_settings')); ?></li>
                   <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
+                  <!--<li class="nav-header">Nav header</li>-->
                   <li><?php echo anchor('/logout', 'Logout'); ?></li>
                 </ul>
               </li>

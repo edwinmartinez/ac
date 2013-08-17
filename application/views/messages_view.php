@@ -19,7 +19,6 @@
   					
 	  		<div id="main-content">
 	  			
-				
 					<div id="messagesInit"><?php echo $this->lang->line('messages_there_are_no_selected_conversations'); ?></div>
 				
 	  		</div>

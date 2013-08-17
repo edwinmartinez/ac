@@ -21,7 +21,7 @@
 			 <?php echo validation_errors('<p class="text-error">'); ?>
 			 
 			<div id="signUpForm">
-				<?php echo form_open("user/registration",'id="register_form"'); ?>
+				<?php echo form_open("user/registration",'id="register_form" autocomplete="off"'); ?>
 				
 			<div>
 				<label for="country"><?php echo $this->lang->line('users_country_of_residence'); ?></label>

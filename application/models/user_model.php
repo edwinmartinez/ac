@@ -81,6 +81,18 @@ class User_model extends CI_Model {
 		$this->db->update('users', $data); 
 		return ($this->db->affected_rows() > 0)? TRUE: FALSE;
 	}
+
+	/*
+	 * @param uid 
+	 * @param cancel_reason
+	 */
+	public function cancel_user($uid, $cancel_reason)
+	{
+		$data = array('status' => 0, 'cancel_reason' => $cancel_reason);
+		$this->db->where('user_id', $uid);
+		$this->db->update('users', $data); 
+		return ($this->db->affected_rows() > 0)? TRUE: FALSE;
+	}
 	/*
 	 * Get countries - get all app approved countries
 	 *

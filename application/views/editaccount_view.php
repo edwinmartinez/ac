@@ -65,7 +65,7 @@
 		
 		<div class="row-fluid">
 			<hr>
-			<form name="cancelaccount_form">
+			<form name="cancelaccount_form" id="cancelaccount_form">
 			<h3><?php echo $this->lang->line('common_cancel_account'); ?></h3>
 			<div>
 				<?php echo $this->lang->line('common_cancel_account_instructions'); ?>
@@ -85,6 +85,21 @@
 		</div>
 	</div>
 	
+</div>
+
+
+<div id="myModal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3><?php echo $this->lang->line('common_cancel_account_success'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p><?php echo $this->lang->line('common_cancel_account_goodbye'); ?></p>
+  </div>
+  <div class="modal-footer">
+  	<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo $this->lang->line('common_close'); ?></button>
+    <!--<a href="#" class="btn btn-primary">Save changes</a>-->
+  </div>
 </div>
 
 <script>
@@ -141,6 +156,13 @@
 	            if(json.new_email){
 	            	$('#user_email').val(json.new_email);
 	            }
+	            
+	            if(serviceFunc == 'cancelaccount.json'){
+	            	$('#myModal').modal('show');
+	            	$('#myModal').on('hidden', function () {
+					 window.location.replace("/logout");
+					});
+	            }
             } else {
             	theForm.prepend($('#statusMessage'));
 	            $('#statusMessage').removeClass('hidden');
@@ -150,6 +172,7 @@
 	            $('#statusMessageContent').html(json.message);
 	           // $('#statusMessage').fadeOut(5000);
             }
+            
             
             //$("#user-form-div").html(json.html);
         }
@@ -217,4 +240,22 @@ var valpasschange =	$("#changepassword_form").validate({
 			
 		}
 	});
+	
+$('#cancelaccount_form').validate({
+	rules: {
+		cancel_account_reason: {
+			maxlength: 140
+		}
+	},
+	messages: {
+		cancel_account_reason: {
+			 required: true,
+			maxlength: "<?php echo $this->lang->line('common_cancel_reason_must_be_at_most_x_characters_long'); ?>"
+		}
+	},
+	submitHandler: function(form) {
+		serviceFunc = 'cancelaccount.json';
+		sendForm($(form));
+	}
+});
 </script>

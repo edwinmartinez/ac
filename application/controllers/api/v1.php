@@ -228,6 +228,24 @@ class V1 extends REST_Controller
 		
 	}
 	
+	public function cancelaccount_post() {
+
+		$user_id = $this->session->userdata('user_id');
+		if(!empty($user_id)) {
+			$cancel_reason = substr($this->post('cancel_account_reason'),0,255); //get first 255 characters
+			$cancel_reason = $this->common->html2text($cancel_reason);
+			$this->load->model('user_model');
+			if($this->user_model->cancel_user($user_id, $cancel_reason)) {
+				$out = array('success'=> 'true', 'message' => $this->lang->line('common_cancel_account_success'),'reason'=>$cancel_reason);
+			} else {
+				$out = array('success' => 'false', 'message'=> $this->lang->line('common_could_not_update_db'));
+			}
+		} else {
+			$out = array('success' => 'false','message' => 'not logged in' );
+		}
+		$this->response($out, 200); // 200 being the HTTP response code
+	}
+	
 	public function changepassword_post()
 	{
 		$user_id = $this->session->userdata('user_id');
