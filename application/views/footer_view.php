@@ -45,7 +45,13 @@
  ?>
   <script type="text/javascript">
    $(function() { 
-  
+  	
+  	<?php if ($this->uri->segment(1) == '') { //<-- if homepage
+  		// if we have a login field focus on it
+  		echo '$("#login").focus();';
+  		}
+	?>
+  	
    	<?php if($this->uri->segment(1) == 'messages') {
    		 echo 'MyHome.username = '."'".$username."';\n";
    		 echo 'MyHome.username_img_url = '."'".$username_img_url."';\n";

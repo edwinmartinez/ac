@@ -30,6 +30,28 @@
   			<h3>Hola, <?php echo $this->session->userdata('username'); ?>!</h3>
 
   			
+			<div class="tabbable"> <!-- Only required for left/right tabs -->
+			  <ul class="nav nav-tabs">
+			    <li class="active"><a href="#statusUpdateForm" data-toggle="tab"><?php echo $this->lang->line('common_update_status'); ?></a></li>
+			    <li><a href="#addPhotoForm" data-toggle="tab"><?php echo $this->lang->line('common_add_photos'); ?></a></li>
+			  </ul>
+			  <div class="tab-content">
+			    <div class="tab-pane active" id="statusUpdateForm">
+			      <p>I'm in Section 1.</p>
+			    </div>
+			    <div class="tab-pane" id="addPhotoForm">
+			    	<?php echo form_open_multipart('user/add_photo');?>
+			      <!--<form method="post" id="photoForm" action="/user/add_photo">-->
+			      	<div class='control-group'>
+			      		<div>
+			      			<input type="file" id="filePhoto" name="filePhoto[]" /> <input type="submit" id="formsubmit"/>
+			      		</div>
+			      	</div>
+			      </form>
+			    </div>
+			  </div>
+			</div>
+  			
   			<div id="feeds-container">Loading...</div>
   		
   		
@@ -38,6 +60,7 @@
 
 	</div><!--<div class="row-fluid">-->
 </div>
+
 
 <script type="text/x-mustache-template" id="user-list-template">
 		
@@ -66,14 +89,46 @@
 <!-- status form -->
 <script type="text/x-mustache-template" id="statusForm-template">
 	<fieldset>
-		<div class='control-group'>
+			<div class='control-group'>
+			<div style="height:0px;overflow:hidden">
+			   <input type="file" id="fileInput" name="fileInput" />
+			</div>
           <div class='controls'>
             <input type="text" class='input-xlarge threadMessageItem-replyField' id="status_text" name="status_text" />
           </div>
+          
+	       <div class="btn-toolbar">
+				<div class="btn-group controls">
+				  <!--<button class="btn">Left</button>-->
+				  <a class="btn" href="#" onclick="chooseFile();"><i class="icon-camera"></i></a>
+				 <!-- <button class="btn">Right</button>-->
+				</div>
+				<div class="btn-group controls">
+					<button type="submit" class="btn btn-primary"><?php echo $this->lang->line('common_post'); ?></button>
+				</div>
+				
+				
+				
+			</div>
         </div>
 		        <div class="form-actions">
-		          <button type="submit" class="btn btn-primary"><?php echo $this->lang->line('common_post'); ?></button>
+		          
 		        </div>
 	</fieldset>
 </script>
- 
+ <script>
+ 	function chooseFile() {
+      $("#fileInput").click();
+   }
+   
+   //autosubmit
+$('input[type=file]').change(function() { 
+    // select the form and submit
+  var filePhotoField = $('#filePhoto');
+  if (filePhotoField.val().length != 0 ) {
+  	$('form').submit();
+  }
+
+	 
+});
+ </script>

@@ -507,6 +507,351 @@ class User_model extends CI_Model {
 		
 		return $out;
 	}
+
+
+	public function upload_photo($username) {
+	//-----------------------------------------------upload photo --------------------------------------------
+	
+		// initialization
+		$result_final = "";
+		$counter = 0;
+		$user_id = $this->common->get_user_id($username);
+
+
+		//global $dbname, $dbhost, $dbuser, $dbpasswd, $lang, $upload_error; //TODO: Delete
+		$images_dir = $this->config->item('member_images_dir').'/'.$username;
+		
+
+		
+		// List of our known photo types
+		$known_photo_types = array( 
+							'image/pjpeg' => 'jpg',
+							'image/jpeg' => 'jpg',
+							'image/gif' => 'gif',
+							'image/x-png' => 'png'
+						);
+		
+		// GD Function List
+		$gd_function_suffix = array( 
+							'image/pjpeg' => 'JPEG',
+							'image/jpeg' => 'JPEG',
+							'image/gif' => 'GIF',
+							'image/x-png' => 'PNG'
+						);
+	
+		// Fetch the photo array sent by the form
+		$photos_uploaded = $_FILES['filePhoto'];
+		//include($this->config->item('basedir').'/application/models/include/easyphpthumbnail.class.php');
+		include($this->config->item('basedir').'/application/models/include/thumbnail.inc.php');
+
+		
+		if (is_dir($images_dir)) { 
+			//ok directory exists
+			if (!is_writable($images_dir)) {
+				chmod($images_dir,0666);
+			}
+		}else {
+			mkdir($images_dir);
+			chmod($images_dir,0777);
+		}
+
+		
+		//while( $counter <= count($photos_uploaded) ) {
+			if($photos_uploaded['size'][$counter] > 0) {
+				if(!array_key_exists($photos_uploaded['type'][$counter], $known_photo_types)){
+					// we will return an array where the first item $result_final[0] will be the status of the operation
+					$result_final .= $this->lang->line('common_file') . " ".($counter+1). " " . $this->lang->line('common_is_not_a_photo') . "<br />";
+					$result[$counter] = array(0,$result_final);
+					
+				}
+				else {
+					
+					//--------------- filenames -----------------------------
+					$filetype = $photos_uploaded['type'][$counter];
+					$extention = $known_photo_types[$filetype];
+					$basefilename = $user_id.".".$this->common->gen_rand_string(time());
+					$filename = $basefilename.".".$extention;
+					$largefilename = $basefilename."_l.".$extention;
+					$medfilename = $basefilename."_m.".$extention;
+					$smfilename = $basefilename."_s.".$extention;
+					$squarefilename = $basefilename."_sq.".$extention;
+					$orig_name = $photos_uploaded['name'][$counter];
+					
+					//---------------filenames end -----------------------------
+					
+					// Store the orignal file with predefined maximun dimensions
+					$width = $this->config->item('IMG_MAX_WIDTH');
+					$height = $this->config->item('IMG_MAX_HEIGHT');
+					
+					list($width_orig, $height_orig) = getimagesize($photos_uploaded["tmp_name"][$counter]);
+					
+					// Build Thumbnail with GD 1.x.x, you can use the other described methods too
+					$function_suffix = $gd_function_suffix[$filetype];
+					$function_to_read = "ImageCreateFrom".$function_suffix;
+					$function_to_write = "Image".$function_suffix;				
+					
+					if($width_orig > $height_orig){
+						$iswide = 1;
+					}else{
+						$iswide = 0;
+					}
+					
+					// is it bigger than our set max width and max height?
+					// else keep the same dimention
+					if($width_orig > $width || $height_orig > $height) {
+						if ($width && $iswide==0) {
+						  $width = ($height / $height_orig) * $width_orig;
+						} else {
+						  $height = ($width / $width_orig) * $height_orig;
+						}
+					} else {
+						$width = $width_orig;
+						$height = $height_orig;
+					}
+					
+					
+					$image_location = $images_dir."/".$largefilename;
+					// Read the source file
+					$source_handle = $function_to_read ($photos_uploaded['tmp_name'][$counter]); 
+
+					echo $photos_uploaded['tmp_name'][$counter];
+					exit;
+					//copy($photos_uploaded['tmp_name'][$counter], $image_location);
+					
+					
+					if($source_handle){
+						if(function_exists("imagecreatetruecolor") && $filetype != 'image/gif') {
+							$new_dest_handle = imagecreatetruecolor($width,$height);
+						}else{
+							$new_dest_handle = imagecreate($width,$height);
+						}
+						if(function_exists("imagecopyresampled")){
+						  imagecopyresampled($new_dest_handle,$source_handle,0,0,0,0,$width,$height,$width_orig,$height_orig);
+						}else{
+						  imagecopyresized  ($new_dest_handle,$source_handle,0,0,0,0,$width,$height,$width_orig,$height_orig);
+						}
+					}
+					// Let's save the image
+					$function_to_write( $new_dest_handle, $image_location);
+					ImageDestroy($new_dest_handle);
+					chmod($image_location, 0666);
+					
+					//check if the copied image exists, else let's skip writtin to the db because something happened
+					
+	
+					if (file_exists($image_location)) {
+	 					$title = substr_replace($orig_name,'',strlen($orig_name)-4);
+						$data=array(
+						    'photo_uid' => $user_id,
+						    'photo_filename' => addslashes($filename),
+						    'photo_title' => mysql_real_escape_string($title),
+						    //'orig_filename' //<-- skipping it
+						    'photo_category'=> 0,
+						    'use_in_profile' => 0
+						);
+						
+						$this->db->insert($this->config->item('USERS_GALLERY_TABLE'),$data);
+						//get the last inserts id and insert it in gen_prefs
+						$this->status_id = $this->db->insert_id();						
+						
+						
+						
+						//------------------medium image -----------------------
+						
+						$width = $this->config->item('IMG_MED_MAX_WIDTH');
+						$height = $this->config->item('IMG_MED_MAX_HEIGHT');
+						$med_image_location = $images_dir."/".$medfilename;
+						
+						if($width_orig >= $this->config->item('IMG_MED_MAX_WIDTH') || $height_orig >= $this->config->item('IMG_MED_MAX_HEIGHT')){
+							$ok_to_create_med = 1;
+							//if is wide we just have to calculate the new height if its tall we calc the new width
+							if($iswide == 1){  $height = ($width / $width_orig) * $height_orig;
+							}else{             $width = ($height / $height_orig) * $width_orig;
+							}
+						}else {
+							$ok_to_create_med = 0;
+						}
+						
+						if($this->config->item('STORE_MED_IMAGE') && $ok_to_create_med){	
+							if($source_handle){
+								if(function_exists("imagecreatetruecolor") && $filetype != 'image/gif') {
+									$new_dest_handle = imagecreatetruecolor($width,$height);
+								}else{
+									$new_dest_handle = imagecreate($width,$height);
+								}
+								if(function_exists("imagecopyresampled")){
+								  imagecopyresampled($new_dest_handle,$source_handle,0,0,0,0,$width,$height,$width_orig,$height_orig);
+								}else{
+								  imagecopyresized  ($new_dest_handle,$source_handle,0,0,0,0,$width,$height,$width_orig,$height_orig);
+								}
+							}
+							// Let's save the image
+							$function_to_write( $new_dest_handle, $med_image_location);
+							ImageDestroy($new_dest_handle );
+							chmod($med_image_location, 0666);
+						}
+						
+						
+						
+						//------------------small image -----------------------
+						//include_once('../includes/thumbnail.inc.php');
+						
+						if($iswide == 1 && $width_orig >= $this->config->item('IMG_SM_MAX_WIDTH')){
+							$ok_to_create_sm = 1;
+						}elseif($iswide == 0 && $height_orig >= $this->config->item('IMG_SM_MAX_HEIGHT')){
+							$ok_to_create_sm = 1;
+						}else {
+							$ok_to_create_sm = 0;
+						}
+						
+						if($this->config->item('STORE_SM_IMAGE') && $ok_to_create_sm){
+							$thumb = new Thumbnail;
+							$thumb->quality = 80;
+							$thumb->fileName = $image_location;
+							$thumb->init();
+							
+							$thumb->percent = 0;
+							if($iswide){
+								$thumb->maxWidth = $this->config->item('IMG_SM_MAX_WIDTH');
+							}else{
+								$thumb->maxHeight = $this->config->item('IMG_SM_MAX_HEIGHT');
+							}
+							$thumb->resize();
+							
+			
+							$thumb->save($images_dir."/".$smfilename);
+							$thumb->destruct();
+						}	
+									
+						//------------------square image -----------------------
+						$square_max_size = $this->config->item('SQUARE_MAX_SIZE');
+						//if its wide and its height is at least as tall as the square
+						if($iswide == 1 && $height_orig >= $square_max_size){
+							$bigger_than_sq = 1;
+						//if its tall and its width is as wide as the square
+						}elseif($iswide == 0 && $width_orig >= $square_max_size){
+							$bigger_than_sq = 1;
+						}else {
+							$bigger_than_sq = 0;
+						}
+						
+						if($this->config->item('STORE_SQUARE_IMAGE') && $bigger_than_sq == 1){
+							$thumb = new Thumbnail;
+							$thumb->quality = 100;
+							$thumb->fileName = $image_location;
+							$thumb->init();
+							$thumb->percent = 0;
+							if($iswide){
+								//is wide so make as tall as square_max_size
+								$thumb->maxHeight = $square_max_size;
+							}else{
+								$thumb->maxWidth = $square_max_size;
+							}
+							//$thumb->maxHeight = SQUARE_MAX_SIZE;
+							$thumb->resize();
+							
+							$thumb->cropSize = $square_max_size;
+							$thumb->cropX = ($thumb->getCurrentWidth()/2)-($thumb->cropSize/2);
+							$thumb->cropY = ($thumb->getCurrentHeight()/2)-($thumb->cropSize/2);
+							$thumb->crop();
+			
+							$thumb->save($images_dir."/".$squarefilename);
+							$thumb->destruct();
+							
+						}elseif($this->config->item('STORE_SQUARE_IMAGE') && $bigger_than_sq == 0){ //the image is narrower than square size
+							
+							//$bg_image  = imagecreate(SQUARE_MAX_SIZE, SQUARE_MAX_SIZE);
+							$bg_image  = imagecreatetruecolor($square_max_size, $square_max_size);
+							$bgcolor     = imagecolorallocate($bg_image, 255, 255, 255);					
+							
+							$sq_dest_x = $square_max_size/2 - $width_orig/2;
+							$sq_dest_y = $square_max_size/2 - $height_orig/2;
+							imagecopy($bg_image,$source_handle,$sq_dest_x,$sq_dest_y,0,0,$width_orig,$height_orig);
+							imagefill($bg_image, 0, 0, $bgcolor);
+							
+							// Ok kids it time to draw a border
+							// save that thing and we outta here
+							$cColor=imagecolorallocate($bg_image,233,233,233);
+							
+								// first coodinates are in the first half of image
+								$x0coordonate = 0;
+								$y0coordonate = 0;
+								// second coodinates are in the second half of image
+								$x1coordonate = 0;
+								$y1coordonate = $square_max_size;
+								imageline ($bg_image, $x0coordonate, $y0coordonate, $x1coordonate, $y1coordonate,$cColor );
+								
+								$x0coordonate = 0;
+								$y0coordonate = $square_max_size-1;
+								// second coodinates are in the second half of image
+								$x1coordonate = $square_max_size-1;
+								$y1coordonate = $square_max_size-1;
+								imageline ($bg_image, $x0coordonate, $y0coordonate, $x1coordonate, $y1coordonate,$cColor );
+							
+								$x0coordonate = $square_max_size-1;
+								$y0coordonate = $square_max_size-1;
+								// second coodinates are in the second half of image
+								$x1coordonate = $square_max_size-1;
+								$y1coordonate = 0;
+								imageline ($bg_image, $x0coordonate, $y0coordonate, $x1coordonate, $y1coordonate,$cColor );
+								
+								$x0coordonate = $square_max_size-1;
+								$y0coordonate = 0;
+								// second coodinates are in the second half of image
+								$x1coordonate = 0;
+								$y1coordonate = 0;
+								imageline ($bg_image, $x0coordonate, $y0coordonate, $x1coordonate, $y1coordonate,$cColor );	
+							
+							$sqfile_loc = $images_dir."/".$squarefilename;
+							switch ($extention) {
+								case 'jpg': imagejpeg($bg_image,$sqfile_loc); break;
+								case 'png':  imagepng($bg_image,$sqfile_loc);  break;
+								case 'gif':  imagegif($bg_image,$sqfile_loc);  break;
+								//default:     imagepng($img);  break;
+							}
+							imagedestroy($bg_image);
+						}
+						
+						//---------------for calculating a small image -----------------
+						$thumbnail_width = $this->config->item('THUMB_MAX_WIDTH');
+						$thumbnail_height = $this->config->item('THUMB_MAX_HEIGHT');	
+						
+						if($width_orig > $square_max_size && $height_orig > $square_max_size)
+							$displayimg = $squarefilename;
+						else $displayimg = $largefilename;
+						
+						$result_final = "
+						<div style=\"width: 322px; margin-top:20px;\"><img src='". $this->config->item('member_images_dir_url') ."/".$user_id.'/'.$displayimg."' />".'</div>'
+						.'<div>'.$this->lang->line('common_photo')." ".($counter+1)." "
+						.$this->lang->line('common_photo_has_been_uploaded')."</div>"."\n";
+						$result[$counter] = array(1,$result_final);
+					} // end of if (file_exists($image_location))
+				}
+			} else {
+				//size is zero then
+			}
+		//$counter++;
+		//} // end of while
+		var_dump($result);
+		exit;
+		return $result;
+	}// end of upload photo
+
+
+	//may be used in future------------------------------
+	//is it a valid image resource?
+	function is_gd_handle($var) {
+	   ob_start();
+	       imagecolorallocate($var, 255, 255, 255);
+	       $error = ob_get_contents();
+	   ob_end_clean();
+	   if(preg_match('/not a valid Image resource/',$error)) {
+	       return false;
+	   } else {
+	       return true;
+	   }
+	}
+	
 	
 }
 ?>

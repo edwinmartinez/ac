@@ -29,6 +29,7 @@ $lang['common_content_home'] = 'Aqui vas a encontrar pareja Quieres buscar parej
 $lang['common_home'] = 'Inicio';
 $lang['common_people'] = 'Gente';
 $lang['common_photos'] = 'Fotos';
+$lang['common_photo'] = 'Foto';
 $lang['common_our_members'] = 'Nuestros miembros';
 $lang['common_only_profiles_with_photos'] = 'Solo perfiles con fotos';
 $lang['common_by_city'] = 'Por ciudad';
@@ -102,6 +103,11 @@ $lang['common_cancel_account_goodbye'] = 'Ha sido un gusto haberte servido. Tu c
 $lang['common_close'] = 'Cerrar';
 $lang['common_save'] = 'Guardar';
 $lang['common_post'] = 'Post';
+$lang['common_photo_has_been_uploaded'] = 'Tu foto ha sido agregada';
+$lang['common_privacy'] = 'Privacidad';
+$lang['common_visibility_world'] = 'Todo el mundo';
+$lang['common_visibility_friends'] = 'Mis amigos';
+$lang['common_attach_photo'] = 'Adjuntar foto';
 $lang['common_searching...'] = 'Buscando...';
 $lang['common_new_members'] = 'Nuevos Miembros';
 $lang['common_file'] = 'Archivo';
@@ -110,6 +116,8 @@ $lang['common_is_not_a_photo'] = 'No Es Una Foto';
 $lang['common_you_dont_have_saved_pictures'] = 'No tienes fotos archivadas';
 $lang['common_added_fem'] = 'Agregada';
 $lang['common_continue'] = 'Continuar';
+$lang['common_update_status'] = 'Actualizar estado';
+$lang['common_add_photos'] = 'Agregar fotos';
 $lang['common_upload_your_picture'] = 'Sube tu foto';
 $lang['common_submit'] = 'Enviar';
 $lang['common_success'] = 'Tarea cumplida';
@@ -216,6 +224,7 @@ Las presentes condiciones, redactadas en espa&ntilde;ol, se encuentran          
 AmigoCupido se reserva el Derecho de Admisi&oacute;n </p>
 
 ENDOF;
+
 
 
 ?>

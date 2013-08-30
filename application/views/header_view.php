@@ -75,8 +75,8 @@
             <?php  if($this->session->userdata('username') == '' ) :?>
 		           <?php $attributes = array('class' => 'navbar-form pull-right', 'id' => 'loginForm', 'autocomplete' => 'off'); 
 		           		echo form_open("user/login",$attributes); ?>
-		              <input class="span2" name="login" type="text" placeholder="<?php echo $this->lang->line('users_email'); ?>" autocomplete="off">
-		              <input class="span2" name="pass" type="password" placeholder="<?php echo $this->lang->line('users_password'); ?>" autocomplete="off">
+		              <input class="span2" name="login" id="login" type="text" placeholder="<?php echo $this->lang->line('users_email'); ?>" autocomplete="off" >
+		              <input class="span2" name="pass" id="pass" type="password" placeholder="<?php echo $this->lang->line('users_password'); ?>" autocomplete="off">
 		              <button type="submit" class="btn"><?php echo $this->lang->line('users_signin'); ?></button>
 		            </form>
             <?php endif; ?>

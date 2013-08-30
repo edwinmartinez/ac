@@ -377,7 +377,10 @@ $config['site_name'] = 'AmigoCupido';
 | lime 
 |
 */
-$config['member_images_dir'] = 'membergallery';  
+$config['basedir'] = str_replace('\\', '/', dirname(dirname(__DIR__)) );
+$config['member_images_dir'] = $config['basedir'] .'/membergallery';
+$config['member_images_dir_url'] = '/membergallery';
+$config["USERS_GALLERY_TABLE"] = 'users_gallery';
 $config['application_images_dir'] = 'images';
 $config['user_preferences_table'] = 'users_gen_pref';
 $config['friends_table'] = 'buddies';
@@ -399,6 +402,17 @@ $config['banned_countries'] = array(
 	"RE","PK","PN","ST","FO","BV","HM","AM","CV","BA"
 	);
 	
-
+$config['IMG_MAX_WIDTH'] = '640';
+$config['IMG_MAX_HEIGHT'] = '480';
+$config['THUMB_MAX_WIDTH'] = '100';
+$config['THUMB_MAX_HEIGHT'] = '100';
+$config['STORE_MED_IMAGE'] = '1';
+$config['IMG_MED_MAX_WIDTH'] = '500';
+$config['IMG_MED_MAX_HEIGHT'] = '500';
+$config['STORE_SM_IMAGE'] = '1';
+$config['IMG_SM_MAX_WIDTH'] = '240';
+$config['IMG_SM_MAX_HEIGHT'] = '240';
+$config['STORE_SQUARE_IMAGE'] = '1';
+$config['SQUARE_MAX_SIZE'] = '80';
 /* End of file config.php */
 /* Location: ./application/config/config.php */

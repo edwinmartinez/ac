@@ -167,6 +167,23 @@ class User extends CI_Controller{
 		}
 	}
 	
+	public function add_photo () {
+		if(($this->session->userdata('username')!= ''))
+		{
+			$this->load->library('form_validation');
+			$this->user_model->upload_photo($this->session->userdata('username'));
+			
+			//echo BASEPATH;
+			exit;
+		} else {
+			redirect('/','location');
+		}
+		
+	}
+	
+	
+	
+	
 	 
 }
 ?>

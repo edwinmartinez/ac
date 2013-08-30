@@ -32,7 +32,8 @@ var MyHome = (function(MyHome) {
 		render: function() {
 			this.$el.html(this.template(this));
 			var form = new MyHome.Userfeeds.Form({collection: this.feeds});
-        	$('#feeds-container').html(form.render().el);
+        	//$('#feeds-container').html(form.render().el);
+        	$('#statusUpdateForm').html(form.render().el);
 			this.feeds.each(this.renderNewFeed, this);
       		return this;
 		},
