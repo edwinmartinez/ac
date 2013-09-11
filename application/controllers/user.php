@@ -1,20 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class User extends CI_Controller{
-	
+
 	 public function __construct()
 	 {
 	  parent::__construct();
 	  $this->load->model('user_model');
 	 }
-	 
+
  	/*
-	Determines if user is loged in 
+	Determines if user is loged in
 	*/
 	 public function index($topmessage='')
 	 {
 		$this->checkUserLogin();
 	 }
-	 
+
 	 public function myhome()
 	 {
 	 	$username = $this->session->userdata('username');
@@ -28,7 +28,7 @@ class User extends CI_Controller{
 		$this->load->view('myhome_view.php', $data);
 		$this->load->view('footer_view',$data);
 	 }
-	 
+
 	 public function checkUserLogin() {
 	 	if(($this->session->userdata('username')!=""))
 		  {
@@ -39,7 +39,7 @@ class User extends CI_Controller{
 		  	$this->registration_form();
 		  }
 	 }
-	 
+
 	 public function login()
 	 {
 	 	$login=$this->input->post('login');
@@ -49,7 +49,7 @@ class User extends CI_Controller{
 		  $result=$this->user_model->login($login,$password);
 		  //if($result) $this->myhome();
 		  if($result) redirect('/myhome', 'location');
-		  
+
 		  //if($result)  redirect('/index_v1.php', 'refresh'); //TODO: fix this line to use the internal login
 		  //if($result) redirect($this->config->item.'/micuenta?p='.$_REQUEST['p']);
 		  else        $this->index($this->lang->line('error_invalid_username_or_password'));
@@ -58,7 +58,7 @@ class User extends CI_Controller{
 			$this->index('Empty Login Vars');
 		}
 	 }
-	 
+
 	 public function userinfo(){
 	 	/*
 		 * usually we dont echo stuff from the controller
@@ -68,15 +68,15 @@ class User extends CI_Controller{
 		echo 'user_id:'.$this->session->userdata('user_id')."<br>\n";
 		echo 'user_email:'.$this->session->userdata('user_email')."<br>\n";
 		echo 'logged_id:'.$this->session->userdata('logged_in')."<br>\n";
-		
+
 	 }
-	 
+
 	 /*
 	  * Set the session vars to empty and return to index
 	  */
 	 public function logout()
 	 {
-	 
+
 	  $newdata = array(
 	  'user_id'   =>'',
 	  'username'  =>'',
@@ -89,7 +89,7 @@ class User extends CI_Controller{
 	  redirect('/', 'location');
 
 	 }
-	 
+
 	 public function registration_form($topmessage='')
 	 {
 	   $data['title'] = $this->lang->line('common_home_page_title');
@@ -99,7 +99,7 @@ class User extends CI_Controller{
 	   $this->load->view("registration_view.php", $data);
 	   $this->load->view('footer_view',$data);
 	 }
-	 
+
 	 public function thank()
 	 {
 	  $data['title']= 'Thank';
@@ -107,12 +107,12 @@ class User extends CI_Controller{
 	  $this->load->view('thanku_view.php', $data);
 	  $this->load->view('footer_view',$data);
 	 }
-	 
+
 	 public function registration()
 	 {
 		  $this->load->library('form_validation');
 		  // field name, error message, validation rules
-		 
+
 		  $this->form_validation->set_rules('country', 'lang:users_country', 'trim|required|max_length[4]');
 		  $this->form_validation->set_rules('birth_day', 'lang:users_day', 'trim|required|max_length[2]');
 		  $this->form_validation->set_rules('birth_month', 'lang:users_month', 'trim|required|max_length[2]');
@@ -122,8 +122,8 @@ class User extends CI_Controller{
 		  $this->form_validation->set_rules('email_address', 'lang:users_email', 'trim|required|valid_email|is_unique[users.user_email]');
 		  $this->form_validation->set_rules('password', 'lang:users_password', 'trim|required|min_length[6]|max_length[32]');
 		  $this->form_validation->set_rules('confirm_password', 'lang:users_confirm_password', 'trim|required|matches[password]');
-		  
-		
+
+
 		  if($this->form_validation->run() == FALSE)
 		  {
 		   $this->registration_form();
@@ -134,13 +134,13 @@ class User extends CI_Controller{
 		   $this->thank();
 		  }
 	 }
-	 
+
 	 public function age_check()
 	 {
 	 	$min_age = 18;
-		
-		$age = $this->user_model->getAge($this->input->post('birth_year').$this->input->post('birth_month').$this->input->post('birth_day'));	
-		
+
+		$age = $this->user_model->getAge($this->input->post('birth_year').$this->input->post('birth_month').$this->input->post('birth_day'));
+
 		if ($age < $min_age)
 		{
 			$this->form_validation->set_message('age_check', $this->lang->line('users_min_age_notice'));
@@ -151,9 +151,25 @@ class User extends CI_Controller{
 			return TRUE;
 		}
 	}
-	
-	public function editprofile () 
-	{ 
+
+	public function editprivacy ()
+	{
+		if(($this->session->userdata('username')!= ''))
+		{
+			$data['user_info'] = $this->user_model->get_info($this->session->userdata('user_id'));
+			//var_dump($data['user_info'] );
+			$data['title']= $this->lang->line('common_privacy_settings');
+			$this->load->view('header_view',$data);
+			$this->load->view('editprofile_view.php', $data);
+			$this->load->view('footer_view',$data);
+		} else {
+			redirect('/', 'location');
+
+		}
+	}
+
+	public function editprofile ()
+	{
 		if(($this->session->userdata('username')!= ''))
 		{
 			$data['user_info'] = $this->user_model->get_info($this->session->userdata('user_id'));
@@ -164,12 +180,12 @@ class User extends CI_Controller{
 			$this->load->view('footer_view',$data);
 		} else {
 			redirect('/', 'location');
-		
+
 		}
 	}
-	
-	public function editaccount () 
-	{ 
+
+	public function editaccount ()
+	{
 		if(($this->session->userdata('username')!= ''))
 		{
 			$data['user_info'] = $this->user_model->get_info($this->session->userdata('user_id'));
@@ -180,10 +196,10 @@ class User extends CI_Controller{
 			$this->load->view('footer_view',$data);
 		} else {
 			redirect('/', 'location');
-		
+
 		}
 	}
-	
+
 	public function add_photo () {
 		if(($this->session->userdata('username')!= ''))
 		{
@@ -192,8 +208,8 @@ class User extends CI_Controller{
 
 			if($photoresult['success']){
 				//insert into status db
-				
-				
+
+
 				//show picture
 				redirect('/myhome','location');
 			}
@@ -205,12 +221,12 @@ class User extends CI_Controller{
 		} else {
 			redirect('/','location');
 		}
-		
+
 	}
-	
-	
-	
-	
-	 
+
+
+
+
+
 }
 ?>

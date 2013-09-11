@@ -44,6 +44,7 @@ $route['myhome'] = 'user/myhome';
 $route['logout'] = 'user/logout';
 $route['editaccount'] = 'user/editaccount';
 $route['editprofile'] = 'user/editprofile';
+$route['editprivacy'] = 'user/editprivacy';
 $route['privacy-policy']   = 'content/privacy_policy';
 $route['terms-of-service'] = 'content/terms_of_service';
 $route['404_override'] = '';

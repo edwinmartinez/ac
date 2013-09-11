@@ -2,38 +2,37 @@
 
 <div class="container-fluid">
 	<div class="row-fluid">
-		
+
 		<div class="span2" style="border: 1px solid #ccc;">
 			something here
 			<ul>
-				
 				<li><?php echo $this->lang->line('common_recent_visits'); ?></li>
 				<li><?php echo $this->lang->line('common_my_photos'); ?></li>
 			</ul>
-			
-			
+
+
 			<div class="row">
 				<h4><?php echo $this->lang->line('common_new_members'); ?></h4>
 				<div class="new-users-container"></div>
 			</div>
-			
+
 			<div class="row">
 				<h4><?php echo $this->lang->line('common_my_fav'); ?></h4>
 			</div>
-			
+
 			<div class="row">
 				<?php echo $this->lang->line('common_search'); ?>
 			</div>
 		</div>
-		
+
   		<div class="span10">
   			<h3>Hola, <?php echo $this->session->userdata('username'); ?>!</h3>
 
-  			
+
 			<div class="tabbable"> <!-- Only required for left/right tabs -->
-			  <ul class="nav nav-tabs">
-			    <li class="active"><a href="#statusUpdateForm" data-toggle="tab"><?php echo $this->lang->line('common_update_status'); ?></a></li>
-			    <li><a href="#addPhotoForm" data-toggle="tab"><?php echo $this->lang->line('common_add_photos'); ?></a></li>
+			  <ul class="nav nav-tabs" id="statusTabs">
+			    <li id="addStatusTab" class="active"><a href="#statusUpdateForm" data-toggle="tab"><?php echo $this->lang->line('common_update_status'); ?></a></li>
+			    <li id="addPhotoTab"><a href="#addPhotoForm" data-toggle="tab"><?php echo $this->lang->line('common_add_photos'); ?></a></li>
 			  </ul>
 			  <div class="tab-content">
 			    <div class="tab-pane active" id="statusUpdateForm">
@@ -54,19 +53,19 @@
 			    </div>
 			  </div>
 			</div>
-  			
+
   			<div id="feeds-container">Loading...</div>
-  		
-  		
+
+
   		</div>
-	  
+
 
 	</div><!--<div class="row-fluid">-->
 </div>
 
 
 <script type="text/x-mustache-template" id="user-list-template">
-		
+
 </script>
 
 <script type="text/x-mustache-template" id="user-unit-template">
@@ -80,7 +79,7 @@
 </script>
 
 <script type="text/x-mustache-template" id="wall-list-template">
-	
+
 </script>
 
 <script type="text/x-mustache-template" id="wall-unit-template">
@@ -100,7 +99,7 @@
           <div class='controls'>
             <input type="text" class='input-xlarge threadMessageItem-replyField' id="status_text" name="status_text" />
           </div>
-          
+
 	       <div class="btn-toolbar">
 				<div class="btn-group controls">
 				  <!--<button class="btn">Left</button>-->
@@ -110,29 +109,30 @@
 				<div class="btn-group controls">
 					<button type="submit" class="btn btn-primary"><?php echo $this->lang->line('common_post'); ?></button>
 				</div>
-				
-				
-				
+
+
+
 			</div>
         </div>
 		        <div class="form-actions">
-		          
+
 		        </div>
 	</fieldset>
 </script>
  <script>
  	function chooseFile() {
-      $("#fileInput").click();
+      //$("#fileInput").click();
+      $('#statusTabs a:last').tab('show');
    }
-   
+
    //autosubmit
-$('input[type=file]').change(function() { 
+$('input[type=file]').change(function() {
     // select the form and submit
   var filePhotoField = $('#filePhoto');
   if (filePhotoField.val().length != 0 ) {
   	$('form').submit();
   }
 
-	 
+
 });
  </script>
