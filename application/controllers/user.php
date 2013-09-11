@@ -85,7 +85,8 @@ class User extends CI_Controller{
 	  );
 	  $this->session->unset_userdata($newdata );
 	  $this->session->sess_destroy();
-	  $this->index('logged out');
+	  //$this->index('logged out');
+	  redirect('/', 'location');
 
 	 }
 	 
@@ -151,6 +152,22 @@ class User extends CI_Controller{
 		}
 	}
 	
+	public function editprofile () 
+	{ 
+		if(($this->session->userdata('username')!= ''))
+		{
+			$data['user_info'] = $this->user_model->get_info($this->session->userdata('user_id'));
+			//var_dump($data['user_info'] );
+			$data['title']= $this->lang->line('common_edit_my_profile');
+			$this->load->view('header_view',$data);
+			$this->load->view('editprofile_view.php', $data);
+			$this->load->view('footer_view',$data);
+		} else {
+			redirect('/', 'location');
+		
+		}
+	}
+	
 	public function editaccount () 
 	{ 
 		if(($this->session->userdata('username')!= ''))
@@ -171,8 +188,18 @@ class User extends CI_Controller{
 		if(($this->session->userdata('username')!= ''))
 		{
 			$this->load->library('form_validation');
-			$this->user_model->upload_photo($this->session->userdata('username'));
-			
+			$photoresult = $this->user_model->upload_photo($this->session->userdata('username'));
+
+			if($photoresult['success']){
+				//insert into status db
+				
+				
+				//show picture
+				redirect('/myhome','location');
+			}
+			//$img_result = "<div style=\"width: 322px; margin-top:20px;\"><img src='". $this->config->item('member_images_dir_url') ."/".$user_id.'/'.$displayimg."' />".'</div>'
+				//		.'<div>'.$this->lang->line('common_photo')." ".($counter+1)." "
+					//	.$this->lang->line('common_photo_has_been_uploaded')."</div>"."\n";
 			//echo BASEPATH;
 			exit;
 		} else {

@@ -64,6 +64,7 @@ var MyHome = (function(MyHome) {
     	//msg_user:        function() { return this.model.get('msg_thread_username'); },
 		username: function() { return this.model.get('status_username'); },
 		profile_pic: function()	{ return this.model.get('profile_pic'); },
+		statusfeed_img: function() {return this.model.get('status_img')},
 		statusfeed_content: function() { return this.model.get('status_text'); },
 		statusfeed_id: function() { return this.model.get('status_id'); } /*,
 		profile_img: function() { return this.model.get('profile_img'); } */

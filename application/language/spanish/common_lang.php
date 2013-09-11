@@ -113,6 +113,7 @@ $lang['common_new_members'] = 'Nuevos Miembros';
 $lang['common_file'] = 'Archivo';
 $lang['common_image'] = 'Imagen';
 $lang['common_is_not_a_photo'] = 'No Es Una Foto';
+$lang['common_make_a_comment_about_this_photo'] = 'Haz un comentario de esta foto';
 $lang['common_you_dont_have_saved_pictures'] = 'No tienes fotos archivadas';
 $lang['common_added_fem'] = 'Agregada';
 $lang['common_continue'] = 'Continuar';

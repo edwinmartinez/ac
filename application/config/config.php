@@ -377,9 +377,10 @@ $config['site_name'] = 'AmigoCupido';
 | lime 
 |
 */
+$config['site_url'] = 'http://'.$_SERVER['SERVER_NAME'];
 $config['basedir'] = str_replace('\\', '/', dirname(dirname(__DIR__)) );
 $config['member_images_dir'] = $config['basedir'] .'/membergallery';
-$config['member_images_dir_url'] = '/membergallery';
+$config['member_images_dir_url'] = $config['site_url'] . '/membergallery';
 $config["USERS_GALLERY_TABLE"] = 'users_gallery';
 $config['application_images_dir'] = 'images';
 $config['user_preferences_table'] = 'users_gen_pref';

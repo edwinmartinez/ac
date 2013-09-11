@@ -40,9 +40,12 @@
 			      <p>I'm in Section 1.</p>
 			    </div>
 			    <div class="tab-pane" id="addPhotoForm">
-			    	<?php echo form_open_multipart('user/add_photo');?>
+			    	<?php echo form_open_multipart('user/add_photo','id="photoform"');?>
 			      <!--<form method="post" id="photoForm" action="/user/add_photo">-->
 			      	<div class='control-group'>
+			      		<!--<div>
+			      			<textarea name="photocaption" rows="3" style="width: 90%"></textarea>
+			      		</div>-->
 			      		<div>
 			      			<input type="file" id="filePhoto" name="filePhoto[]" /> <input type="submit" id="formsubmit"/>
 			      		</div>
@@ -83,6 +86,7 @@
 <script type="text/x-mustache-template" id="wall-unit-template">
 	<div class="profile-pic"><img src="{{profile_pic}}" /></div>
 	<div class="statusfeed_username">{{username}}</div>
+	{{#statusfeed_img}}<div class="statusfeed_img"><img src="{{statusfeed_img}}" border="0"></div>{{/statusfeed_img}}
 	<div class="statusfeed_content">{{statusfeed_content}}</div>
 </script>
 

@@ -332,7 +332,7 @@ class User_model extends CI_Model {
 	        break;
 		}
 		
-			$member_img_dir_url = base_url().$this->config->item('member_images_dir');
+			$member_img_dir_url = $this->config->item('member_images_dir_url');
 			return $member_img_dir_url."/".$uid."/".$profile_pic;
 		}
 		
@@ -347,6 +347,7 @@ class User_model extends CI_Model {
 		 
 	}
 	
+
 	
 	function add_to_fav($user_id,$fav_uid){
 
@@ -403,6 +404,17 @@ class User_model extends CI_Model {
 	}
 	
 	//-------------------------------------------------------------------------
+	
+	public function get_status_img($status_img_db)
+	{
+		list($uid,$imgname,$extention) = explode(".", $status_img_db);
+		$basefilename = $uid.".".$imgname;
+		$status_img = $basefilename."_s.".$extention;
+		return $this->config->item('member_images_dir_url').'/'.$uid.'/'.$status_img;
+	}
+	
+	
+	
 	public function get_statusfeed($my_uid, $feeds_per_page=10, $offset=0) {
 		$this->my_user_id = $my_uid;
 		
@@ -421,25 +433,32 @@ class User_model extends CI_Model {
 		$select_rows = array(
 			'users.user_username as status_username',
 			'user_gender',
-			'photo_filename',
+			'users_gallery.photo_filename as user_photo',
+			'g.photo_filename AS status_img_db',
 			'status_id',
 			'status_uid',
 			'status_text',
 			'status_date',
 		);
 		$select = join(', ', $select_rows);
+		/*
+		 * $this->db->where('buddies.user_uid',$this->my_user_id);
+		$this->db->where('buddies.confirmed',1);
+		$this->db->where('users.status',1);
+		 */
+		
 		
 		$this->db->select($select);
 		$this->db->from('users_status');
 		$this->db->join('buddies','buddies.buddy_uid = status_uid');
 		$this->db->join('users','users.user_id = status_uid');
 		$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid and users_gallery.use_in_profile = 1', 'left');
-		$this->db->where('buddies.confirmed',1);
-		$this->db->where('buddies.user_uid',$this->my_user_id);
-		$this->db->where('users.status',1);
-		//$this->db->where('status_uid','buddies.buddy_uid');
+		$this->db->join('users_gallery as g', 'users_status.status_attachment_id = g.photo_id', 'left');
+		$this->db->where('(buddies.user_uid = '.$this->my_user_id.' AND buddies.confirmed = 1 AND users.status = 1)');
+		$this->db->or_where('status_uid =', $this->my_user_id);
+		$this->db->group_by('status_id');
 		$this->db->order_by("status_date", "desc");
-		$this->db->limit(10, $offset);
+		$this->db->limit(20, $offset);
 		$query = $this->db->get();
 		
 		if($query->num_rows() > 0)
@@ -448,8 +467,12 @@ class User_model extends CI_Model {
 			foreach($query->result() as $row)
 			{
 				//$row->from_username_img_url = $this->profile_images[$row->status_uid];
-				$row->profile_pic =  $this->get_profile_photo_url($row->photo_filename,'square',$row->user_gender);
-				unset($row->photo_filename);
+				$row->profile_pic =  $this->get_profile_photo_url($row->user_photo,'square',$row->user_gender);
+				unset($row->user_photo);
+				if($row->status_img_db) {
+					$row->status_img = $this->get_status_img($row->status_img_db);
+				}
+				unset($row->status_img_db);
 				$this->results[] = $row;
 				
 			}
@@ -457,9 +480,9 @@ class User_model extends CI_Model {
 		return($this->results);
 		//return array_reverse($this->results);
 	}
+	
 
-
-	public function new_statuspost($from_username = '', $to_username = FALSE, $status_text, $status_visibility = '')
+	public function new_statuspost($from_username = '', $to_username = FALSE, $status_text='', $attachment_id = '', $status_visibility = '')
 	{
 		// let's take care of the from_user_id
 		if(empty($from_username) ) {
@@ -482,6 +505,7 @@ class User_model extends CI_Model {
 		$data=array(
 		    'status_uid' => $this->from_user_id,
 		    'status_text' => mysql_real_escape_string(strip_tags($this->status_text)),
+		    'status_attachment_id' => $attachment_id,
 		    'status_visibility' => 1,
 			//'status_date' => time(),
 			'status_ip_address' => ip2long($this->input->ip_address()) //using the new field
@@ -519,7 +543,7 @@ class User_model extends CI_Model {
 
 
 		//global $dbname, $dbhost, $dbuser, $dbpasswd, $lang, $upload_error; //TODO: Delete
-		$images_dir = $this->config->item('member_images_dir').'/'.$username;
+		$images_dir = $this->config->item('member_images_dir').'/'.$user_id;
 		
 
 		
@@ -538,7 +562,14 @@ class User_model extends CI_Model {
 							'image/gif' => 'GIF',
 							'image/x-png' => 'PNG'
 						);
-	
+		
+		// possible PHP upload errors
+		$errors = array(1 => 'php.ini max file size exceeded', 
+                2 => 'html form max file size exceeded', 
+                3 => 'file upload was only partial', 
+                4 => 'no file was attached');
+		
+		
 		// Fetch the photo array sent by the form
 		$photos_uploaded = $_FILES['filePhoto'];
 		//include($this->config->item('basedir').'/application/models/include/easyphpthumbnail.class.php');
@@ -548,7 +579,7 @@ class User_model extends CI_Model {
 		if (is_dir($images_dir)) { 
 			//ok directory exists
 			if (!is_writable($images_dir)) {
-				chmod($images_dir,0666);
+				chmod($images_dir,0777);
 			}
 		}else {
 			mkdir($images_dir);
@@ -558,10 +589,11 @@ class User_model extends CI_Model {
 		
 		//while( $counter <= count($photos_uploaded) ) {
 			if($photos_uploaded['size'][$counter] > 0) {
+				
 				if(!array_key_exists($photos_uploaded['type'][$counter], $known_photo_types)){
 					// we will return an array where the first item $result_final[0] will be the status of the operation
 					$result_final .= $this->lang->line('common_file') . " ".($counter+1). " " . $this->lang->line('common_is_not_a_photo') . "<br />";
-					$result[$counter] = array(0,$result_final);
+					$result[$counter] = array('success'=>FALSE,$result_final);
 					
 				}
 				else {
@@ -614,8 +646,7 @@ class User_model extends CI_Model {
 					// Read the source file
 					$source_handle = $function_to_read ($photos_uploaded['tmp_name'][$counter]); 
 
-					echo $photos_uploaded['tmp_name'][$counter];
-					exit;
+
 					//copy($photos_uploaded['tmp_name'][$counter], $image_location);
 					
 					
@@ -640,6 +671,8 @@ class User_model extends CI_Model {
 					
 	
 					if (file_exists($image_location)) {
+						
+						// --------------- save to db -------------------------------------------------------
 	 					$title = substr_replace($orig_name,'',strlen($orig_name)-4);
 						$data=array(
 						    'photo_uid' => $user_id,
@@ -652,7 +685,7 @@ class User_model extends CI_Model {
 						
 						$this->db->insert($this->config->item('USERS_GALLERY_TABLE'),$data);
 						//get the last inserts id and insert it in gen_prefs
-						$this->status_id = $this->db->insert_id();						
+						$this->photo_id = $this->db->insert_id();						
 						
 						
 						
@@ -819,12 +852,10 @@ class User_model extends CI_Model {
 						if($width_orig > $square_max_size && $height_orig > $square_max_size)
 							$displayimg = $squarefilename;
 						else $displayimg = $largefilename;
-						
-						$result_final = "
-						<div style=\"width: 322px; margin-top:20px;\"><img src='". $this->config->item('member_images_dir_url') ."/".$user_id.'/'.$displayimg."' />".'</div>'
-						.'<div>'.$this->lang->line('common_photo')." ".($counter+1)." "
-						.$this->lang->line('common_photo_has_been_uploaded')."</div>"."\n";
-						$result[$counter] = array(1,$result_final);
+
+						$this->new_statuspost($username,'' ,'new photo',$this->photo_id);
+						//$result[$counter] = array('success'=>TRUE,'display_image'=>$displayimg); //<-- for multiple imgs
+						return array('success'=>TRUE, 'id'=>$this->photo_id, 'display_image'=>$displayimg);
 					} // end of if (file_exists($image_location))
 				}
 			} else {
@@ -832,9 +863,7 @@ class User_model extends CI_Model {
 			}
 		//$counter++;
 		//} // end of while
-		var_dump($result);
-		exit;
-		return $result;
+		//return $result;
 	}// end of upload photo
 
 

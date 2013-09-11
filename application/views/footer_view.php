@@ -63,5 +63,26 @@
  	
  	<?php } ?>
  	});
+ 	
+ 	
+ 	<?php if ($this->uri->segment(1) != '') { //<-- if not homepage ?>
+ 	setInterval(
+ 		//function(){logout();},100000
+ 		function(){redirect();},
+ 		20*60*1000
+ 	);
+
+	function logout(){
+	    if(confirm('Logout?'))
+	        redirect();
+	    else
+	        alert('OK! keeping you logged in')
+	}
+	
+	function redirect(){
+	    document.location = "/logout"
+	}
+	
+	<?php } ?>
  </script>
 </html>
