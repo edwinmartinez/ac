@@ -87,6 +87,10 @@
 	<div class="statusfeed_username">{{username}}</div>
 	{{#statusfeed_img}}<div class="statusfeed_img"><img src="{{statusfeed_img}}" border="0"></div>{{/statusfeed_img}}
 	<div class="statusfeed_content">{{statusfeed_content}}</div>
+	<div class="statusfeed_actionlinks"><span><a class="statusfeed_likelink" href="/likeit/{{statusfeed_id}}"><?php echo $this->lang->line('common_like'); ?></a></span>
+		<span><a class="statusfeed_commentlink" href="{statusfeed_id}}"><?php echo $this->lang->line('common_comment'); ?></a></span>
+		<i class="icon-thumbs-up"></i>
+		</div>
 </script>
 
 <!-- status form -->
