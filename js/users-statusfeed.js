@@ -43,6 +43,7 @@ var MyHome = (function(MyHome) {
         	//$('#feeds-container').html(form.render().el);
 			var view = new MyHome.UserFeedView({model: userFeed});
 			$('#feeds-container').append(view.render().el);
+			$("abbr.timeago").timeago();
 			//$('#feeds-container').append(view.render().el);
 			
 			//$('div.messageItem').click(function(){
@@ -61,10 +62,48 @@ var MyHome = (function(MyHome) {
 			this.$el.html(this.template(this));
 			return this;
 		},
+		events:{
+			'click .statusfeed_commentlink': 'commentClicked',
+			'click .statusfeed_likelink': 'likeClicked',
+			'click .statusfeed_post_comment_button': 'postCommentClicked'
+		},
+		commentClicked: function(e){
+			//alert(this.);
+			//var id = $(e.currentTarget).attr('data-id'); 
+			$(e.currentTarget).parents('.statusfeed_wrapper').addClass('myclass');
+			var id = $(e.currentTarget).parents('.statusfeed_wrapper').attr('data-id');
+			var comment_form = $(e.currentTarget).parents('.statusfeed_wrapper').find('.statusfeed_comment_form');
+			if(comment_form.hasClass( "hidden" ))
+				comment_form.removeClass('hidden');
+			else
+				comment_form.addClass('hidden');
+				
+			e.preventDefault();
+			//$(this).parents('.statusfeed_wrapper').addClass('myclass');
+		},
+		likeClicked: function(e){
+			var id = $(e.currentTarget).parents('.statusfeed_wrapper').attr('data-id');
+			e.preventDefault();
+			//$(this).parents('.statusfeed_wrapper').addClass('myclass');
+		},
+		postCommentClicked: function(e) {
+			var id = $(e.currentTarget).parents('.statusfeed_wrapper').attr('data-id');
+			$.ajax({
+				  type: "POST",
+				  url: "/api/v1/statusfeed.json",
+				  data: { comment_id: id, comment_text: "Boston" }
+				})
+				  .done(function( msg ) {
+				    alert( "Data Saved: " + msg );
+			});
+		},
     	//msg_user:        function() { return this.model.get('msg_thread_username'); },
 		username: function() { return this.model.get('status_username'); },
 		profile_pic: function()	{ return this.model.get('profile_pic'); },
-		statusfeed_img: function() {return this.model.get('status_img')},
+		statusfeed_img: function() {return this.model.get('status_img');},
+		likes_num: function() {return this.model.get('likes_num');},
+		comments_num: function() {return this.model.get('comments_num');},
+		comments: function() { return this.model.get('comments'); },
 		statusfeed_content: function() { return this.model.get('status_text'); },
 		statusfeed_id: function() { return this.model.get('status_id'); } /*,
 		profile_img: function() { return this.model.get('profile_img'); } */

@@ -435,10 +435,12 @@ class User_model extends CI_Model {
 			'user_gender',
 			'users_gallery.photo_filename as user_photo',
 			'g.photo_filename AS status_img_db',
-			'status_id',
+			'users_status.status_id',
 			'status_uid',
 			'status_text',
 			'status_date',
+			'COUNT(DISTINCT(likes.uid)) AS likes_num',
+			'COUNT(DISTINCT(comments.uid)) AS comments_num'
 		);
 		$select = join(', ', $select_rows);
 		/*
@@ -454,6 +456,8 @@ class User_model extends CI_Model {
 		$this->db->join('users','users.user_id = status_uid');
 		$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid and users_gallery.use_in_profile = 1', 'left');
 		$this->db->join('users_gallery as g', 'users_status.status_attachment_id = g.photo_id', 'left');
+		$this->db->join('users_status_likes as likes','likes.status_id = users_status.status_id', 'left');
+		$this->db->join('users_status_comm as comments','comments.status_id = users_status.status_id', 'left');
 		$this->db->where('(buddies.user_uid = '.$this->my_user_id.' AND buddies.confirmed = 1 AND users.status = 1)');
 		$this->db->or_where('status_uid =', $this->my_user_id);
 		$this->db->group_by('status_id');
@@ -473,6 +477,24 @@ class User_model extends CI_Model {
 					$row->status_img = $this->get_status_img($row->status_img_db);
 				}
 				unset($row->status_img_db);
+				
+				// get the comments
+				if($row->comments_num > 0) {
+					$this->db->select('sc.*, users.user_username as username, user_gender, users_gallery.photo_filename as user_photo');
+					$this->db->from('users_status_comm as sc');
+					$this->db->join('users','users.user_id = sc.uid');
+					$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid and users_gallery.use_in_profile = 1', 'left');
+					$this->db->where('status_id = '.$row->status_id);
+					$this->db->order_by("sc.comment_date", "asc");
+					$query_comm = $this->db->get();
+					foreach ($query_comm->result() as $crow) {
+						$crow->profile_pic =  $this->get_profile_photo_url($crow->user_photo,'square',$crow->user_gender);
+						unset($crow->user_photo);
+						$crow->comment_iso_date = date('c',strtotime($crow->comment_date));
+						$row->comments[] =  $crow;
+						
+					}
+				}
 				$this->results[] = $row;
 
 			}
@@ -881,6 +903,42 @@ class User_model extends CI_Model {
 	   }
 	}
 
+	function new_status_comment($from_username = '',$status_id,$comment_text){
+		// let's take care of the from_user_id
+		if(empty($from_username) ) {
+			if($this->session->userdata('user_id') == '') {
+				echo 'no from username provided';
+				return FALSE;
+			} else {
+				$this->from_user_id = $this->session->userdata('user_id');
+			}
+		} else {
+			$this->from_user_id = $this->common->get_user_id($from_username);
+		}
+		
+		$this->comment_text = $comment_text;
+		
+		$data=array(
+			'status_id' => $status_id,
+		    'uid' => $this->from_user_id,
+		    'comment_text' => mysql_real_escape_string(strip_tags($this->comment_text)),
+			//'status_date' => time(),
+		);
 
+		$this->db->insert('users_status_comm',$data);
+		//get the last inserts id and insert it in gen_prefs
+		$this->status_id = $this->db->insert_id();
+
+
+		$out = array(
+			'status_id' => $this->status_id,
+			'status_comm_date' => time(),
+			'status_comm_text' => $this->status_text,
+			'from_username' => $from_username
+		);
+
+
+		return $out;
+	}
 }
 ?>

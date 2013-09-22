@@ -237,6 +237,10 @@ div.new {
 
 .wall-unit .statusfeed_content {
 	background: #EEEEEE;
+	margin-left: 60px;
+}
+.statusfeed_actionlinks {
+	margin-left: 60px;
 }
 
 #messageList {
@@ -325,6 +329,21 @@ ul#sidebarMessagesNav{
 
 /* ----------- status --------------------------*/
 
+.statusfeed_comments {
+	margin-left:60px;
+	background: #CCCCCC;
+	padding: 5px;
+}
+.statusfeed_comments_unit {
+	margin: 5px 0;
+	
+}
+.statusfeed_comment_form {
+	margin: 0;
+}
+div .statusfeed_comments_text {
+	margin-left: 5px;
+}
 
 
 /* ----------- status end --------------------*/

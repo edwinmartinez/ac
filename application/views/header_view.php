@@ -8,10 +8,11 @@
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/ac-v2.css"  media="all" />
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap-responsive.css" />
  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/jquery.jscrollpane.css"  media="all" />
- <!--<script src="<?php echo base_url();?>js/jquery.js"></script>-->
- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+ <script src="<?php echo base_url();?>js/jquery.js"></script>
+ <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
  <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>-->
+ <script src="<?php echo base_url();?>js/jquery.validate.min.js"></script>
 </head>
 
  <script type="text/x-mustache-template" id="messagesHeader-template">

@@ -155,7 +155,7 @@ class V1 extends REST_Controller
 		var_dump($this->put('message_id'));
 	}
 	
-	public function statusfeed_get_old()
+	public function statusfeed_get_sample()
 	{
 		$out = array('id' => '43', 'statusfeed_username' => 'someuser', 'statusfeed_content' => 'some content here');
         
@@ -272,6 +272,16 @@ class V1 extends REST_Controller
 		}
 		$this->response($out, 200); // 200 being the HTTP response code
 	}
+	
+	
+	function statuscomment_post() //create
+    {
+        $out = $this->user_model->newStatusComment($this->session->userdata('user_id'), $this->post('status_id'), $this->post('comment_text') );
+        //$comment = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
+        
+        $this->response($out, 200); // 200 being the HTTP response code
+    }
+	
 	
 	public function send_post()
 	{

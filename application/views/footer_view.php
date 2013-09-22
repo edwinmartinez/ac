@@ -84,5 +84,9 @@
 	}
 	
 	<?php } ?>
+	
+	$(document).ready(function() {
+  		$("abbr.timeago").timeago();
+	});
  </script>
 </html>

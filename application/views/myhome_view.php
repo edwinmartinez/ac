@@ -83,14 +83,34 @@
 </script>
 
 <script type="text/x-mustache-template" id="wall-unit-template">
-	<div class="profile-pic"><img src="{{profile_pic}}" /></div>
-	<div class="statusfeed_username">{{username}}</div>
-	{{#statusfeed_img}}<div class="statusfeed_img"><img src="{{statusfeed_img}}" border="0"></div>{{/statusfeed_img}}
-	<div class="statusfeed_content">{{statusfeed_content}}</div>
-	<div class="statusfeed_actionlinks"><span><a class="statusfeed_likelink" href="/likeit/{{statusfeed_id}}"><?php echo $this->lang->line('common_like'); ?></a></span>
-		<span><a class="statusfeed_commentlink" href="{statusfeed_id}}"><?php echo $this->lang->line('common_comment'); ?></a></span>
-		<i class="icon-thumbs-up"></i>
+	<div data-id="{{statusfeed_id}}" class="statusfeed_wrapper" id="statusfeed-{{statusfeed_id}}">
+		<div class="profile-pic"><img src="{{profile_pic}}" /></div>
+		<div class="statusfeed_username">{{username}}</div>
+		{{#statusfeed_img}}<div class="statusfeed_img"><img src="{{statusfeed_img}}" border="0"></div>{{/statusfeed_img}}
+		<div class="statusfeed_content">{{statusfeed_content}}</div>
+		<div class="statusfeed_actionlinks"><span><a class="statusfeed_likelink" href="#"><?php echo $this->lang->line('common_like'); ?></a></span>
+			<span><a class="statusfeed_commentlink" href="#"><?php echo $this->lang->line('common_comment'); ?></a></span>
+			<i class="icon-thumbs-up"></i>{{likes_num}} <i class="icon-comment"></i>{{comments_num}}
 		</div>
+		<div class="statusfeed_comments">
+		<div class="statusfeed_comments_list">
+		{{#comments}}
+			<div class="statusfeed_comments_unit">
+			<span><a href="/member/{{username}}">{{username}}</a></span>
+			<span class="statusfeed_comments_text">{{comment_text}}</span>
+			<span class="statusfeed_comments_isodate"><abbr class="timeago" title="{{comment_iso_date}}Z">{{comment_date}}</abbr></span>
+			</div>
+		{{/comments}}
+		</div>
+			<div class="statusfeed_comment_form hidden">
+				<form>
+				<textarea name="statusfeed_comment" ></textarea><br />
+				<button class="btn btn-mini btn-primary statusfeed_post_comment_button" type="button"><?php echo $this->lang->line('common_post'); ?></button>
+				</form>
+			</div>
+		</div>
+		
+	</div>
 </script>
 
 <!-- status form -->
@@ -139,4 +159,13 @@ $('input[type=file]').change(function() {
 
 
 });
+
+$(function(){
+	
+	 $('#feeds-containerll').click( function(e) {
+        $(this).parents('.statusfeed_wrapper').addClass('myclass');
+        e.preventDefault();
+    });
+});
+
  </script>
