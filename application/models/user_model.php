@@ -7,12 +7,11 @@ class User_model extends CI_Model {
 
 	 function login($login,$password)
 	 {
-	  $this->db->where("user_email",$login);
-	  $this->db->or_where('user_username', $login);
-	  $this->db->where("user_password",$password);
-
-
-	  $query=$this->db->get("users");
+		$this->db->where("user_email",$login);
+		$this->db->or_where('user_username', $login);
+		$this->db->where("user_password",$password);
+		$query=$this->db->get("users");
+		
 	  if($query->num_rows()>0)
 	  {
 	   foreach($query->result() as $rows)
@@ -23,6 +22,7 @@ class User_model extends CI_Model {
 	      'username'  => $rows->user_username,
 	      'seeks_gender' => $rows->user_seeks_gender,
 	      'user_email'    => $rows->user_email,
+	      'username_img_url' => $this->get_profile_photo($rows->user_id),
 	      'logged_in'  => TRUE,
 	    );
 	   }
@@ -320,18 +320,18 @@ class User_model extends CI_Model {
 	public function get_profile_photo_url($filename_in_db='',$format='square', $gender='')
 	{
 		if(!empty($filename_in_db)) {
-		list($uid,$imgname,$extention) = explode(".", $filename_in_db);
-		$basefilename = $uid.".".$imgname;
-
-		switch ($format) {
-	    case "large":
-	        $profile_pic = $basefilename."_l.".$extention;
-	        break;
-	    case "square":
-	        $profile_pic = $basefilename."_sq.".$extention;
-	        break;
-		}
-
+			list($uid,$imgname,$extention) = explode(".", $filename_in_db);
+			$basefilename = $uid.".".$imgname;
+	
+			switch ($format) {
+		    case "large":
+		        $profile_pic = $basefilename."_l.".$extention;
+		        break;
+		    case "square":
+		        $profile_pic = $basefilename."_sq.".$extention;
+		        break;
+			}
+	
 			$member_img_dir_url = $this->config->item('member_images_dir_url');
 			return $member_img_dir_url."/".$uid."/".$profile_pic;
 		}
@@ -471,7 +471,7 @@ class User_model extends CI_Model {
 			foreach($query->result() as $row)
 			{
 				//$row->from_username_img_url = $this->profile_images[$row->status_uid];
-				$row->profile_pic =  $this->get_profile_photo_url($row->user_photo,'square',$row->user_gender);
+				$row->profile_pic_url =  $this->get_profile_photo_url($row->user_photo,'square',$row->user_gender);
 				unset($row->user_photo);
 				if($row->status_img_db) {
 					$row->status_img = $this->get_status_img($row->status_img_db);
@@ -488,7 +488,7 @@ class User_model extends CI_Model {
 					$this->db->order_by("sc.comment_date", "asc");
 					$query_comm = $this->db->get();
 					foreach ($query_comm->result() as $crow) {
-						$crow->profile_pic =  $this->get_profile_photo_url($crow->user_photo,'square',$crow->user_gender);
+						$crow->profile_pic_url =  $this->get_profile_photo_url($crow->user_photo,'square',$crow->user_gender);
 						unset($crow->user_photo);
 						$crow->comment_iso_date = date('c',strtotime($crow->comment_date));
 						$row->comments[] =  $crow;
@@ -910,32 +910,33 @@ class User_model extends CI_Model {
 				echo 'no from username provided';
 				return FALSE;
 			} else {
-				$this->from_user_id = $this->session->userdata('user_id');
+				$this->from_uid = $this->session->userdata('user_id');
 			}
 		} else {
-			$this->from_user_id = $this->common->get_user_id($from_username);
+			$this->from_uid = $this->common->get_user_id($from_username);
 		}
 		
-		$this->comment_text = $comment_text;
-		
-		$data=array(
-			'status_id' => $status_id,
-		    'uid' => $this->from_user_id,
-		    'comment_text' => mysql_real_escape_string(strip_tags($this->comment_text)),
-			//'status_date' => time(),
-		);
-
-		$this->db->insert('users_status_comm',$data);
-		//get the last inserts id and insert it in gen_prefs
-		$this->status_id = $this->db->insert_id();
-
-
-		$out = array(
-			'status_id' => $this->status_id,
-			'status_comm_date' => time(),
-			'status_comm_text' => $this->status_text,
-			'from_username' => $from_username
-		);
+		$this->comment_text = mysql_real_escape_string(strip_tags($comment_text));
+		if(!empty($this->comment_text) && !empty($this->from_uid)) {
+			$data=array(
+				'status_id' => $status_id,
+			    'uid' => $this->from_uid,
+			    'comment_text' => $this->comment_text,
+				//'status_date' => time(),
+			);
+	
+			$this->db->insert('users_status_comm',$data);
+	
+			$out = array(
+				'success'=>TRUE,
+				'comment_id' => $this->db->insert_id(),
+				'comment_date' => time(),
+				'comment_text' => $this->comment_text,
+				'from_uid' => $this->from_uid
+			);
+		} else {
+			$out = array('success'=>FALSE);
+		}
 
 
 		return $out;

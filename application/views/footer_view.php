@@ -48,13 +48,17 @@
   	
   	<?php if ($this->uri->segment(1) == '') { //<-- if homepage
   		// if we have a login field focus on it
-  		echo '$("#login").focus();';
-  		}
+  			echo '$("#login").focus();';
+  		} else {
+			echo 'MyHome.username = '."'".$this->session->userdata('username')."';\n";
+			echo 'MyHome.username_img_url = '."'".$this->session->userdata('username_img_url')."';\n";
+		}
+	
 	?>
   	
    	<?php if($this->uri->segment(1) == 'messages') {
-   		 echo 'MyHome.username = '."'".$username."';\n";
-   		 echo 'MyHome.username_img_url = '."'".$username_img_url."';\n";
+   		 //echo 'MyHome.username = '."'".$username."';\n";
+   		 //echo 'MyHome.username_img_url = '."'".$username_img_url."';\n";
 		 echo 'MyHome.thread_username = '."'".$thread_username."';\n";
 	}
 	if ($this->uri->segment(1) == 'messages' || $this->uri->segment(1) == 'myhome') {	?>
@@ -84,9 +88,6 @@
 	}
 	
 	<?php } ?>
-	
-	$(document).ready(function() {
-  		$("abbr.timeago").timeago();
-	});
+
  </script>
 </html>

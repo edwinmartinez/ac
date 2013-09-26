@@ -276,7 +276,8 @@ class V1 extends REST_Controller
 	
 	function statuscomment_post() //create
     {
-        $out = $this->user_model->newStatusComment($this->session->userdata('user_id'), $this->post('status_id'), $this->post('comment_text') );
+        $out = $this->user_model->new_status_comment('', $this->post('status_id'), $this->post('comment_text') );
+        //$out = array('uid'=>$this->session->userdata('user_id'), 'status_id'=>$this->post('status_id'), 'comment'=>$this->post('comment_text') );
         //$comment = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
         
         $this->response($out, 200); // 200 being the HTTP response code

@@ -88,18 +88,32 @@ var MyHome = (function(MyHome) {
 		},
 		postCommentClicked: function(e) {
 			var id = $(e.currentTarget).parents('.statusfeed_wrapper').attr('data-id');
-			$.ajax({
-				  type: "POST",
-				  url: "/api/v1/statusfeed.json",
-				  data: { comment_id: id, comment_text: "Boston" }
-				})
-				  .done(function( msg ) {
-				    alert( "Data Saved: " + msg );
-			});
+			var comment_text_field = $(e.currentTarget).parents('.statusfeed_wrapper').find('.statusfeed_comment_text');
+			var comment_text =comment_text_field.val();
+			var comment_list = $(e.currentTarget).parents('.statusfeed_wrapper').find('.statusfeed_comments_list');
+			console.log(comment_text);
+			if(comment_text.length !== 0){
+				$.ajax({
+					  type: "POST",
+					  url: "/api/v1/statuscomment.json",
+					  data: { status_id: id, comment_text: comment_text }
+					})
+				.done(function( json ) {
+					    console.log(json);
+					    if(json.success == true) {
+					    	comment_text_field.val('');
+					    	//comment_list.append('<div class="statusfeed_comments_unit">'+json.status_comm_text+'</div>');
+					    	var template = $('#statusfeedCommentUnit-template').html();
+						    var html = Mustache.to_html(template, json);
+						    comment_list.append(html);
+					    }
+				});
+			}
+			
 		},
     	//msg_user:        function() { return this.model.get('msg_thread_username'); },
 		username: function() { return this.model.get('status_username'); },
-		profile_pic: function()	{ return this.model.get('profile_pic'); },
+		profile_pic_url: function()	{ return this.model.get('profile_pic_url'); },
 		statusfeed_img: function() {return this.model.get('status_img');},
 		likes_num: function() {return this.model.get('likes_num');},
 		comments_num: function() {return this.model.get('comments_num');},

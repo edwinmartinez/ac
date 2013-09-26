@@ -224,24 +224,7 @@ div.new {
 	cursor: pointer;
 }
 
-.wall-unit{
-	clear:both;
-	padding-top: 20px;
-}
-.wall-unit .profile-pic {
-	width:50px;
-	height: auto;
-	float: left;
-	padding-right: 10px;
-}
 
-.wall-unit .statusfeed_content {
-	background: #EEEEEE;
-	margin-left: 60px;
-}
-.statusfeed_actionlinks {
-	margin-left: 60px;
-}
 
 #messageList {
 	font-size: .8em;
@@ -328,7 +311,24 @@ ul#sidebarMessagesNav{
 }
 
 /* ----------- status --------------------------*/
+.wall-unit{
+	clear:both;
+	padding-top: 20px;
+}
+.wall-unit .profile-pic, .statusfeed_comment_profile_img {
+	width:50px;
+	height: auto;
+	float: left;
+	padding-right: 10px;
+}
 
+.wall-unit .statusfeed_content {
+	background: #EEEEEE;
+	margin-left: 60px;
+}
+.statusfeed_actionlinks {
+	margin-left: 60px;
+}
 .statusfeed_comments {
 	margin-left:60px;
 	background: #CCCCCC;
@@ -336,15 +336,27 @@ ul#sidebarMessagesNav{
 }
 .statusfeed_comments_unit {
 	margin: 5px 0;
-	
+	clear: both;
+}
+.statusfeed_comments_fields {
+	margin-left: 40px;
 }
 .statusfeed_comment_form {
 	margin: 0;
+	padding-top:10px;
+	clear: both;
 }
 div .statusfeed_comments_text {
 	margin-left: 5px;
 }
-
+.statusfeed_comment_profile_img{
+	float: left;
+	width: 32px;
+}
+.statusfeed_comments_date {
+	color:#999999;
+	font-size: 10px;
+}
 
 /* ----------- status end --------------------*/
 .navbar .nav > li > .dropdown-menu:before {

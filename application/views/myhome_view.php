@@ -84,7 +84,7 @@
 
 <script type="text/x-mustache-template" id="wall-unit-template">
 	<div data-id="{{statusfeed_id}}" class="statusfeed_wrapper" id="statusfeed-{{statusfeed_id}}">
-		<div class="profile-pic"><img src="{{profile_pic}}" /></div>
+		<div class="profile-pic"><img src="{{profile_pic_url}}" /></div>
 		<div class="statusfeed_username">{{username}}</div>
 		{{#statusfeed_img}}<div class="statusfeed_img"><img src="{{statusfeed_img}}" border="0"></div>{{/statusfeed_img}}
 		<div class="statusfeed_content">{{statusfeed_content}}</div>
@@ -96,22 +96,35 @@
 		<div class="statusfeed_comments_list">
 		{{#comments}}
 			<div class="statusfeed_comments_unit">
-			<span><a href="/member/{{username}}">{{username}}</a></span>
-			<span class="statusfeed_comments_text">{{comment_text}}</span>
-			<span class="statusfeed_comments_isodate"><abbr class="timeago" title="{{comment_iso_date}}Z">{{comment_date}}</abbr></span>
+				<div class="statusfeed_comment_profile_img"><img src="{{profile_pic_url}}" border="0" /></div>
+				<span><a href="/member/{{username}}">{{username}}</a></span>
+				<span class="statusfeed_comments_text">{{comment_text}}</span>
+				<span class="statusfeed_comments_date"><abbr class="timeago" title="{{comment_iso_date}}">{{comment_date}}</abbr></span>
 			</div>
 		{{/comments}}
 		</div>
 			<div class="statusfeed_comment_form hidden">
-				<form>
-				<textarea name="statusfeed_comment" ></textarea><br />
+				<div style="float:left;margin-right: 8px; width: 32px; height: auto;"><img src="<?php echo $this->session->userdata('username_img_url'); ?>"></div>
+				<div class="statusfeed_comments_fields"><form>
+				<textarea name="statusfeed_comment_text" class="statusfeed_comment_text" ></textarea><br />
 				<button class="btn btn-mini btn-primary statusfeed_post_comment_button" type="button"><?php echo $this->lang->line('common_post'); ?></button>
 				</form>
+				</div>
 			</div>
 		</div>
-		
 	</div>
 </script>
+
+
+<script type="text/x-mustache-template" id="statusfeedCommentUnit-template">
+			<div class="statusfeed_comments_unit">
+				<div class="statusfeed_comment_profile_img"><img src="{{profile_pic_url}}" border="0" /></div>
+				<span><a href="/member/{{username}}">{{username}}</a></span>
+				<span class="statusfeed_comments_text">{{comment_text}}</span>
+				<span class="statusfeed_comments_date"><abbr class="timeago" title="{{comment_iso_date}}">{{comment_date}}</abbr></span>
+			</div>
+</script>
+
 
 <!-- status form -->
 <script type="text/x-mustache-template" id="statusForm-template">
