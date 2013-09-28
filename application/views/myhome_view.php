@@ -95,12 +95,7 @@
 		<div class="statusfeed_comments">
 		<div class="statusfeed_comments_list">
 		{{#comments}}
-			<div class="statusfeed_comments_unit">
-				<div class="statusfeed_comment_profile_img"><img src="{{profile_pic_url}}" border="0" /></div>
-				<span><a href="/member/{{username}}">{{username}}</a></span>
-				<span class="statusfeed_comments_text">{{comment_text}}</span>
-				<span class="statusfeed_comments_date"><abbr class="timeago" title="{{comment_iso_date}}">{{comment_date}}</abbr></span>
-			</div>
+			{{>statusfeedCommentUnit}}
 		{{/comments}}
 		</div>
 			<div class="statusfeed_comment_form hidden">

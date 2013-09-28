@@ -6,7 +6,16 @@
 var MyHome = (function(MyHome) {
 	console.log('loading statusfeed'); 
 	
-	var template = function(name) {
+	var template = function(name,partials) {
+		
+		// for partials documentation see https://github.com/janl/mustache.js/
+		if(typeof partials !== "undefined") {
+			if($.isArray(partials)) {
+				//TODO: compile array
+			} else {
+				Mustache.compilePartial(partials,$('#'+partials+'-template').html());
+			}
+		}
 		return Mustache.compile($('#'+name+'-template').html());
 	};
 
@@ -14,7 +23,7 @@ var MyHome = (function(MyHome) {
 	
 	MyHome.Userfeeds = Backbone.Collection.extend({
 	  	initialize: function(){
-  			console.log('init feeds collection');
+  			//console.log('init feeds collection');
   		},
 	  	model:MyHome.Userfeed,
 	  	url:'/api/v1/statusfeed.json'
@@ -57,7 +66,7 @@ var MyHome = (function(MyHome) {
 	MyHome.UserFeedView = Backbone.View.extend({
   		tagName: 'div',
   		className: 'wall-unit',
-    	template: template('wall-unit'),
+    	template: template('wall-unit','statusfeedCommentUnit'), //template and partial name
     	render: function() {
 			this.$el.html(this.template(this));
 			return this;
@@ -102,10 +111,13 @@ var MyHome = (function(MyHome) {
 					    console.log(json);
 					    if(json.success == true) {
 					    	comment_text_field.val('');
+					    	json.username = MyHome.username;
+					    	json.profile_pic_url = MyHome.username_img_url;
 					    	//comment_list.append('<div class="statusfeed_comments_unit">'+json.status_comm_text+'</div>');
 					    	var template = $('#statusfeedCommentUnit-template').html();
 						    var html = Mustache.to_html(template, json);
 						    comment_list.append(html);
+						    $("abbr.timeago").timeago();
 					    }
 				});
 			}

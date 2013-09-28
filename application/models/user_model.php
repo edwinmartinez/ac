@@ -542,7 +542,8 @@ class User_model extends CI_Model {
 
 		$out = array(
 			'status_id' => $this->status_id,
-			'status_date' => time(),
+			//'status_date' => date('c',time()),
+			'status_date' => date("Y-m-d", time()) . 'T' . date("H:i:s", time()) .'+00:00',
 			'status_text' => $this->status_text,
 			'from_username' => $from_username,
 			'from_username_img_url' => $this->get_profile_photo($this->from_user_id),
