@@ -346,8 +346,12 @@ ul#sidebarMessagesNav{
 	padding-top:10px;
 	clear: both;
 }
+.statusfeed_comment_username {
+	float:left;
+	padding-right: 10px;
+}
 div .statusfeed_comments_text {
-	margin-left: 5px;
+	margin-left: 45px;
 }
 .statusfeed_comment_profile_img{
 	float: left;

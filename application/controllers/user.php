@@ -200,6 +200,22 @@ class User extends CI_Controller{
 		}
 	}
 
+	public function usersfinder()
+	{
+		if(($this->session->userdata('username')!= ''))
+		{
+			$data['user_info'] = $this->user_model->get_info($this->session->userdata('user_id'));
+			//var_dump($data['user_info'] );
+			$data['title']= $this->lang->line('common_people_search');
+			$this->load->view('header_view',$data);
+			$this->load->view('usersfinder_view.php', $data);
+			$this->load->view('footer_view',$data);
+		} else {
+			redirect('/', 'location');
+
+		}
+	}
+
 	public function add_photo () {
 		if(($this->session->userdata('username')!= ''))
 		{

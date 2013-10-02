@@ -6,10 +6,10 @@ echo '
 var popupsetting=[1, "width=550px, height=400px, scrollbars, resizable"]
 
 function popuplinkfunc(imgsrc){
-if (popupsetting[0]==1){
-var popwin=open(imgsrc.href, "popwin", popupsetting[1])
-popwin.focus()
-return false
+	if (popupsetting[0]==1){
+	var popwin=open(imgsrc.href, "popwin", popupsetting[1])
+	popwin.focus()
+	return false
 }
 else
 return true

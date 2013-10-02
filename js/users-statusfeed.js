@@ -44,6 +44,7 @@ var MyHome = (function(MyHome) {
         	//$('#feeds-container').html(form.render().el);
         	$('#statusUpdateForm').html(form.render().el);
 			this.feeds.each(this.renderNewFeed, this);
+			$("abbr.timeago").timeago();
       		return this;
 		},
 		renderNewFeed:function(userFeed) {
@@ -52,7 +53,6 @@ var MyHome = (function(MyHome) {
         	//$('#feeds-container').html(form.render().el);
 			var view = new MyHome.UserFeedView({model: userFeed});
 			$('#feeds-container').append(view.render().el);
-			$("abbr.timeago").timeago();
 			//$('#feeds-container').append(view.render().el);
 			
 			//$('div.messageItem').click(function(){
@@ -124,15 +124,15 @@ var MyHome = (function(MyHome) {
 			
 		},
     	//msg_user:        function() { return this.model.get('msg_thread_username'); },
-		username: function() { return this.model.get('status_username'); },
-		profile_pic_url: function()	{ return this.model.get('profile_pic_url'); },
-		statusfeed_img: function() {return this.model.get('status_img');},
-		likes_num: function() {return this.model.get('likes_num');},
-		comments_num: function() {return this.model.get('comments_num');},
-		comments: function() { return this.model.get('comments'); },
+		username: 			function() { return this.model.get('status_username'); },
+		profile_pic_url: 	function() { return this.model.get('profile_pic_url'); },
+		statusfeed_img: 	function() { return this.model.get('status_img');},
+		likes_num: 			function() { return this.model.get('likes_num');},
+		comments_num: 		function() { return this.model.get('comments_num');},
+		comments: 			function() { return this.model.get('comments'); },
 		statusfeed_content: function() { return this.model.get('status_text'); },
-		statusfeed_id: function() { return this.model.get('status_id'); } /*,
-		profile_img: function() { return this.model.get('profile_img'); } */
+		statusfeed_id: 		function() { return this.model.get('status_id'); },
+		statusfeed_form_visible: 		function() { return this.model.get('comments_num') > 0 ? "" : "hidden"; }
 	});
 	
 	MyHome.Userfeeds.Form = Backbone.View.extend({
@@ -158,6 +158,11 @@ var MyHome = (function(MyHome) {
 			}
 	    }
 	});
+	
+	MyHome.nl2br = function (str, is_xhtml) {   
+    	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
+    	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+	};
 	
 	return MyHome;
 })(MyHome || {} );

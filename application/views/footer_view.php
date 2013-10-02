@@ -18,6 +18,7 @@
 
 </body>
 <?php 
+	$myBaseUri = $this->uri->segment(1);
 	$loadjs = array(
 			'jquery.timeago.js',
 			'underscore.min.js',
@@ -30,12 +31,17 @@
 			//'myhome.js',
 			//'users.js'
 	);
-	if ($this->uri->segment(1) == 'messages') {
+	if ($myBaseUri == 'messages') {
 	    $loadjs[] = 'myhome.js';
-	} elseif ($this->uri->segment(1) == 'myhome') {
+	} elseif ($myBaseUri == 'myhome') {
 		$loadjs[] = 'myhome.js';
-		$loadjs[] = 'users.js';
+		$loadjs[] = 'users.js'; //latest users
 		$loadjs[] = 'users-statusfeed.js';
+	} elseif ($myBaseUri == 'finder') {
+		$loadjs[] = 'myhome.js';
+		$loadjs[] = 'usersfinder.js'; //friendfinder
+	} elseif ($myBaseUri == 'editprofile' || $myBaseUri == 'editaccount') {
+		$loadjs[] = 'myhome.js';
 	}
 
  	foreach ($loadjs as $jsscript) {
@@ -46,7 +52,7 @@
   <script type="text/javascript">
    $(function() { 
   	
-  	<?php if ($this->uri->segment(1) == '') { //<-- if homepage
+  	<?php if ($myBaseUri == '') { //<-- if homepage
   		// if we have a login field focus on it
   			echo '$("#login").focus();';
   		} else {
@@ -56,12 +62,12 @@
 	
 	?>
   	
-   	<?php if($this->uri->segment(1) == 'messages') {
+   	<?php if($myBaseUri == 'messages') {
    		 //echo 'MyHome.username = '."'".$username."';\n";
    		 //echo 'MyHome.username_img_url = '."'".$username_img_url."';\n";
 		 echo 'MyHome.thread_username = '."'".$thread_username."';\n";
 	}
-	if ($this->uri->segment(1) == 'messages' || $this->uri->segment(1) == 'myhome') {	?>
+	if ($myBaseUri == 'messages' || $myBaseUri == 'myhome' || $myBaseUri == 'finder') {	?>
  	  MyHome.boot($('#msgDropdown')); 
  	  Backbone.history.start();
  	
@@ -69,23 +75,23 @@
  	});
  	
  	
- 	<?php if ($this->uri->segment(1) != '') { //<-- if not homepage ?>
- 	setInterval(
- 		//function(){logout();},100000
- 		function(){redirect();},
- 		20*60*1000
- 	);
-
-	function logout(){
-	    if(confirm('Logout?'))
-	        redirect();
-	    else
-	        alert('OK! keeping you logged in')
-	}
+ 	<?php if ($myBaseUri != '') { //<-- if not homepage ?>
+	 	setInterval(
+	 		//function(){logout();},100000
+	 		function(){redirect();},
+	 		20*60*1000
+	 	);
 	
-	function redirect(){
-	    document.location = "/logout"
-	}
+		function logout(){
+		    if(confirm('Logout?'))
+		        redirect();
+		    else
+		        alert('OK! keeping you logged in')
+		}
+		
+		function redirect(){
+		    document.location = "/logout"
+		}
 	
 	<?php } ?>
 

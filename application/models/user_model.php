@@ -415,9 +415,9 @@ class User_model extends CI_Model {
 
 
 
-	public function get_statusfeed($my_uid, $feeds_per_page=10, $offset=0) {
+	public function get_statusfeed($my_uid, $feeds_per_page=5, $offset=0) {
 		$this->my_user_id = $my_uid;
-
+		$this->comments_per_feed = 5;
 		/*if(empty($my_username) ) {
 			if($this->session->userdata('user_id') == '') {
 				echo 'no for username provided';
@@ -462,7 +462,7 @@ class User_model extends CI_Model {
 		$this->db->or_where('status_uid =', $this->my_user_id);
 		$this->db->group_by('status_id');
 		$this->db->order_by("status_date", "desc");
-		$this->db->limit(20, $offset);
+		$this->db->limit($feeds_per_page, $offset);
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0)
@@ -471,6 +471,7 @@ class User_model extends CI_Model {
 			foreach($query->result() as $row)
 			{
 				//$row->from_username_img_url = $this->profile_images[$row->status_uid];
+				$row->status_text = htmlentities($row->status_text,ENT_QUOTES);
 				$row->profile_pic_url =  $this->get_profile_photo_url($row->user_photo,'square',$row->user_gender);
 				unset($row->user_photo);
 				if($row->status_img_db) {
@@ -480,20 +481,36 @@ class User_model extends CI_Model {
 				
 				// get the comments
 				if($row->comments_num > 0) {
+					//get real count of comments
+					//$this->db->select('count(*)');
+					$this->db->from('users_status_comm as sc');
+					$this->db->join('users','users.user_id = sc.uid');
+					$this->db->where('status_id = '.$row->status_id.' AND users.status = 1');
+					$comm_query = $this->db->get();
+					$row->comments_num = $comm_query->num_rows();
+					
+					//get the comments
 					$this->db->select('sc.*, users.user_username as username, user_gender, users_gallery.photo_filename as user_photo');
 					$this->db->from('users_status_comm as sc');
 					$this->db->join('users','users.user_id = sc.uid');
 					$this->db->join('users_gallery', 'users.user_id = users_gallery.photo_uid and users_gallery.use_in_profile = 1', 'left');
-					$this->db->where('status_id = '.$row->status_id);
-					$this->db->order_by("sc.comment_date", "asc");
+					$this->db->where('status_id = '.$row->status_id.' AND users.status = 1');
+					$this->db->order_by("sc.comment_date", "desc");
+					$this->db->limit($this->config->item('comments_per_status'), 0);
+					//$this->db->limit($this->comments_per_feed, $offset);
 					$query_comm = $this->db->get();
-					foreach ($query_comm->result() as $crow) {
+					
+					$comm_array = $query_comm->result();
+					krsort($comm_array);
+					foreach ($comm_array as $crow) {
+						$crow->comment_text = $this->common->parse_for_json(htmlentities($crow->comment_text, ENT_QUOTES, 'UTF-8'));
 						$crow->profile_pic_url =  $this->get_profile_photo_url($crow->user_photo,'square',$crow->user_gender);
 						unset($crow->user_photo);
 						$crow->comment_iso_date = date('c',strtotime($crow->comment_date));
 						$row->comments[] =  $crow;
 						
 					}
+				
 				}
 				$this->results[] = $row;
 
@@ -522,11 +539,11 @@ class User_model extends CI_Model {
 		}
 
 		$this->status_text = $status_text;
-
+		$this->status_text = preg_replace('/(?:(?:\r\n|\r|\n)\s*){2}/s', "\n\n", $this->status_text); // replace 2 or more by just two lines
 
 		$data=array(
 		    'status_uid' => $this->from_user_id,
-		    'status_text' => mysql_real_escape_string(strip_tags($this->status_text)),
+		    'status_text' => strip_tags($this->status_text),
 		    'status_attachment_id' => $attachment_id,
 		    'status_visibility' => 1,
 			//'status_date' => time(),
@@ -917,7 +934,8 @@ class User_model extends CI_Model {
 			$this->from_uid = $this->common->get_user_id($from_username);
 		}
 		
-		$this->comment_text = mysql_real_escape_string(strip_tags($comment_text));
+		$this->comment_text = strip_tags($comment_text);
+		$this->comment_text = preg_replace('/(?:(?:\r\n|\r|\n)\s*){2}/s', "\n\n", $this->comment_text); // replace 2 or more by just two lines
 		if(!empty($this->comment_text) && !empty($this->from_uid)) {
 			$data=array(
 				'status_id' => $status_id,
@@ -942,5 +960,150 @@ class User_model extends CI_Model {
 
 		return $out;
 	}
+
+
+	public function peopleFinder($ger_vars){
+	//--------------------------------------------------------------------------------------------------
+
+		//Build the sql statement
+		
+		if (!empty($_REQUEST['min_age'])) { 
+			$this->min_bday = date('Y-m-d',mktime(0, 0, 0, date("m"),  date("d")-1,  date("Y")-($_REQUEST['min_age'])));
+		}	
+		if (!empty($_REQUEST['max_age'])) { 
+			$this->max_bday = date('Y-m-d',mktime(0, 0, 0, date("m"),  date("d")-1,  date("Y")-($_REQUEST['max_age']+1)));
+		}
+
+		
+		//define the results per page
+		if(!empty($_GET['rpp'])) {
+			$this->rpp = $_GET['rpp'];
+		}else{
+			$this->rpp = PEOPLE_SEARCH_RPP;
+		}
+		
+		$this->sqlstart  = "SELECT u.*, c.".COUNTRY_NAME_FIELD." as country_name from ".SITE_USERS_TABLE." as u ";
+		$this->sqlcount = "SELECT count(*) as total_count from ".SITE_USERS_TABLE." as u ";
+		$this->sql = "LEFT JOIN ".COUNTRY_TABLE." as c ON c.".COUNTRY_ID_FIELD." = u.user_country_id ";
+		if (!empty($_GET['photo_only'])) { 
+			$this->sql .= "join ".USERS_GALLERY_TABLE." ";
+		}
+		if (!empty($_REQUEST['user_country_id'])) { 
+			$this->sql .= "WHERE  user_country_id=".$_REQUEST['user_country_id']." "; 
+			$this->use_and = 1;
+		}
+		if(!(!empty($_GET['m']) && !empty($_GET['f']))){
+			if (!empty($_GET['m'])) {
+				$this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+				$this->sql .= $this->and."user_gender=1 ";
+				$this->use_and = 1;
+			}
+			if (!empty($_GET['f'])) {
+				$this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+				$this->sql .= $this->and."user_gender=2 ";
+				$this->use_and = 1;
+			}
+		}
+		if (!empty($_REQUEST['min_age'])) {
+			$this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+			$this->sql .= $this->and." user_birthdate < '".$this->min_bday."'";
+			$this->use_and = 1;		
+		}
+		if (!empty($_REQUEST['max_age'])) {
+			$this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+			$this->sql .= $this->and." user_birthdate > '".$this->max_bday."'";
+			$this->use_and = 1;		
+		}
+		
+		if (!empty($_GET['photo_only'])) { 
+			$this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+			$this->sql .= $this->and."photo_uid=user_id and use_in_profile=1 ";
+			$this->use_and = 1;
+		}
+		
+		if (!empty($_REQUEST['username'])) { 
+			$this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+			$this->sql .= $this->and."user_username LIKE '%".$_REQUEST['username']."%' ";
+			$this->use_and = 1;
+		}
+		
+		if (!empty($_REQUEST['user_city'])) { 
+			$this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+			$this->sql .= $this->and."user_city LIKE '%".$_REQUEST['user_city']."%' ";
+			$this->use_and = 1;
+		}
+		
+		//mod for cancelled accounts
+		    $this->and = ( $this->use_and == 1 ) ? 'AND ' : 'WHERE ';
+			$this->sql .= $this->and."status = 1 ";
+			$this->use_and = 1;
+		
+		$this->sqlorderby = " ORDER BY ".USER_LAST_LOGIN_FIELD." desc";
+		$this->sql_limit .= " limit ".$this->rpp;
+		
+		if(!empty($_GET['p'])) {
+			$this->sql_limit .= " OFFSET ".(($_GET['p']-1) * $this->rpp);
+		}
+		$this->sqlcount = $this->sqlcount . $this->sql;
+		$this->sql = $this->sqlstart . $this->sql . $this->sqlorderby . $this->sql_limit;
+		
+		
+		header('Content-type: text/xml');
+		$this->xml = '<?xml version="1.0" ?>'."\n";
+		$this->xml .= "<xml>\n";
+		//$this->xml .= "<statement>".'mnb'.$this->min_bday.'mxb'.$this->max_bday.":".$this->sql."</statement>\n";
+		
+		if ( !($this->countresult = $this->db->Query($this->sqlcount)) ) { 
+            printf('Could not do query at line %s file: %s <br> sql:%s',  __LINE__, __FILE__, $this->sqlcount);
+            $this->db->Kill();
+        } else {
+			$this->count_rows = mysql_num_rows($this->countresult);
+			$this->countrow = mysql_fetch_assoc($this->countresult);
+			$this->totalcount = $this->countrow['total_count']; 
+		}
+
+		// let's catch the results into profile_array so we release the db results
+		// so we can perform a subquery for the profile pics
+		if(!$this->profile_array = $this->db->QueryArray($this->sql)){ 
+            printf('Could not do query at line %s file: %s <br> sql:%s',  __LINE__, __FILE__, $this->sql);
+            $this->db->Kill();
+        } else {
+			$this->total_rows = count($this->profile_array);
+			//do we have a row with that username?
+			if ($this->total_rows < 1) {
+			//There are no results for this search
+				$this->xml .= "<status>2</status>\n";
+				$this->xml .= "<users>".$this->sql."\n";
+				
+				//header("Location: ".$this->cfgHomeUrl."/logout.php");
+			}else{
+				$this->xml .= "<status>1</status>\n";
+				$this->xml .= "<totalcount>".$this->totalcount."</totalcount>\n";
+				$this->xml .= "<users>\n";
+				
+				foreach ($this->profile_array as $this->profile){
+					//$this->profile = mysql_fetch_assoc($this->result);
+					$this->profile['user_username'] = preg_replace('/�/','n',$this->profile['user_username']);
+	
+					$this->xml .= '    <user ';
+					$this->xml .= 'user_id="'.$this->profile['user_id'].'" ';
+					$this->xml .= 'user_username="'.htmlentities($this->profile['user_username']).'" ';
+					//$this->xml .= 'country="'.get_user_country($this->profile['user_country_id']).'" ';
+					$this->xml .= 'country="'.htmlentities($this->profile['country_name']).'" ';
+					$this->xml .= 'user_city="'.urlencode(ucwords(strtolower($this->profile['user_city']))).'" ';
+					$this->xml .= 'photo="'.$this->getProfilePic($this->profile['user_id']).'" ';
+					$this->xml .= ' />'."\n";
+				}			
+				
+			}
+			
+		}
+		$this->xml .= "</users>\n";
+		//$this->xml .= "<sql>".$this->sqlcount."</sql>\n";
+		$this->xml .= "</xml>";
+		return $this->xml;
+		//echo "\n".$this->sql."\n".$this->sqlcount;
+	}
+
 }
 ?>

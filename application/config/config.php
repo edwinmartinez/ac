@@ -383,6 +383,8 @@ $config['member_images_dir'] = $config['basedir'] .'/membergallery';
 $config['member_images_dir_url'] = $config['site_url'] . '/membergallery';
 $config["USERS_GALLERY_TABLE"] = 'users_gallery';
 $config['application_images_dir'] = 'images';
+$config['comments_per_status'] = 10;
+
 $config['user_preferences_table'] = 'users_gen_pref';
 $config['friends_table'] = 'buddies';
 $config['favorite_people_table'] = 'users_fav_people';

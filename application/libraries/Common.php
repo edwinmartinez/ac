@@ -35,6 +35,17 @@ class Common {
 		return $text; 
 	}
 	
+	public function parse_for_json($text) {
+	    // Damn pesky carriage returns...
+	    $text = str_replace("\r\n", "\n", $text);
+	    $text = str_replace("\r", "\n", $text);
+	
+	    // JSON requires new line characters be escaped
+	    //$text = str_replace("\n", "\\n", $text);
+	    $text = str_replace("\n", "<br>", $text);
+	    return $text;
+	}
+	
 	public function gen_rand_string($hash){
 		$chars = array( 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J',  'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T',  'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
 	

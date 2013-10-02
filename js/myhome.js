@@ -229,12 +229,12 @@ var MyHome = (function(MyHome) {
         		//MyHome.ThreadMessages().fetch();
         		threadView.refetch();
         		},5000);*/
-	}
+	};
 
   // Router --------------------------------
   MyHome.Router = Backbone.Router.extend({
 	    initialize: function(options) {
-	      	this.el = options.el
+	      	this.el = options.el;
 	    },
 	    routes: {
 	      	"": "index"
@@ -256,7 +256,7 @@ var MyHome = (function(MyHome) {
 			        }
 		      }
 		      
-		      //we check if the users module is loaded. the users.js module defines MyHome.Member
+		      //we check if the users module is loaded. the users.js module defines MyHome.User
 		      // so we test for that
 		      if(MyHome.User){
 		      	//console.log('member',MyHome.Member);
@@ -273,13 +273,18 @@ var MyHome = (function(MyHome) {
 		      	$('#feeds-container').empty();
 		      	$('#feeds-container').append(newUserFeed.render());
 		      }
+		      
+		      if(MyHome.User2){
+		      	console.log('userfinder.js is loaded... starting');
+		      	//$('.find-users-container').empty();
+		      }
 	    }
   });
 
 
 	MyHome.boot = function(container) {
 	    container = $(container);
-	    MyHome.router = new MyHome.Router({el: container})
+	    MyHome.router = new MyHome.Router({el: container});
 	    //Backbone.history.start();
 	};
 

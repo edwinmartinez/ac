@@ -42,6 +42,7 @@
 $route['default_controller'] = 'user';
 $route['myhome'] = 'user/myhome';
 $route['logout'] = 'user/logout';
+$route['finder'] = 'user/usersfinder';
 $route['editaccount'] = 'user/editaccount';
 $route['editprofile'] = 'user/editprofile';
 $route['editprivacy'] = 'user/editprivacy';

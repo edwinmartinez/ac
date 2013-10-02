@@ -69,7 +69,7 @@
             	<?php if(($this->session->userdata('username')!="")) : ?>
               	<li class="active"><a href="#"><?php echo $this->lang->line('common_home'); ?></a></li>
               	<li><?php echo anchor('user/timeline', $this->session->userdata('username')); // TODO: correct this link  ?></li>
-              	<li><?php echo anchor('user/friendfinder', $this->lang->line('common_people_search')); ?></li>
+              	<li><?php echo anchor('/finder', $this->lang->line('common_people_search')); ?></li>
 
               	<?php endif;  ?>
             </ul>

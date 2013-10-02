@@ -98,7 +98,7 @@
 			{{>statusfeedCommentUnit}}
 		{{/comments}}
 		</div>
-			<div class="statusfeed_comment_form hidden">
+			<div class="statusfeed_comment_form {{statusfeed_form_visible}}">
 				<div style="float:left;margin-right: 8px; width: 32px; height: auto;"><img src="<?php echo $this->session->userdata('username_img_url'); ?>"></div>
 				<div class="statusfeed_comments_fields"><form>
 				<textarea name="statusfeed_comment_text" class="statusfeed_comment_text" ></textarea><br />
@@ -114,9 +114,9 @@
 <script type="text/x-mustache-template" id="statusfeedCommentUnit-template">
 			<div class="statusfeed_comments_unit">
 				<div class="statusfeed_comment_profile_img"><img src="{{profile_pic_url}}" border="0" /></div>
-				<span><a href="/member/{{username}}">{{username}}</a></span>
-				<span class="statusfeed_comments_text">{{comment_text}}</span>
-				<span class="statusfeed_comments_date"><abbr class="timeago" title="{{comment_iso_date}}">{{comment_date}}</abbr></span>
+				<div class="statusfeed_comment_username"><a href="/member/{{username}}">{{username}}</a></div>
+				<div class="statusfeed_comments_text">{{{comment_text}}}</div>
+				<div class="statusfeed_comments_date"><abbr class="timeago" title="{{comment_iso_date}}">{{comment_date}}</abbr></div>
 			</div>
 </script>
 
