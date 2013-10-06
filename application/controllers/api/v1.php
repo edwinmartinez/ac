@@ -93,11 +93,12 @@ class V1 extends REST_Controller
 		$results_per_page = $this->get('rpp');
 		//$get_all_options['country_id'] = 10;
 		$get_all_options['gender'] = $this->session->userdata('seeks_gender');
-		$get_all_options['limit'] = 12;
+		$get_all_options['country_id'] = $this->session->userdata('country_id');
+		$get_all_options['limit'] = 20;
         $users = $this->user_model->get_all($get_all_options);
         
         if($users)
-        {
+        {	
             $this->response($users, 200); // 200 being the HTTP response code
         }
         else

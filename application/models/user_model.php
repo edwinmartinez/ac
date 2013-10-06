@@ -22,6 +22,7 @@ class User_model extends CI_Model {
 	      'username'  => $rows->user_username,
 	      'seeks_gender' => $rows->user_seeks_gender,
 	      'user_email'    => $rows->user_email,
+	      'country_id' => $rows->user_country_id,
 	      'username_img_url' => $this->get_profile_photo($rows->user_id),
 	      'logged_in'  => TRUE,
 	    );
@@ -195,7 +196,8 @@ class User_model extends CI_Model {
 			'state_id' => FALSE,
 			'last_login' => FALSE,
 			'status' => 1,
-			'group'=> FALSE // groups: newregs
+			'order_by'=> FALSE, // groups: newregs
+			'order_by_sort' => FALSE
 		);
 		$options = array_merge($default_options,$options);
 		$options['limit'] = ($options['limit'] > 60) ? 60 : $options['limit'] ; //let's put a hard limit to the amount of users returned
@@ -245,9 +247,12 @@ class User_model extends CI_Model {
 		} else {
 				$this->db->where('users.status',1);
 		}
-		if(empty($options['group']) || $options['group'] == 'newregs') {
+		if(!empty($options['order_by'])) {
+			$this->db->order_by($options['order_by'], !empty($options['order_by_sort'])? $options['order_by_sort']:'asc' );
+		} else {
 			$this->db->order_by("user_created", "desc");
 		}
+		
 		$this->db->limit($options['limit'], $options['offset']);
 		$query = $this->db->get();
 		foreach($query->result() as $row)

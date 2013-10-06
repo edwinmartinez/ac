@@ -510,6 +510,26 @@ div .statusfeed_comments_text {
 	left:180px;
 }
 
+/* ----------------findusers --------------------*/
+.finduserUnit {
+	width: 160px;
+	height: 60px;
+	float: left;
+	margin: 10px;
+	background-color: #ccc;
+	overflow: hidden;
+}
+img.finduserUnit-img {
+	width: 60px;
+	border: 1px solid #CCCCCC;
+}
+.finduserUnit-imgDiv {
+	float:left;
+}
+.finduserUnit-info{
+	margin-left: 65px;
+	font-size:11px;
+}
 
 /* --------------- myhome ----------------------- */
 .new-users-container {

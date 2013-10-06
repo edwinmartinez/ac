@@ -55,6 +55,7 @@ var MyHome = (function(MyHome) {
 	
 	MyHome.UserView = Backbone.View.extend({
   		tagName: 'div',
+  		className : 'finduserUnit',
     	template: template('finduser-unit'),
     	render: function() {
 			this.$el.html(this.template(this));

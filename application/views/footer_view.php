@@ -63,11 +63,9 @@
 	?>
   	
    	<?php if($myBaseUri == 'messages') {
-   		 //echo 'MyHome.username = '."'".$username."';\n";
-   		 //echo 'MyHome.username_img_url = '."'".$username_img_url."';\n";
 		 echo 'MyHome.thread_username = '."'".$thread_username."';\n";
 	}
-	if ($myBaseUri == 'messages' || $myBaseUri == 'myhome' || $myBaseUri == 'finder') {	?>
+	if ($myBaseUri == 'messages' || $myBaseUri == 'myhome' || $myBaseUri == 'finder' || $myBaseUri == 'editprofile' || $myBaseUri == 'editaccount') {	?>
  	  MyHome.boot($('#msgDropdown')); 
  	  Backbone.history.start();
  	
