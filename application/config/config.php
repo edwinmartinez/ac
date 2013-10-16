@@ -374,7 +374,7 @@ $config['site_name'] = 'AmigoCupido';
 |--------------------------------------------------------------------------
 |
 | Typically this will be the name of the dir withing the application
-| lime 
+| lime
 |
 */
 $config['site_url'] = 'http://'.$_SERVER['SERVER_NAME'];
@@ -384,6 +384,7 @@ $config['member_images_dir_url'] = $config['site_url'] . '/membergallery';
 $config["USERS_GALLERY_TABLE"] = 'users_gallery';
 $config['application_images_dir'] = 'images';
 $config['comments_per_status'] = 10;
+$config['min_age_to_register'] = 18;
 
 $config['user_preferences_table'] = 'users_gen_pref';
 $config['friends_table'] = 'buddies';
@@ -392,7 +393,7 @@ $config['profile_comments_table'] = 'users_profile_comments';
 $config['user_pass_reset_table'] = 'users_pass_reset';
 $config['user_prefs_table'] = 'users_gen_pref';
 $config['countries_table'] = 'countries';
-$config['top_countries'] = array("US","CA","ES","MX","GT","SV","HN","NI","CR","PA","DO","CU","CL","PR","PE","EC","VE","BO","UY","PY","AR","BR");
+$config['top_countries'] = array("US","CA","ES","MX","CO","GT","GD","SV","HN","NI","CR","PA","DO","DM","CU","CL","PR","PE","EC","VE","BO","UY","PY","AR","BR","BZ","TT");
 $config['banned_countries'] = array(
 	"AF","AO","BD","SA","BN","BT","KH","TD","LB","RO","IO","MV","MR","KP","IQ",
 	"CI","HR","EG","AE","ET","GA","GM","GH","GS","GP","IR","CC","CK","FJ","JO","KE",
@@ -402,9 +403,9 @@ $config['banned_countries'] = array(
 	"UG","UZ","VU","ZR","ZM","ZW","CG","CM","KH","BI","BD","BH","BY","MZ","BW","BJ",
 	"AZ","YE","DJ","MM","MW","KG","BW","BF","CY","KM","ER","GU","CX","SB","SC","NF",
 	"MH","MP","KW","KY","GN","GQ","GW","SJ","TC","VI","VG","WF","KN","VC","VN","PM",
-	"RE","PK","PN","ST","FO","BV","HM","AM","CV","BA"
+	"RE","PK","PN","ST","FO","BV","HM","AM","CV","BA","DZ"
 	);
-	
+
 $config['IMG_MAX_WIDTH'] = '640';
 $config['IMG_MAX_HEIGHT'] = '480';
 $config['THUMB_MAX_WIDTH'] = '100';

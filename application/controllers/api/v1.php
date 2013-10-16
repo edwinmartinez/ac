@@ -303,6 +303,21 @@ class V1 extends REST_Controller
         $this->response($out, 200); // 200 being the HTTP response code
     }
 	
+	public function checkusername_get()
+	{
+		//$out = array('username' => FALSE);
+		 //$this->response($out, 200); // 200 being the HTTP response code
+		 $exists = $this->user_model->check_username_exists($this->get('username'));
+		 echo ($exists == TRUE)? 'false':'true'; //if it exist then we echo false -- that's what jquery validator expects
+	}
+	
+	public function checkemail_get()
+	{
+		//$out = array('username' => FALSE);
+		 //$this->response($out, 200); // 200 being the HTTP response code
+		 $exists = $this->user_model->check_email_exists($this->get('email_address'));
+		 echo ($exists == TRUE)? 'false':'true'; //if it exist then we echo false -- that's what jquery validator expects
+	}
 	
 	public function send_post()
 	{
